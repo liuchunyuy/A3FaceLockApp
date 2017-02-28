@@ -206,8 +206,8 @@
 		86DA20B71E63BF5D00B03B6A /* DeviceSettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DeviceSettingViewController.xib; sourceTree = "<group>"; };
 		86DA20BB1E63D49000B03B6A /* ADAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADAudioTool.h; sourceTree = "<group>"; };
 		86DA20BC1E63D49000B03B6A /* ADAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADAudioTool.m; sourceTree = "<group>"; };
-		86DA20BE1E63DBA500B03B6A /* SDSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDSoundPlayer.h; path = ../SDSoundPlayer.h; sourceTree = "<group>"; };
-		86DA20BF1E63DBA500B03B6A /* SDSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDSoundPlayer.m; path = ../SDSoundPlayer.m; sourceTree = "<group>"; };
+		86DA20BE1E63DBA500B03B6A /* SDSoundPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDSoundPlayer.h; path = ../../SDSoundPlayer.h; sourceTree = "<group>"; };
+		86DA20BF1E63DBA500B03B6A /* SDSoundPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SDSoundPlayer.m; path = ../../SDSoundPlayer.m; sourceTree = "<group>"; };
 		86DC6F321E2DDF71006FC681 /* A3FaceLockApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = A3FaceLockApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86DC6F361E2DDF71006FC681 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		86DC6F381E2DDF71006FC681 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -310,6 +310,15 @@
 			);
 			name = ViewControllers;
 			path = "../ TableViewCells/ViewControllers";
+			sourceTree = "<group>";
+		};
+		869848DB1E655F090044C7DC /* SDSoundPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				86DA20BE1E63DBA500B03B6A /* SDSoundPlayer.h */,
+				86DA20BF1E63DBA500B03B6A /* SDSoundPlayer.m */,
+			);
+			path = SDSoundPlayer;
 			sourceTree = "<group>";
 		};
 		86D4FC311E5409FA00C81A1B /* 二维码扫描 */ = {
@@ -551,8 +560,7 @@
 		86DC6F7F1E2DED8D006FC681 /* Utiles */ = {
 			isa = PBXGroup;
 			children = (
-				86DA20BE1E63DBA500B03B6A /* SDSoundPlayer.h */,
-				86DA20BF1E63DBA500B03B6A /* SDSoundPlayer.m */,
+				869848DB1E655F090044C7DC /* SDSoundPlayer */,
 				86DA20BA1E63D49000B03B6A /* ADAudioTool */,
 				8633C4AA1E600EC10002FF1D /* MBManager */,
 				86D4FC891E553F8B00C81A1B /* CalendarPicker */,

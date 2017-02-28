@@ -256,12 +256,16 @@
             advance(iter, 0);
             m_strCurID = iter->second->m_strID;
             locksListVc.m_pGateway = iter->second;
-            
             locksListVc.title = @"门锁";
+            
             UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:locksListVc];
             //deviceVc.m_pGateway = locksListVc.m_pGateway;
             
             AlermViewController *alermVc = [[AlermViewController alloc]init];
+            ITER_MAP_STR_GATEWAY iter1 = m_map_str_gateway.begin();
+            advance(iter, 0);
+            m_strCurID = iter1->second->m_strID;
+            alermVc.m_pGateway = iter1->second;
             alermVc.title = @"消息";
             UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:alermVc];
             

@@ -243,7 +243,7 @@
         }else if (iStatus == 12){
             cell.gateWayStatus.text = @"网关ID错误";
         }else if (iStatus == 13){
-            cell.gateWayStatus.text = @"The gateway password mistake";
+            cell.gateWayStatus.text = @"网关密码错误";
         }else if (iStatus == 14){
             cell.gateWayStatus.text = @"Change the new IP login";
         }else if (iStatus == 21){

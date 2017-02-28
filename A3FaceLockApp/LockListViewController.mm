@@ -292,13 +292,6 @@
         advance(iter, indexPath.row);
         std::map<CString, CEPData>::iterator it = iter->second->m_map_ep_data.begin();
         
-        
-                NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
-                NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
-                NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
-        
-                sendGetDeviceAlarmData(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(),iter->second->m_strID.c_str(), [timeString UTF8String], 10);
-        
         if(iter->second->Alarmable()){
             while (it != iter->second->m_map_ep_data.end()){
                 CString epStatus = it->second.m_strEPStatus.c_str();
@@ -315,7 +308,6 @@
             it++;
         }
     }
-    
     //int sendControlDevMsg(CPCHAR appID, CPCHAR gwID, CPCHAR devID, CPCHAR ep, CPCHAR epType, CPCHAR epData);
     //int sendGetDeviceAlarmData(CPCHAR appID, CPCHAR gwID,CPCHAR devID, CPCHAR time, CPCHAR pageSize);
     return;

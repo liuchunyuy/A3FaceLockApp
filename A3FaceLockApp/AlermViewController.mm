@@ -76,14 +76,26 @@
         
         NSLog(@"%li-%li-%li", (long)year,(long)month,(long)day);
         
-      //  NSInteger t = [MyUtiles timeSwitchTimestamp:<#(NSString *)#> andFormatter:<#(NSString *)#>]
+        NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
+        NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
+        NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+
+       // sendGetDeviceAlarmData(CPCHAR appID, CPCHAR gwID,CPCHAR devID, [timeString UTF8String], 10);
+        int t =  sendGetDeviceAlarmData(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(),NULL, [timeString UTF8String], "10");
         
-//        NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
-//        NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
-//        NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
-//        
-//        sendGetDeviceAlarmData(CPCHAR appID, CPCHAR gwID,CPCHAR devID, [timeString UTF8String], 10);
+        NSLog(@"时间戳timeString is %@",timeString);
+        NSLog(@"获取警告信息结果t is %d",t);
     };
+}
+
+- (void)setM_pGateway:(CGateway *)pGateway{
+    
+    m_pGateway = pGateway;
+}
+
+- (CGateway*)m_pGateway{
+    
+    return m_pGateway;
 }
 
 - (void)didReceiveMemoryWarning {

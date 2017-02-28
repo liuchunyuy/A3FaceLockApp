@@ -10,5 +10,11 @@
 #include "Device.h"
 #include "wulianSDK.h"
 @interface AlermViewController : UIViewController
+{
+    CGateway* m_pGateway;
+    CString strAreaID;
+}
 
+- (void)setM_pGateway:(CGateway *)pGateway;
+- (CGateway*)m_pGateway;
 @end
