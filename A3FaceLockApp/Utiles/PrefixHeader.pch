@@ -1,0 +1,32 @@
+//
+//  PrefixHeader.pch
+//  A3FaceLockApp
+//
+//  Created by GavinHe on 2017/1/17.
+//  Copyright © 2017年 Liu Chunyu. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef __OBJC__ // 只被object－c文件所引用
+
+#import <UIKit/UIKit.h>
+#import "MyUtiles.h"
+//#import "MBProgressHUD.h"
+#import "MBManager.h"
+#import "ADAudioTool.h"
+
+
+#define CityDataURL @"http://www.hunliji.com/cities.json" // 这个宏定义全工程都可以调用，不用重复编写（好处）
+
+#endif
+
+#endif /* PrefixHeader_pch */
+
+#define SCREEN_FRAME ([UIScreen mainScreen].applicationFrame)
+#define SCREEN_WIDTH ([UIScreen mainScreen].bounds.size.width)
+#define SCREEN_HEIGHT ([UIScreen mainScreen].bounds.size.height)
