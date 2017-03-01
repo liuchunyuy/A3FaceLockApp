@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     NSLog(@"_gateWayIDStr is %@", _gateWayIDStr);
     NSLog(@"_gateWayPWStr is%@", _gateWayPWStr);
     
@@ -140,7 +140,7 @@
 
 -(void)creatTableView{
 
-    _tableView  = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/3+20) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor orangeColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _tableView  = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/3+20) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor lightGrayColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
@@ -234,7 +234,9 @@
             cell.gateWayStatus.text = @"The gateway to disconnect";
         }else if (iStatus == -2){
             cell.gateWayStatus.text = @"正在尝试连接网关...";
+            [MBManager showLoadingInView:_tableView];
         }else if (iStatus == 0){
+            [MBManager hideAlert];
             cell.gateWayStatus.text = @"网关连接成功";
         }else if (iStatus == -1){
             cell.gateWayStatus.text = @"The gateway connection fails";

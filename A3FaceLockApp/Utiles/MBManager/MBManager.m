@@ -93,6 +93,9 @@ UIView *hudAddedView;
     }
     MBProgressHUD *hud = [[MBProgressHUD alloc] initWithView:view];
     hud.labelText = kLoadingMessage;
+    hud.labelFont = [UIFont systemFontOfSize:13];                      //lcy
+    hud.labelColor = [UIColor orangeColor];
+    
     hud.removeFromSuperViewOnHide = YES;
     if (hudManager.isShowGloomy) {
         //如果添加了view则将botomView的frame修改与view一样大

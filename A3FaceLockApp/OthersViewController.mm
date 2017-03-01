@@ -19,6 +19,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.view.backgroundColor = [UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0];
     self.navigationController.delegate = self; //实现nav代理隐藏本页面的nav
     
     [self createView];
@@ -35,7 +36,7 @@
     UILabel *companyLabel = [MyUtiles createLabelWithFrame:CGRectMake(30, 64+SCREEN_WIDTH/3+20, SCREEN_WIDTH-60, 30) font:[UIFont systemFontOfSize:16] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:@"上海友迪斯数字识别系统有限公司"];
     [self.view addSubview:companyLabel];
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 64+SCREEN_WIDTH/3+70, SCREEN_WIDTH, 10)];
+    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 64+SCREEN_WIDTH/3+70, SCREEN_WIDTH, 15)];
     view.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:view];
     
@@ -56,7 +57,6 @@
             [btn addTarget:self action:@selector(clearCache) forControlEvents:UIControlEventTouchUpInside];
         }
     }
-    
     UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(30, 64+SCREEN_WIDTH/3+100 + 30+ 10 +40, 100, 30) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:@"版    本"];
     [self.view addSubview:label];
 }

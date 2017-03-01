@@ -36,6 +36,7 @@ void __stdcall myMessageCallback(int fncode, void *pdata)
 {
     std::cout<<"fncode:"<<fncode<<std::endl;
     CString strID;
+    CString data;      //lcy
     CString strAreaID;
     bool bArea = false;
     CString strDeviceID;
@@ -124,6 +125,15 @@ void __stdcall myMessageCallback(int fncode, void *pdata)
         LP_GATEWAY_UP result = (LP_GATEWAY_UP)pdata;
         strID = result->gwID;
         m_map_str_gateway[strID]->m_strData = "32";	//Õ¯πÿœ¬œﬂ
+    }
+#warning 我自己加的----------------
+    else if (fncode == DEVICE_HISTORY_DATA){
+    
+        LP_DEVICE_HISTORY_DATA result = (LP_DEVICE_HISTORY_DATA)pdata;
+        strID = result->gwid;
+        data = result->data;
+        m_map_str_gateway[strID]->data = result->data;
+        
     }
     else if (fncode == DEVICE_UP)
     {

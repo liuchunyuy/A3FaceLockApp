@@ -14,7 +14,8 @@
     CGateway* m_pGateway;
     CString strAreaID;
 }
-
+@property(nonatomic, strong)UITableView *messageTable;
+@property(nonatomic, strong)UITableView *alermTable;
 - (void)setM_pGateway:(CGateway *)pGateway;
 - (CGateway*)m_pGateway;
 @end
