@@ -114,6 +114,17 @@
     
 }
 
++ (NSString *)getDate:(NSString *)date
+{
+    long long time=[date longLongValue];
+    NSDate *d = [[NSDate alloc]initWithTimeIntervalSince1970:time];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];//格式化
+    [df setDateFormat:@"yy-MM-dd HH:mm"];
+    [df setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"] ];
+    NSString * timeStr =[df stringFromDate:d];
+    return timeStr;
+}
+
 + (NSString *)convertHexStrToString:(NSString *)str {
     if (!str || [str length] == 0) {
         return nil;

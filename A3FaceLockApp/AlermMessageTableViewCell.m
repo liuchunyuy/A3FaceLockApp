@@ -40,37 +40,39 @@
             _nameLabel.textColor = [UIColor purpleColor];
         }else if ([_model.epData isEqualToString:@"138"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   钥匙开锁",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor brownColor];
         }else if ([_model.epData isEqualToString:@"23"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   入侵警报",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor redColor];
         }else if ([_model.epData isEqualToString:@"24"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   报警解除",model.name];
             _nameLabel.textColor = [UIColor blueColor];
         }else if ([_model.epData isEqualToString:@"25"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   强制上锁",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor redColor];
         }else if ([_model.epData isEqualToString:@"10"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   上保险",model.name];
             _nameLabel.textColor = [UIColor blueColor];
         }else if ([_model.epData isEqualToString:@"11"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   解除保险",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor redColor];
         }else if ([_model.epData isEqualToString:@"29"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   破坏报警",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor redColor];
         }else if ([_model.epData isEqualToString:@"31"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   密码连续出错",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor redColor];
         }else if ([_model.epData isEqualToString:@"20"]){
             _nameLabel.text = [NSString stringWithFormat:@"%@   反锁",model.name];
-            _nameLabel.textColor = [UIColor blueColor];
+            _nameLabel.textColor = [UIColor redColor];
+        }else{
+            _nameLabel.text = [NSString stringWithFormat:@"%@ 其他",model.name];
+        _nameLabel.textColor = [UIColor blueColor];
         }
-        //_nameLabel.text = model.name;
+        
         _timeLabel.text = model.createDate;
         _timeLabel.textColor = [UIColor lightGrayColor];
         
-       // [_image setImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@",_model.messageImg]]];
         _image.image = [UIImage imageNamed:@"company_logo"];
     }
 
