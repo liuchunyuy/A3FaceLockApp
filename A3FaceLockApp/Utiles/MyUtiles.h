@@ -47,4 +47,7 @@
 //将某个时间转化成 时间戳
 +(NSInteger)timeSwitchTimestamp:(NSString *)formatTime andFormatter:(NSString *)format;
 + (NSString *)getDate:(NSString *)date;
+
+//cell上建imageView
++(UIImageView *)createStatueImage:(NSString *)imageName label:(UILabel *)cellLabel;
 @end

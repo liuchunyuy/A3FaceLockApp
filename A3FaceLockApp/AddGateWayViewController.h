@@ -20,7 +20,9 @@
 
 @property(nonatomic,assign)id<AddGatewayViewControllerDelegate>delegate;
 
-@property(nonatomic,strong) UITableView *tableView;  //  网关 
+@property(nonatomic,strong) UITableView *tableView;  //  网关
+@property(nonatomic,strong) UITableView *userNametableView;  //  用户名
+@property(nonatomic,strong)NSMutableArray *userArr;  // 用户名数组
 @property(nonatomic,strong)UITextField *textID;
 @property(nonatomic,strong)UITextField *textPW;
 @property(nonatomic,strong)UILabel *label;

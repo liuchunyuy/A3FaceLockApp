@@ -19,6 +19,7 @@
 //#import "MBProgressHUD.h"
 #import "MBManager.h"
 #import "ADAudioTool.h"
+#import "MJRefresh.h"
 
 
 #define CityDataURL @"http://www.hunliji.com/cities.json" // 这个宏定义全工程都可以调用，不用重复编写（好处）

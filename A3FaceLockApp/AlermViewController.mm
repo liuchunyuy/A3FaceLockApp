@@ -15,7 +15,7 @@
 #import "AlermAlermTableViewCell.h"
 #import "AlermAlermModel.h"
 
-#import "MJRefresh.h"
+
 @interface AlermViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property(nonatomic,strong)UISegmentedControl *segmentedControl; //信息、警告
 @property(nonatomic,copy) UIView *messageView;  //消息
@@ -26,6 +26,8 @@
 @property(nonatomic,copy)NSMutableArray *alermArr1;  //截取后的警告数组
 
 @property(nonatomic,strong)NSString *date;
+
+@property(nonatomic)BOOL isToday;
 @end
 
 @implementation AlermViewController
@@ -34,6 +36,8 @@
     [super viewDidLoad];
     
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    _isToday = YES;
     
     _messageArr = [NSMutableArray array];
     _alermArr = [NSMutableArray array];
@@ -55,7 +59,7 @@
 
 -(void)createRigthBtn{
 
-    UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(0, 0, 100, 50) title:@"选择日期" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(dataClick)];
+    UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(0, 0, 25, 25) title:nil normalBgImg:@"日期@2x" highlightedBgImg:nil target:self action:@selector(dataClick)];
     [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
@@ -65,7 +69,7 @@
 
 -(void)createTableView{
     
-    _messageTable = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-49) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor colorWithRed:64/255.f green:76/255.f blue:86/255.f alpha:1.0] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _messageTable = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-49) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor colorWithRed:64/255.f green:76/255.f blue:86/255.f alpha:1.0] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:YES];
     _messageTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
     _messageTable.delegate = self;
     _messageTable.dataSource =self;
@@ -79,7 +83,7 @@
     });
     
     _alermArr = [NSMutableArray array];
-    _alermTable = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-49) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor colorWithRed:64/255.f green:76/255.f blue:86/255.f alpha:1.0] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _alermTable = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-49) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor colorWithRed:64/255.f green:76/255.f blue:86/255.f alpha:1.0] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:YES];
     _alermTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
     _alermTable.delegate = self;
     _alermTable.dataSource =self;
@@ -87,32 +91,20 @@
     [_alermTable registerNib:[UINib nibWithNibName:@"AlermAlermTableViewCell" bundle:nil] forCellReuseIdentifier:@"AlermAlermTableViewCell"];
     
     [self addHeaderFooter];
+    
 }
 
 -(void)addHeaderFooter{
     
-    _messageTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        // 进入刷新状态后会自动调用这个block
-        [_messageArr removeAllObjects];
-        [self dataPick];
-    }];
-    
-//    _messageTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        [_messageArr removeAllObjects];
-//        [self dataPick];
-//    }];
-    
-    _alermTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        // 进入刷新状态后会自动调用这个block
-        [_alermArr removeAllObjects];
-        [self dataPick];
-    }];
-    
-//    _alermTable.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingBlock:^{
-//        [_alermArr removeAllObjects];
-//        [self dataPick];
-//    }];
-    
+        _messageTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            // 进入刷新状态后会自动调用这个block
+            [self dataPick];
+        }];
+        
+        _alermTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+            // 进入刷新状态后会自动调用这个block
+            [self dataPick];
+        }];
 }
 
 -(void)createSegmentControl{
@@ -121,7 +113,7 @@
     _segmentedControl = [[UISegmentedControl alloc]initWithItems:segmentedArray];
     _segmentedControl.frame = CGRectMake(0, 0, 100, 25);
     _segmentedControl.selectedSegmentIndex = 0;
-    _segmentedControl.tintColor = [UIColor colorWithRed:30/255.f green:144/255.f blue:1.0 alpha:1.0];
+    _segmentedControl.tintColor = [UIColor whiteColor];
     [_segmentedControl addTarget:self  action:@selector(indexDidChangeForSegmentedControl:)
                 forControlEvents:UIControlEventValueChanged];
     [self.navigationItem setTitleView:_segmentedControl];
@@ -135,6 +127,7 @@
             _alermView.hidden = YES;
             _messageView.hidden = NO;
             [_messageView addSubview:_messageTable];
+            [_messageTable.mj_header beginRefreshing];
             break;
         case 1:
             _alermView.hidden = NO;
@@ -146,6 +139,7 @@
                 return;
             }
             [_alermView addSubview:_alermTable];
+            [_alermTable.mj_header beginRefreshing];
             break;
         default:
             break;
@@ -162,15 +156,19 @@
     
     calendarPicker.calendarBlock = ^(NSInteger day, NSInteger month, NSInteger year){
         _date = [NSString stringWithFormat:@"%li-%li-%li 23:59:59", (long)year,(long)month,(long)day];
-        [_messageArr removeAllObjects];
         [MBManager showLoading];
-        
+        //[_messageTable.mj_header beginRefreshing];
+        //_isToday = NO;
         NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
         [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
         NSDate *date1 = [formatter dateFromString:_date];
         NSLog(@"date1 is %@",_date);
         NSTimeInterval a=(long long)[date1 timeIntervalSince1970]*1000; //*1000 是精确到毫秒，不乘是精确到秒
         NSString *timeSp = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+        if (!m_pGateway) {
+            [MBManager hideAlert];
+            return;
+        }
         dispatch_async(dispatch_get_main_queue(),^{;
             sendGetDeviceAlarmData(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(),NULL, [timeSp UTF8String], "100");
             ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
@@ -181,6 +179,8 @@
             }
             NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[gateWayIDStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
             NSArray *array = [dic objectForKey:@"retData"];
+            [_alermArr removeAllObjects];
+            [_messageArr removeAllObjects];
             NSString *date22 = [NSString stringWithFormat:@"%@",date1];
             NSString *dateNow = [date22 substringToIndex:11];
             NSLog(@"dateNow is %@",dateNow);
@@ -202,9 +202,16 @@
 
 -(void)dataPick{     //当前时间
 
+    //_isToday = YES;
     NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
     NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+    
+    if (!m_pGateway) {
+        [MBManager hideAlert];
+        return;
+    }
+    
     int t =  sendGetDeviceAlarmData(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(),NULL, [timeString UTF8String], "100");
     
     ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
@@ -216,27 +223,34 @@
     NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[gateWayIDStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     
     NSArray *array = [dic objectForKey:@"retData"];
+
+    /*
+     1.先截取日历选择的日期的前十个字符：2017-03-01 22:22:22
+     2.从网关获取的信息记录日期key：cteateData: 2017-03-01 22:22:22
+     3.比较两个日期的前十个字符是否一样，一样的话把此元素保存在一个数组中，此数组就是即将显示的数组
+     */
     
-   // NSLog(@"获取信息结果 is%@",array);
-    NSString *lenth = @"2017-03-01";
-    NSLog(@"lenth is %lu",(unsigned long)lenth.length);
+    [_alermArr removeAllObjects];
+    [_messageArr removeAllObjects];
     NSString *date22 = [NSString stringWithFormat:@"%@",date];
-    NSString *dateNow = [date22 substringToIndex:11];
+    NSString *dateNow = [date22 substringToIndex:11];          //截取日历选择日期的前10个字符：2017-03-01
     NSLog(@"dateNow is %@",dateNow);
     NSMutableArray *messageArr = [NSMutableArray array];
     for (NSDictionary *dic in array) {
-        NSString *dateNetNow = [dic[@"createDate"] substringToIndex:11];
-        if ([dateNow isEqualToString:dateNetNow]) {
+        NSString *dateNetNow = [dic[@"createDate"] substringToIndex:11]; //截取获取到的日期前10个字符
+        if ([dateNow isEqualToString:dateNetNow]) {   //日期前10个字符相等的元素加入一个新数组供显示
             [messageArr addObject:dic];
         }
     }
     NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:messageArr];
     [_messageArr addObjectsFromArray:models];
+    if (_messageArr.count == 0) {
+        [MBManager hideAlert];
+        return;
+    }
     [_messageTable reloadData];
     
     [MBManager hideAlert];
-    [_messageTable.mj_header endRefreshing];
-    [_messageTable.mj_footer endRefreshing];
     
     for (NSDictionary *dic in array) {
         NSString *nameStr = [NSString stringWithFormat:@"%@",dic[@"epData"]];
@@ -249,8 +263,8 @@
     [_alermArr addObjectsFromArray:models1];
     [_alermTable reloadData];
     
+    [_messageTable.mj_header endRefreshing];
     [_alermTable.mj_header endRefreshing];
-    [_alermTable.mj_footer endRefreshing];
    // NSLog(@"时间戳timeString is %@",timeString);
     NSLog(@"获取警告信息结果t is %d",t);
 }

@@ -44,6 +44,9 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    //导航栏字体颜色
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReViewGateway:) name:REVIEW_GATEWAY object:nil];
     
     [self creatTableView];
@@ -54,10 +57,17 @@
 -(void)createView{
 
     NSArray *labelArr = @[@"网关ID",@"网关版本"];
-    for (int i = 0; i < 2; i++) {
-        UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(30, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 100, 30) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:labelArr[i]];
-
-        [self.view addSubview:label];
+    NSArray *imageArr = @[@"网关ID@2x",@"网关版本@2x",@"修改密码@2x",@"切换网关@2x"];
+    for (int i = 0; i < 4; i++) {
+        if (i < 2) {
+            UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 100, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:labelArr[i]];
+           // label.backgroundColor = [UIColor redColor];
+            [self.view addSubview:label];
+        }
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageArr[i]]];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(25, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 25, 25)];
+        imageView.image = image;
+        [self.view addSubview:imageView];
     }
     
     NSString *gateWayIDStr = [NSString stringWithUTF8String:m_map_str_gateway.begin()->second->m_strID.c_str()];   //
@@ -68,13 +78,13 @@
     
     NSArray *label1Arr = @[gateWayIDStr,@"3.3.25"];
     for (int i = 0; i < 2; i++) {
-        UILabel *label1 = [MyUtiles createLabelWithFrame:CGRectMake(150, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 150, 30) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:label1Arr[i]];
+        UILabel *label1 = [MyUtiles createLabelWithFrame:CGRectMake(150, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 150, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:label1Arr[i]];
         [self.view addSubview:label1];
     }
     
     NSArray *buttonArr = @[@"修改密码",@"切换网关"];
     for (int i = 0; i < 2; i++) {
-        UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(30, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30+30+30*i, 100, 30) title:buttonArr[i] normalBgImg:nil highlightedBgImg:nil target:self action:nil];
+        UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30+30+30*i, 100, 25) title:buttonArr[i] normalBgImg:nil highlightedBgImg:nil target:self action:nil];
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;

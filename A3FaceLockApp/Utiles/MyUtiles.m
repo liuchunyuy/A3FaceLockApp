@@ -221,6 +221,14 @@
     
 }
 
+//cell上建imageView
++(UIImageView *)createStatueImage:(NSString *)imageName label:(UILabel *)cellLabel{
+
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(cellLabel.frame.origin.x,cellLabel.frame.origin.y, cellLabel.frame.size.width, cellLabel.frame.size.height)];
+    imageView.image = [UIImage imageNamed:imageName];
+    return imageView;
+}
+
 
 //将分类的英文改成中文
 + (NSString *)transferCateName:(NSString *)name

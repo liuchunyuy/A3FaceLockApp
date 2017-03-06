@@ -36,7 +36,7 @@
 //本地图片
 -(NSArray *)localImageArr{
     
-    _localImageArr=@[@"mv_00",@"mv_01",@"mv_02"];
+    _localImageArr=@[@"scroll_1",@"scroll_2",@"scroll_3"];
     //轮播图图片数组
     return _localImageArr;
 }
@@ -48,7 +48,9 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    
+    //[[UITabBar appearance] setBackgroundColor:[UIColor colorWithRed:47/255.f green:47/255.f blue:47/255.f alpha:1.0]];
+    //导航栏字体颜色
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     _isNeedPassWord = YES;
     _passWordAlertTitle = @"关闭密码";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshouopen:) name:@"openPsaaword" object:nil];
@@ -174,16 +176,17 @@
            // [ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
-            _cell.statueLabel.text = @"打开";
-            _cell.statueLabel.textColor = [UIColor whiteColor];
-            _cell.statueLabel.font = [UIFont systemFontOfSize:14];
-            _cell.statueLabel.backgroundColor = [UIColor greenColor];
+            _cell.statueLabel.backgroundColor = [UIColor clearColor];
+            UIImageView *image = [MyUtiles createStatueImage:@"app2@2x" label:_cell.statueLabel];
+            [_cell addSubview:image];
         }else if ([devStatus isEqual:@"2"]){
             //[self playNotifySound:@"门锁已关闭"];
             _cell.statueLabel.text = @"关闭";
             _cell.statueLabel.textColor = [UIColor whiteColor];
             _cell.statueLabel.font = [UIFont systemFontOfSize:14];
-            _cell.statueLabel.backgroundColor = [UIColor redColor];
+            _cell.statueLabel.backgroundColor = [UIColor clearColor];
+            UIImageView *image = [MyUtiles createStatueImage:@"关门2@2x" label:_cell.statueLabel];
+            [_cell addSubview:image];
         }else if ([devStatus isEqual:@"145"]){
             _cell.statueLabel.text = @"密码验证失败";
             _cell.statueLabel.textColor = [UIColor whiteColor];
@@ -194,29 +197,33 @@
             //[ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
-            _cell.statueLabel.text = @"人脸开门";
-           // [self playNotifySound];
-            _cell.statueLabel.textColor = [UIColor whiteColor];
-            _cell.statueLabel.font = [UIFont systemFontOfSize:12];
-            _cell.statueLabel.backgroundColor = [UIColor greenColor];
+            _cell.statueLabel.backgroundColor = [UIColor clearColor];
+            UIImageView *image = [MyUtiles createStatueImage:@"人脸2@2x" label:_cell.statueLabel];
+            [_cell addSubview:image];
         }else if ([devStatus isEqual:@"30"]){
             NSString *message = [NSString stringWithFormat:@"%@密码验证开锁成功",_cell.nameLabel.text];
             //[ADAudioTool playSystemAudioWithSoundID:1007]; /播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
-            _cell.statueLabel.text = @"密码开门";
-            _cell.statueLabel.textColor = [UIColor whiteColor];
-            _cell.statueLabel.font = [UIFont systemFontOfSize:10];
-            _cell.statueLabel.backgroundColor = [UIColor greenColor];
+            _cell.statueLabel.backgroundColor = [UIColor clearColor];
+            UIImageView *image = [MyUtiles createStatueImage:@"密码2@2x" label:_cell.statueLabel];
+            [_cell addSubview:image];
         }else if ([devStatus isEqual:@"138"]){
             NSString *message = [NSString stringWithFormat:@"%@钥匙开锁成功",_cell.nameLabel.text];
             //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
-            _cell.statueLabel.text = @"钥匙开门";
-            _cell.statueLabel.textColor = [UIColor whiteColor];
-            _cell.statueLabel.font = [UIFont systemFontOfSize:10];
-            _cell.statueLabel.backgroundColor = [UIColor greenColor];
+            _cell.statueLabel.backgroundColor = [UIColor clearColor];
+            UIImageView *image = [MyUtiles createStatueImage:@"钥匙2@2x" label:_cell.statueLabel];
+            [_cell addSubview:image];
+        }else if ([devStatus isEqual:@"28"]){
+            NSString *message = [NSString stringWithFormat:@"%@电量低",_cell.nameLabel.text];
+            //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+            [self playNotifySound:message];
+            [MBManager showBriefMessage:message InView:_roundScrollView];
+            _cell.statueLabel.backgroundColor = [UIColor clearColor];
+            UIImageView *image = [MyUtiles createStatueImage:@"电量低2@2x" label:_cell.statueLabel];
+            [_cell addSubview:image];
         }
         return _cell;
 }

@@ -20,7 +20,10 @@
     // Do any additional setup after loading the view.
     
     self.view.backgroundColor = [UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0];
-    self.navigationController.delegate = self; //实现nav代理隐藏本页面的nav
+    //self.navigationController.delegate = self; //实现nav代理隐藏本页面的nav
+    
+    //导航栏字体颜色
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [self createView];
     
@@ -28,27 +31,35 @@
 
 -(void)createView{
 
-    UIImage *image = [UIImage imageNamed:@"company_logo"];
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/3, 64, SCREEN_WIDTH/3, SCREEN_WIDTH/3)];
+    UIImage *image = [UIImage imageNamed:@"other_company@2x"];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT/3)];
     imageView.image = image;
     [self.view addSubview:imageView];
     
-    UILabel *companyLabel = [MyUtiles createLabelWithFrame:CGRectMake(30, 64+SCREEN_WIDTH/3+20, SCREEN_WIDTH-60, 30) font:[UIFont systemFontOfSize:16] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:@"上海友迪斯数字识别系统有限公司"];
-    [self.view addSubview:companyLabel];
+    for (int i = 0; i <  3; i++) {
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/3+64+50*(i+1), SCREEN_WIDTH, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:lineView];
+    }
     
-    UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 64+SCREEN_WIDTH/3+70, SCREEN_WIDTH, 15)];
-    view.backgroundColor = [UIColor orangeColor];
-    [self.view addSubview:view];
+    NSArray *imageArr = @[@"关于我们@2x",@"清除缓存@2x",@"版本@2x"];
     
+    for (int i = 0; i < 3; i++) {
+        UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageArr[i]]];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(30, SCREEN_HEIGHT/3+64+10+50*i, 30, 30)];
+        imageView.image = image;
+        [self.view addSubview:imageView];
+    }
     NSArray *btnTitleArr = @[@"关于我们",@"清除缓存"];
     for (int i = 0; i < 2; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-        btn.frame = CGRectMake(30, 64+SCREEN_WIDTH/3+100 + 30*i+ 10, 100, 30);
+        btn.frame = CGRectMake(80, SCREEN_HEIGHT/3+5+64+50*i, 100, 40);
         [btn setTitle:btnTitleArr[i] forState:UIControlStateNormal];
         btn.backgroundColor = [UIColor clearColor];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         btn.titleLabel.font = [UIFont systemFontOfSize:15];
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
         [self.view addSubview:btn];
         
         if (i == 0) {
@@ -57,7 +68,7 @@
             [btn addTarget:self action:@selector(clearCache) forControlEvents:UIControlEventTouchUpInside];
         }
     }
-    UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(30, 64+SCREEN_WIDTH/3+100 + 30+ 10 +40, 100, 30) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:@"版    本"];
+    UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(80, SCREEN_HEIGHT/3+64+5+50*2, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"版    本"];
     [self.view addSubview:label];
 }
 

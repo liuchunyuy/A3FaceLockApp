@@ -9,8 +9,6 @@
 #import "AddGateWayViewController.h"
 
 #import "SaoyisaoViewController.h"       // 扫一扫
-//#import "SwitchGateWayViewController.h"  // 切换网关
-//#import "ProductionViewController.h"  //    产品介绍
 #import "DeviceListViewController.h"  //    网关
 #import "DeviceListTableViewCell.h"   //    网关cell
 
@@ -20,11 +18,15 @@
 //#import "DeviceViewController.h"      //    设备
 #import "LockListViewController.h"
 
+#import "SwitchGateWayTableViewCell.h"
 @interface AddGateWayViewController ()<UITableViewDelegate,UITableViewDataSource,UINavigationControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>{
 
     UITabBarController *_tabBarController;
+    
 }
 @property(nonatomic,strong)NSString *versionStr;
+@property(nonatomic) BOOL isShowMenu;
+
 @end
 
 @implementation AddGateWayViewController
@@ -56,16 +58,18 @@
     // Do any additional setup after loading the view, typically from a nib.
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UIImage *image = [UIImage imageNamed:@"backGround"];
+    UIImage *image = [UIImage imageNamed:@"login_background"];
     UIImageView *imageVc = [[UIImageView alloc]initWithFrame:[UIScreen mainScreen].bounds];
     imageVc.image = image;
     imageVc.userInteractionEnabled = YES;
     [self.view addSubview:imageVc];
 
+    _isShowMenu = NO;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
                                    action:@selector(dismissKeyboard)];
-    [self.view addGestureRecognizer:tap];
+    
+    // [self.view addGestureRecognizer:tap];
     tap.delegate = self;
     
     // 设置CGRectZero从导航栏下开始计算
@@ -79,77 +83,192 @@
     [self creatTableView];     //隐藏的网关
     [self createNavRightBtn];   //nav右上角按钮
     
+   // [self createUserDownMenu];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReViewGateway:) name:REVIEW_GATEWAY object:nil];     //监测网关状态
 
 }
 
 - (void)SetControl{
     
-    UIImage *image = [UIImage imageNamed:@"company_logo"];
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(SCREEN_WIDTH/3, 64+36, SCREEN_WIDTH/3, SCREEN_WIDTH/3)];
-    imageView.image = image;
-    [self.view addSubview:imageView];
+    UIView *userView = [[UIView alloc]initWithFrame:CGRectMake(30, 80+64+SCREEN_WIDTH/3, SCREEN_WIDTH-60, 50)];
+    userView.backgroundColor = [UIColor colorWithRed:238/255.f green:238/255.f blue:238/255.f alpha:0.2];
+    userView.layer.cornerRadius = 10;
+    userView.layer.masksToBounds = YES;
+    [self.view addSubview:userView];
     
-    textID = [MyUtiles createTextField:CGRectMake((SCREEN_WIDTH/3)/2, 80+64+36+SCREEN_WIDTH/3, 2*(SCREEN_WIDTH/3), 40) placeholder:@"" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor colorWithRed:246/255.f green:246/255.f blue:246/255.f alpha:0.1] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:NO];
+    UIView *passWordView = [[UIView alloc]initWithFrame:CGRectMake(30, 80+60+64+SCREEN_WIDTH/3, SCREEN_WIDTH-60, 50)];
+    passWordView.backgroundColor = [UIColor colorWithRed:238/255.f green:238/255.f blue:238/255.f alpha:0.2];
+    passWordView.layer.cornerRadius = 10;
+    passWordView.layer.masksToBounds = YES;
+    [self.view addSubview:passWordView];
+    
+    textID = [MyUtiles createTextField:CGRectMake(60, 5, SCREEN_WIDTH-60-100, 40) placeholder:@"用户名" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor clearColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeNever secureTextEntry:NO];
     //textID.layer.cornerRadius = 4;
-    //textID.layer.masksToBounds = YES;
+    //textID.layer.masksToBounds = YES5
     textID.textColor = [UIColor whiteColor];
+    [textPW setBorderStyle:UITextBorderStyleNone];
+   // textID.layer.borderColor = [UIColor clearColor].CGColor;
     textID.returnKeyType =UIReturnKeyDone;
-    textID.borderStyle = UITextBorderStyleRoundedRect;
+   // textID.borderStyle = UITextBorderStyleRoundedRect;
     textID.delegate =self;
+    [textID addTarget:self action:@selector(downMenuUsers) forControlEvents:UIControlEventTouchUpInside];
     
-    textPW = [MyUtiles createTextField:CGRectMake((SCREEN_WIDTH/3)/2, 60+80+64+36+SCREEN_WIDTH/3, 2*(SCREEN_WIDTH/3), 40) placeholder:@"网关密码默认后六位" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor colorWithRed:246/255.f green:246/255.f blue:246/255.f alpha:0.1] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:NO];
-    //textPW.layer.cornerRadius = 4;
-    //textPW.layer.masksToBounds = YES;
+    UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(userView.frame.size.width-40,15,20,20) title:nil normalBgImg:@"下拉@2x" highlightedBgImg:nil target:self action:@selector(userDownMenu)];
+    btn.backgroundColor = [UIColor clearColor];
+    [userView addSubview:btn];
+    
+    UIImage *image = [UIImage imageNamed:@"用户名@2x"];
+    UIImageView *imageUser = [[UIImageView alloc]initWithFrame:CGRectMake(25, 15, 20, 20)];
+    imageUser.image = image;
+    imageUser.userInteractionEnabled = YES;
+    [userView addSubview:imageUser];
+    
+    textPW = [MyUtiles createTextField:CGRectMake(60, 5, SCREEN_WIDTH-60-100, 40) placeholder:@"网关密码默认后六位" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor clearColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeNever secureTextEntry:NO];
     textPW.textColor = [UIColor whiteColor];
+    [textPW setBorderStyle:UITextBorderStyleNone];
     textPW.returnKeyType =UIReturnKeyDone;
-    textPW.borderStyle = UITextBorderStyleRoundedRect;
+    //textPW.borderStyle = UITextBorderStyleRoundedRect;
     textPW.delegate = self;
     
-    UIButton *loginBtn = [MyUtiles createBtnWithFrame:CGRectMake((SCREEN_WIDTH/3)/2, SCREEN_HEIGHT-120, 2*(SCREEN_WIDTH/3), 40) title:@"登  录" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(OK:)];
-    loginBtn.layer.cornerRadius = 4;
+    UIImage *image1 = [UIImage imageNamed:@"密码@2x"];
+    UIImageView *imagePassWord = [[UIImageView alloc]initWithFrame:CGRectMake(25, 15, 20, 20)];
+    imagePassWord.image = image1;
+    imagePassWord.userInteractionEnabled = YES;
+    [passWordView addSubview:imagePassWord];
+    
+    UIButton *loginBtn = [MyUtiles createBtnWithFrame:CGRectMake(30, 80+60+60+64+SCREEN_WIDTH/3, SCREEN_WIDTH-60, 50) title:@"登  录" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(OK:)];
+    loginBtn.layer.cornerRadius = 10;
     loginBtn.layer.masksToBounds = YES;
     loginBtn.titleLabel.font = [UIFont systemFontOfSize:16];
-    loginBtn.backgroundColor = [UIColor colorWithRed:246/255.f green:246/255.f blue:246/255.f alpha:0.4];
+    [loginBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [loginBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    loginBtn.backgroundColor = [UIColor colorWithRed:252/255.f green:86/255.f blue:88/255.f alpha:1.0];
     [loginBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     
-    UIButton *saoyisaoBtn = [MyUtiles createBtnWithFrame:CGRectMake((SCREEN_WIDTH/3)*2, textID.frame.origin.y-50, 60, 40) title:@"扫一扫" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(saoyisao)];
-    [self.view addSubview:saoyisaoBtn]; //扫一扫按钮
+    UIButton *saoyisaoBtn = [MyUtiles createBtnWithFrame:CGRectMake(SCREEN_WIDTH-60, 40, 40, 40) title:@"扫一扫" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(saoyisao)];
+    [saoyisaoBtn setImage:[UIImage imageNamed:@"saoyisao@2x"] forState:UIControlStateNormal];
+    saoyisaoBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+    [saoyisaoBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [saoyisaoBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    [saoyisaoBtn.imageView setContentMode:UIViewContentModeScaleToFill];
+    [self initButton:saoyisaoBtn];
+    
     [self.view addSubview:loginBtn];    //登录按钮
-    [self.view addSubview:textID];      //ID输入框
-    [self.view addSubview:textPW];      //密码输入框
-    if (m_pGateway != NULL){
-        textID.text = [NSString stringWithUTF8String:m_pGateway->m_strID.c_str()];
-        textID.enabled = NO;
-        textPW.text = [NSString stringWithUTF8String:m_pGateway->m_strPW.c_str()];
+    _userNametableView = [MyUtiles createTableView:CGRectMake(userView.frame.origin.x, userView.frame.origin.y+55, userView.frame.size.width, userView.frame.size.height*4) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor lightGrayColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _userNametableView.delegate = self;
+    _userNametableView.dataSource = self;
+    _userNametableView.hidden = YES;
+    //_userNametableView.userInteractionEnabled = YES;
+    _userNametableView.layer.cornerRadius = 7;
+    _userNametableView.layer.masksToBounds = YES;
+    _userNametableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
+    [_userNametableView registerNib:[UINib nibWithNibName:@"SwitchGateWayTableViewCell" bundle:nil] forCellReuseIdentifier:@"SwitchGateWayTableViewCell"];
+    [self.view addSubview:_userNametableView];
+    
+    [self.view addSubview:saoyisaoBtn]; //扫一扫按钮
+    
+    [userView addSubview:textID];      //ID输入框
+    [passWordView addSubview:textPW];      //密码输入框
+   // if (m_pGateway != NULL){
+//        textID.text = [NSString stringWithUTF8String:m_pGateway->m_strID.c_str()];
+//        textID.enabled = NO;
+//        textPW.text = [NSString stringWithUTF8String:m_pGateway->m_strPW.c_str()];
         //label.text = @"Modify the gateway";
-    }else{
+   // }else{
         //textID.text = @"50294D203FFB";
         textID.text = @"50294D2044C1";
         //textID.enabled = NO;
         //label.text = @"Add the gateway";
         textPW.text = @"2044C1";
+   // }
+}
+
+//封装调整button上文字和图片居中，且图片在上，文字在下
+-(void)initButton:(UIButton*)btn{
+    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;//使图片和文字水平居中显示
+    [btn setTitleEdgeInsets:UIEdgeInsetsMake(btn.imageView.frame.size.height+10 ,-btn.imageView.frame.size.width, 0.0,0.0)];//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变
+    [btn setImageEdgeInsets:UIEdgeInsetsMake(-30, 0.0,0.0, -btn.titleLabel.bounds.size.width)];//图片距离右边框距离减少图片的宽度，其它不边
+}
+
+
+-(void)userDownMenu{
+    
+    if (_isShowMenu == YES) {
+        _isShowMenu = NO;
+        _userNametableView.hidden = YES;
+        
+    }else if (_isShowMenu == NO){
+        _isShowMenu = YES;
+        NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
+        _userArr = [NSMutableArray arrayWithArray:products.allKeys];
+        [_userNametableView reloadData];
+        _userNametableView.hidden = NO;
     }
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textID  resignFirstResponder];
     [textPW resignFirstResponder];
+    _userNametableView.hidden = YES;
+    return YES;
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+
+    NSLog(@"点击了用户名输入框");
+    [textID resignFirstResponder];
+    NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
+    _userArr = [NSMutableArray arrayWithArray:products.allKeys];
+    NSLog(@"用户名arr ------%@", _userArr);
     
-   // [self connectGateWay];
+    [_userNametableView reloadData];
+    _userNametableView.hidden = NO;
     return YES;
 }
 
 -(void)creatTableView{
     
-    _tableView  = [MyUtiles createTableView:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT/3) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor orangeColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _tableView  = [MyUtiles createTableView:CGRectMake(0, 64, SCREEN_WIDTH, 64) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor orangeColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.hidden = YES;
     [self.view addSubview:_tableView];
+    
+//    _userNametableView = [MyUtiles createTableView:CGRectMake(textID.frame.origin.x, textID.frame.origin.y+45, textID.frame.size.width, textID.frame.size.height*4) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor lightGrayColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+//    _userNametableView.delegate = self;
+//    _userNametableView.dataSource = self;
+//    _userNametableView.hidden = YES;
+//    //_userNametableView.userInteractionEnabled = YES;
+//    _userNametableView.layer.cornerRadius = 7;
+//    _userNametableView.layer.masksToBounds = YES;
+//    _userNametableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
+//    [_userNametableView registerNib:[UINib nibWithNibName:@"SwitchGateWayTableViewCell" bundle:nil] forCellReuseIdentifier:@"SwitchGateWayTableViewCell"];
+//    [self.view addSubview:_userNametableView];
 }
 
+-(void)downMenuUsers{
+
+    NSLog(@"点击了用户名输入框");
+    NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
+    _userArr = [NSMutableArray arrayWithArray:products.allKeys];
+    NSLog(@"用户名arr ------%@", _userArr);
+
+    _userNametableView.hidden = NO;
+}
+
+
 -(void)connectGateWay{
+    
+    if (textID.text.length == 0) {
+        [MBManager hideAlert];
+        [MBManager showBriefMessage:@"用户名不能为空 o(>﹏<)o" InView:self.view];
+        return;
+    }
+    if (textPW.text.length == 0) {
+        [MBManager hideAlert];
+        [MBManager showBriefMessage:@"密码不能为空 o(>﹏<)o" InView:self.view];
+        return;
+    }
     
     ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.find([textID.text UTF8String]);
     if (iter == m_map_str_gateway.end()){
@@ -167,6 +286,7 @@
         m_map_str_gateway[pGetway->m_strID] = pGetway;
         bool bLocal = false;
         int iRet = connectDefault(pGetway->m_strAppID.c_str(), "0",m_strAppVer.c_str(), pGetway->m_strID.c_str(), pGetway->m_strPW.c_str(), NULL, NULL, [[[NSBundle mainBundle] resourcePath] UTF8String], NULL, bLocal);
+        
         NSLog(@"iRet is %d",iRet);
         if (iRet != ERR_SUCCESS){
             if (iRet == ERR_CERTIFICATION){
@@ -179,12 +299,17 @@
         }
         [self.tableView reloadData];
     }else{
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"prompt"
-                                                     message:@"The gateway has been in existence"
-                                                    delegate:self
-                                           cancelButtonTitle:@"ok" otherButtonTitles:nil];
-        [av show];
-        //[av release];
+//        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"prompt"
+//                                                     message:@"The gateway has been in existence"
+//                                                    delegate:self
+//                                           cancelButtonTitle:@"ok" otherButtonTitles:nil];
+//        [av show];
+//        //[av release];
+        
+        NSLog(@"加载主页面");
+        [MBManager hideAlert];
+        [self loadMainView];
+        return;
     }
 }
 
@@ -195,130 +320,175 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return m_map_str_gateway.size();
+    if (tableView == _tableView) {
+        return m_map_str_gateway.size();
+    }else
+        return _userArr.count;
 }
 
 // Customize the appearance of table view cells.
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    //static NSString *GatewayCellIdentifier = @"GatewayCellIdentifier";
-    static NSString *cellID = @"DeviceListTableViewCell";
-    DeviceListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil){
-        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DeviceListTableViewCell"
-                                                     owner:self
-                                                   options:nil];
-        for (id oneObject in nib)
-            if ([oneObject isKindOfClass:[DeviceListTableViewCell class]])
-                cell = (DeviceListTableViewCell*)oneObject;
-    }
     
-    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-    advance(iter, indexPath.row);
-    NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->m_strID.c_str()];
-    cell.gateWayID.text = [NSString stringWithFormat:@"网关ID: %@",gateWayIDStr];
-    
-    NSLog(@"连接网关的状态%d",iter->second->m_iServerStatus);
-    if (iter->second->m_iServerStatus == -5){
-        cell.gateWayStatus.text = @"number of connections to limit";
-    }else if (iter->second->m_iServerStatus == -4){
-        cell.gateWayStatus.text = @"certificate error";
-    }else if (iter->second->m_iServerStatus == -3){
-        cell.gateWayStatus.text = @"Failed to initialize";
-    }else if (iter->second->m_iServerStatus == -2){
-        cell.gateWayStatus.text = @"connecting";
-    }else if (iter->second->m_iServerStatus == 0){
-        char *stopped;
-        int iStatus = strtol(iter->second->m_strData.c_str(), &stopped, 10);  //网关状态
-        NSLog(@"iStatus is %d",iStatus);
-        if (iStatus == -3){
-            cell.gateWayStatus.text = @"The gateway to disconnect";
-        }else if (iStatus == -2){
-            cell.gateWayStatus.text = @"In the gateway to connect";
-        }else if (iStatus == 0){
-            //[MBProgressHUD hideHUDForView:self.view animated:YES];
-            
-            [MBManager hideAlert];
-            cell.gateWayStatus.text = @"Gateway connection is successful";
-            
-            //加载主页面
-            NSMutableArray *VcArr = [[NSMutableArray alloc]init];
-            _tabBarController = [[UITabBarController alloc]init];
-            
-            DeviceListViewController *deviceVc = [[DeviceListViewController alloc]init];
-            deviceVc.gateWayIDStr = textID.text;
-            deviceVc.gateWayPWStr = textPW.text;
-            deviceVc.title = @"网关";
-            UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:deviceVc];
-            
-            LockListViewController *locksListVc = [[LockListViewController alloc]init];
-            ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-            advance(iter, 0);
-            m_strCurID = iter->second->m_strID;
-            locksListVc.m_pGateway = iter->second;
-            locksListVc.title = @"门锁";
-            
-            UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:locksListVc];
-            //deviceVc.m_pGateway = locksListVc.m_pGateway;
-            
-            AlermViewController *alermVc = [[AlermViewController alloc]init];
-            ITER_MAP_STR_GATEWAY iter1 = m_map_str_gateway.begin();
-            advance(iter, 0);
-            m_strCurID = iter1->second->m_strID;
-            alermVc.m_pGateway = iter1->second;
-            alermVc.title = @"消息";
-            UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:alermVc];
-            
-            OthersViewController *otherVc = [[OthersViewController alloc]init];
-            otherVc.title = @"其他";
-            UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:otherVc];
-            [VcArr addObject:nav2];
-            [VcArr addObject:nav1];
-            [VcArr addObject:nav3];
-            [VcArr addObject:nav4];
-            _tabBarController.viewControllers = VcArr;
-            NSArray *imageArray = @[@"person@2x",@"person@2x",@"person@2x",@"person@2x"];
-            for (int i = 0; i < imageArray.count; i++) {
-                UITabBarItem *item = _tabBarController.tabBar.items[i];
-                [item setImage:[UIImage imageNamed:imageArray[i]]];
-            }
-            [self presentViewController:_tabBarController animated:YES completion:nil];
-
-        }else if (iStatus == -1){
-            cell.gateWayStatus.text = @"The gateway connection fails";
-        }else if (iStatus == 11){
-            cell.gateWayStatus.text = @"The gateway is not online";
-        }else if (iStatus == 12){
-            cell.gateWayStatus.text = @"The gateway ID error";
-        }else if (iStatus == 13){
-            cell.gateWayStatus.text = @"The gateway password mistake";
-        }else if (iStatus == 14){
-            cell.gateWayStatus.text = @"Change the new IP login";
-        }else if (iStatus == 21){
-            cell.gateWayStatus.text = @"Change the password successfully";
-        }else if (iStatus == 22){
-            cell.gateWayStatus.text = @"Change the password failure";
-        }else if (iStatus == 31){
-            cell.gateWayStatus.text = @ "The gateway to online";
-        }else if (iStatus == 32){
-            cell.gateWayStatus.text = @"The gateway is offline";
-        }else{
-            cell.gateWayStatus.text = @"Server connection is successful, the gateway status is unknown";
+    if (tableView == _tableView) {
+        //static NSString *GatewayCellIdentifier = @"GatewayCellIdentifier";
+        static NSString *cellID = @"DeviceListTableViewCell";
+        DeviceListTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        if (cell == nil){
+            NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"DeviceListTableViewCell"
+                                                         owner:self
+                                                       options:nil];
+            for (id oneObject in nib)
+                if ([oneObject isKindOfClass:[DeviceListTableViewCell class]])
+                    cell = (DeviceListTableViewCell*)oneObject;
         }
-    }else if (iter->second->m_iServerStatus == -1){
-        cell.gateWayStatus.text = @"Server connection is broken";
+        
+        ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
+        advance(iter, indexPath.row);
+        NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->m_strID.c_str()];
+        cell.gateWayID.text = [NSString stringWithFormat:@"网关ID: %@",gateWayIDStr];
+        
+        NSLog(@"连接网关的状态%d",iter->second->m_iServerStatus);
+        if (iter->second->m_iServerStatus == -5){
+            cell.gateWayStatus.text = @"number of connections to limit";
+        }else if (iter->second->m_iServerStatus == -4){
+            cell.gateWayStatus.text = @"certificate error";
+        }else if (iter->second->m_iServerStatus == -3){
+            cell.gateWayStatus.text = @"Failed to initialize";
+        }else if (iter->second->m_iServerStatus == -2){
+            cell.gateWayStatus.text = @"connecting";
+        }else if (iter->second->m_iServerStatus == 0){
+            char *stopped;
+            int iStatus = strtol(iter->second->m_strData.c_str(), &stopped, 10);  //网关状态
+            NSLog(@"iStatus is %d",iStatus);
+            if (iStatus == -3){
+                cell.gateWayStatus.text = @"The gateway to disconnect";
+            }else if (iStatus == -2){
+                cell.gateWayStatus.text = @"In the gateway to connect";
+            }else if (iStatus == 0){
+                [MBManager hideAlert];
+                cell.gateWayStatus.text = @"Gateway connection is successful";
+                [self loadMainView];    // 加载主页面
+            }else if (iStatus == -1){
+                cell.gateWayStatus.text = @"The gateway connection fails";
+            }else if (iStatus == 11){
+                cell.gateWayStatus.text = @"The gateway is not online";
+            }else if (iStatus == 12){
+                cell.gateWayStatus.text = @"The gateway ID error";
+            }else if (iStatus == 13){
+                cell.gateWayStatus.text = @"The gateway password mistake";
+                [MBManager hideAlert];
+                [MBManager showBriefMessage:@"密码错误 o(>﹏<)o" InView:self.view];
+            }else if (iStatus == 14){
+                cell.gateWayStatus.text = @"Change the new IP login";
+            }else if (iStatus == 21){
+                cell.gateWayStatus.text = @"Change the password successfully";
+            }else if (iStatus == 22){
+                cell.gateWayStatus.text = @"Change the password failure";
+            }else if (iStatus == 31){
+                cell.gateWayStatus.text = @ "The gateway to online";
+            }else if (iStatus == 32){
+                cell.gateWayStatus.text = @"The gateway is offline";
+            }else{
+                cell.gateWayStatus.text = @"Server connection is successful, the gateway status is unknown";
+            }
+        }else if (iter->second->m_iServerStatus == -1){
+            cell.gateWayStatus.text = @"Server connection is broken";
+        }else{
+            cell.gateWayStatus.text = @"The server connection is unknown";
+        }
+        
+        NSString *strDeviceNum = [NSString stringWithFormat:@"设备: %ld个", m_map_id_str_device[iter->second->m_strID].size()];
+        cell.gateWayDevice.text = strDeviceNum;
+        //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        return cell;
+
     }else{
-        cell.gateWayStatus.text = @"The server connection is unknown";
+        SwitchGateWayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchGateWayTableViewCell" forIndexPath:indexPath];
+        cell.userLabel.text = _userArr[indexPath.row];
+        cell.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.4];
+        return cell;
     }
+}
+
+//点击cell
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    NSString *strDeviceNum = [NSString stringWithFormat:@"设备: %ld个", m_map_id_str_device[iter->second->m_strID].size()];
-    cell.gateWayDevice.text = strDeviceNum;
-    //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    return cell;
+    NSLog(@"点击了用户名列表");
+    if (tableView == _userNametableView) {
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
+        textID.text = @"";
+        textID.text = _userArr[indexPath.row];
+        NSLog(@"textID.text is %@",textID.text);
+        _userNametableView.hidden = YES;
+    }else
+        NSLog(@"-----");
+}
+
+-(void)loadMainView{
+
+    //加载主页面
+    NSMutableArray *VcArr = [[NSMutableArray alloc]init];
+    _tabBarController = [[UITabBarController alloc]init];
+    
+    DeviceListViewController *deviceVc = [[DeviceListViewController alloc]init];
+    deviceVc.gateWayIDStr = textID.text;
+    deviceVc.gateWayPWStr = textPW.text;
+    deviceVc.title = @"网关";
+    UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:deviceVc];
+    
+    LockListViewController *locksListVc = [[LockListViewController alloc]init];
+    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
+    advance(iter, 0);
+    m_strCurID = iter->second->m_strID;
+    locksListVc.m_pGateway = iter->second;
+    locksListVc.title = @"门锁";
+    
+    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:locksListVc];
+    //deviceVc.m_pGateway = locksListVc.m_pGateway;
+    
+    AlermViewController *alermVc = [[AlermViewController alloc]init];
+    ITER_MAP_STR_GATEWAY iter1 = m_map_str_gateway.begin();
+    advance(iter, 0);
+    m_strCurID = iter1->second->m_strID;
+    alermVc.m_pGateway = iter1->second;
+    alermVc.title = @"消息";
+    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:alermVc];
+    
+    OthersViewController *otherVc = [[OthersViewController alloc]init];
+    otherVc.title = @"其他";
+    UINavigationController *nav4 = [[UINavigationController alloc]initWithRootViewController:otherVc];
+    [VcArr addObject:nav2];
+    [VcArr addObject:nav1];
+    [VcArr addObject:nav3];
+    [VcArr addObject:nav4];
+    _tabBarController.viewControllers = VcArr;
+    [UINavigationBar appearance].barTintColor = [UIColor colorWithRed:252/255.f green:86/255.f blue:89/255.f alpha:1.0];   //nav 背景颜色
+    //设置正常状态下的TabBar文字颜色
+    [[UITabBarItem appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    //设置被选中状态下的TabBar文字颜色
+    [[UITabBarItem appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:252/255.f green:13/255.f blue:17/255.f alpha:1.0]} forState:UIControlStateSelected];
+    [UITabBar appearance].translucent = NO;
+    [[UITabBar appearance] setBarTintColor:[UIColor colorWithRed:47/255.f green:47/255.f  blue:47/255.f  alpha:1.0]];   //tab背景颜色
+    
+    NSArray *imageArray_select = @[@"device@2x",@"gateWay@2x",@"alermMessage@2x",@"other@2x"];
+    NSArray *imageArray_usual = @[@"device_2@2x",@"gateWay_2@2x",@"alermMessage_2@2x",@"other_2@2x"];
+    for (int i = 0; i < imageArray_usual.count; i++) {
+        UITabBarItem *item = _tabBarController.tabBar.items[i];
+        
+        [item setSelectedImage:[[UIImage imageNamed:imageArray_select[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+        [item setImage:[[UIImage imageNamed:imageArray_usual[i]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
+       
+    }
+    [self presentViewController:_tabBarController animated:YES completion:nil];
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
-    return 80;
+    if (tableView == _tableView) {
+        return 80;
+    }else
+        return 35;
+    
 }
 
 -(void)saoyisao{
@@ -426,6 +596,7 @@
 
 -(void)dismissKeyboard {
     [self.view endEditing:YES];
+    _userNametableView.hidden = YES;
     //[self.nameTextField resignFirstResponder];
 }
 
@@ -469,7 +640,6 @@
     }];
     [dataTask resume];
 }
-
 
 
 - (void)didReceiveMemoryWarning {
