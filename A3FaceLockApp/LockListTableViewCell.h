@@ -14,5 +14,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *statueLabel;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *actLoading;
 
+@property (strong, nonatomic) IBOutlet UIImageView *statueImage;
+@property (strong, nonatomic) IBOutlet UILabel *danSuoLabel;
 
 @end

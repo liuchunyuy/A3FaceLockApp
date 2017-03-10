@@ -36,9 +36,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.view.backgroundColor = [UIColor orangeColor];
+    self.view.backgroundColor = [UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0];
     self.navigationItem.title = @"修改网关密码";
-    
+    //左按钮颜色
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     //添加self.view的点击事件（点击屏幕空白取消键盘）
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
@@ -55,7 +56,7 @@
     NSArray *titleArr = @[@"原密码",@"新密码",@"确认密码"];
     for (int i = 0; i < 3; i++) {
         UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(30, 84+32*i, 70, 30) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:titleArr[i]];
-        label.backgroundColor = [UIColor purpleColor];
+        label.backgroundColor = [UIColor clearColor];
         [self.view addSubview:label];
     }
     _oldPW = [MyUtiles createTextField:CGRectMake(30+70+20, 84, SCREEN_WIDTH-70-20-60, 30) placeholder:@"输入原密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:NO];
@@ -76,16 +77,21 @@
 -(void)modifyPassWord{
 
     NSLog(@"确定修改网关密码");
-    NSString *message = NULL;
     if (_oldPW.text.length == 0||_PWNew.text.length == 0||_repertPW.text.length == 0){
-        message = @"密码不能为空";
+        [MBManager showBriefMessage:@"密码不能为空" InView:self.view];
+        return;
+    }else if([_PWNew.text containsString:@" "] || [_repertPW.text containsString:@" "]){
+        [MBManager showBriefMessage:@"密码不能有空格" InView:self.view];
+        return;
+    }else if(_PWNew.text.length < 4){
+        [MBManager showBriefMessage:@"密码不能小于四位" InView:self.view];
+        return;
     }else if([_oldPW.text UTF8String] != _m_pGateway->m_strPW){
-        message = @"原密码不正确";
+        [MBManager showBriefMessage:@"原密码不正确" InView:self.view];
+        return;
     }else if (![_PWNew.text isEqualToString:_repertPW.text]){
-        message = @"两次新密码不匹配";
-    }if (message != NULL){
-        UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:self cancelButtonTitle:@"好的" otherButtonTitles:nil];
-        [alertView show];
+        [MBManager showBriefMessage:@"两次新密码不匹配" InView:self.view];
+        return;
     }else{
         m_strChangePw = [_PWNew.text UTF8String];
         sendChangeGwPwdMsg(_m_pGateway->m_strAppID.c_str(), _m_pGateway->m_strID.c_str(), [_oldPW.text UTF8String], [_PWNew.text UTF8String]);

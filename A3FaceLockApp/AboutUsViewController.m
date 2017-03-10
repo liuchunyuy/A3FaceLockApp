@@ -20,23 +20,24 @@
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"公司简介";
-    
+    //左按钮颜色
+    [MBManager showLoading];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createView];
-   // [self createWebView];
+    //[self createView];
+    [self createWebView];
 }
 
 -(void)createWebView{
+ 
+    UIWebView *webview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
+    webview.scalesPageToFit = YES;
+    [self.view addSubview:webview];
     
-
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
-
-    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:@"https://udis888.1688.com"]];
-
-    webView.scalesPageToFit = YES;
-    [webView loadRequest:request];
-    [self.view addSubview: webView];
-
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"companyIntrduce.pdf" withExtension:nil];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [webview loadRequest:request];
+    [MBManager hideAlert];
 }
 
 -(void)createView{

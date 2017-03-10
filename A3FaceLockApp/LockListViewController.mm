@@ -16,22 +16,28 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 #import "DeviceSettingViewController.h"
+
+#import "YCXMenu.h"      // 右上角按钮
 @interface LockListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic,copy)NSArray *localImageArr;   //本地图片数组
 @property(nonatomic,copy)SZKRoundScrollView *roundScrollView;
 
-@property(nonatomic)BOOL isNeedPassWord;
+@property(nonatomic)BOOL isNeedPassWord;     //是否需要开门密码
 
 @property(nonatomic,strong)NSString *passWordAlertTitle;
-@property(nonatomic,strong)UITextField *openPassWord;
+@property(nonatomic,strong)UITextField *openPassWord;   //开门密码
 
-@property(nonatomic,strong)UITextField *nNameTextField;
+@property(nonatomic,strong)UIButton *setUpButton;  //单锁页面右上角设置按钮
+@property(nonatomic,strong)UILabel *noDeviceLabel;  //无设备label
+@property (nonatomic , strong) NSMutableArray *items;   //单锁测试按钮的列表item
+
+@property(nonatomic)NSInteger *i;
 
 @end
 
 @implementation LockListViewController
-
+@synthesize items = _items;
 
 //本地图片
 -(NSArray *)localImageArr{
@@ -48,7 +54,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    //[[UITabBar appearance] setBackgroundColor:[UIColor colorWithRed:47/255.f green:47/255.f blue:47/255.f alpha:1.0]];
+    
     //导航栏字体颜色
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     _isNeedPassWord = YES;
@@ -58,13 +64,76 @@
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
     self.title = @"设备";
-   // self.tableView.frame = CGRectMake(0, SCREEN_HEIGHT/3, SCREEN_WIDTH, SCREEN_HEIGHT/3);
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReViewDevice:) name:REVIEW_DEVICE object:nil];
-    
+    _i = 0;
+    [self createRightSetUpButton];
     [self creatTableView];
-    
     [self createScrollView];
 
+}
+
+-(void)createRightSetUpButton{
+
+    _setUpButton = [MyUtiles createBtnWithFrame:CGRectMake(0, 0, 100, 50) title:@"设置" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(monitorClick:)];
+    [_setUpButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_setUpButton setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    _setUpButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithCustomView:_setUpButton];
+    self.navigationItem.rightBarButtonItem = rightBtn;
+    
+}
+
+-(void)monitorClick:(UIButton *)sender{
+    
+    if ([YCXMenu isShow]){
+        [YCXMenu dismissMenu];
+    } else {
+
+        _items = [@[
+                    [YCXMenuItem menuItem:_passWordAlertTitle
+                                    image:nil
+                                      tag:100
+                                 userInfo:@{@"title":@"Menu"}],
+                    [YCXMenuItem menuItem:@"重命名"
+                                    image:nil
+                                      tag:101
+                                 userInfo:@{@"title":@"Menu"}],
+                    [YCXMenuItem menuItem:@"删除"
+                                    image:nil
+                                      tag:102
+                                 userInfo:@{@"title":@"Menu"}],
+                        ] mutableCopy];
+        [YCXMenu showMenuInView:self.view fromRect:CGRectMake(self.view.frame.size.width - 50, 0, 50, 0) menuItems:_items selected:^(NSInteger index, YCXMenuItem *item) {
+            NSLog(@"index is %ld",(long)index);
+            if (index == 0) {
+               // NSLog(@"关闭密码");
+                if (_isNeedPassWord == YES) {
+                    NSLog(@"打开密码");
+                    _isNeedPassWord = NO;
+                    _passWordAlertTitle = @"打开密码";
+                    [_tableView reloadData];
+                    _isNeedPassWord = NO;
+                }else if (_isNeedPassWord == NO){
+                    NSLog(@"关闭密码");
+                    _isNeedPassWord = YES;
+                    _passWordAlertTitle = @"关闭密码";
+                    [_tableView reloadData];
+                    _isNeedPassWord = YES;
+                }
+            }else if (index == 1){
+                NSLog(@"单锁重命名");
+                [self reName:0];
+            }else if (index == 2){
+                NSLog(@"单锁删除");
+                [self deleteDevice:0];
+            }
+        }];
+    }
+}
+
+- (void) pushMenuItem:(id)sender
+{
+    NSLog(@"%@", sender);
 }
 
 -(void)jisshouopen:(NSNotification *)notification{
@@ -103,31 +172,23 @@
 
 -(void)creatTableView{
         
-    _tableView  = [MyUtiles createTableView:CGRectMake(0, SCREEN_HEIGHT/3, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_HEIGHT/3-49-64) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor clearColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _tableView  = [MyUtiles createTableView:CGRectMake(0, SCREEN_HEIGHT/3, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_HEIGHT/3-49-64) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     [_tableView registerNib:[UINib nibWithNibName:@"LockListTableViewCell" bundle:nil] forCellReuseIdentifier:@"LockListTableViewCell"];
     _tableView.delegate = self;
     _tableView.dataSource = self;
-    //UIImageView *backImageView=[[UIImageView alloc]initWithFrame:self.view.bounds];
-    UIImageView*imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"noDevice"]];
-    
-    _tableView.backgroundView = imageView;
-    
+   // UIImageView*imageView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"deviceEmpty"]];
+   // _tableView.backgroundView = imageView;
     //_tableView.backgroundView=backImageView;
     _tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
     [self.view addSubview:_tableView];
     
-}
-
--(void)createNavRightBtn{
+    _noDeviceLabel = [MyUtiles createLabelWithFrame:CGRectMake(SCREEN_WIDTH/3, 100, SCREEN_WIDTH/3, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor lightGrayColor] text:@"暂无设备"];
+    _noDeviceLabel.backgroundColor = [UIColor orangeColor];
+    [_tableView addSubview:_noDeviceLabel];
     
-    UIBarButtonItem *rightSharBt = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(setUp)];
-    //NSArray *buttonItem = @[rightSharBt,rightMaxBt];
-    self.navigationItem.rightBarButtonItem = rightSharBt;
 }
-
 
 #pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     
     return 1;
@@ -135,9 +196,23 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    if (m_map_id_str_device[m_pGateway->m_strID].size() == 1) {
+    if (m_map_id_str_device[m_pGateway->m_strID].size() == 0) {
+        _noDeviceLabel.hidden = NO;
+        _setUpButton.hidden = YES;
+        
+    }else if (m_map_id_str_device[m_pGateway->m_strID].size() == 1) {
+        _setUpButton.hidden = NO;
+        _noDeviceLabel.hidden = YES;
+        _cell.nameLabel.hidden = YES;
+        _cell.danSuoLabel.hidden = NO;
+        _tableView.scrollEnabled = NO;
         return SCREEN_HEIGHT-SCREEN_HEIGHT/3-49-64;
     }else
+        _setUpButton.hidden = YES;
+        _noDeviceLabel.hidden = YES;
+        _cell.nameLabel.hidden = NO;
+        _cell.danSuoLabel.hidden = YES;
+        _tableView.scrollEnabled = YES;
         return 100;
 }
 
@@ -149,13 +224,11 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
         _cell = [tableView dequeueReusableCellWithIdentifier:@"LockListTableViewCell" forIndexPath:indexPath];
-//        // 设置圆角
-//        _cell.statueLabel.layer.cornerRadius = _cell.statueLabel.bounds.size.width/2;
-//        _cell.statueLabel.layer.masksToBounds=YES;
         ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
         advance(iter, indexPath.row);
         NSString *emptyNameStr = @"未命名";
         _cell.nameLabel.text = iter->second->m_strName == ""?emptyNameStr:[NSString stringWithUTF8String:iter->second->m_strName.c_str()];
+        _cell.danSuoLabel.text = iter->second->m_strName == ""?emptyNameStr:[NSString stringWithUTF8String:iter->second->m_strName.c_str()];
         NSMutableString *devStatus = [NSMutableString stringWithString:@""];
         NSLog(@"self.deviceName.text is %@",_cell.nameLabel.text);
         std::map<CString, CEPData>::iterator it = iter->second->m_map_ep_data.begin();
@@ -172,58 +245,72 @@
     NSLog(@"锁返回状态 devStatus is %@",devStatus);
     NSArray *arr = @[@"65",@"66",@"67",@"68",@"69",@"70",@"71",@"72",@"73",@"74",@"75",@"76",@"77",@"78",@"79",@"80",@"81",@"82",@"83",@"84"];
         if ([devStatus isEqual: @"1"]) {
+            _cell.statueLabel.hidden = YES;
+            _cell.statueImage.hidden = NO;
             NSString *message = [NSString stringWithFormat:@"%@远程开锁成功",_cell.nameLabel.text];
            // [ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
             [self playNotifySound:message];
+            [MBManager hideAlert];
             [MBManager showBriefMessage:message InView:_roundScrollView];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
-            UIImageView *image = [MyUtiles createStatueImage:@"app2@2x" label:_cell.statueLabel];
-            [_cell addSubview:image];
-        }else if ([devStatus isEqual:@"2"]){
+            _cell.statueImage.image = [UIImage imageNamed:@"app2@2x"];
+        }else if ([devStatus isEqual:@"2"] || [devStatus isEqual:@"00"]){
+            _cell.statueLabel.hidden = YES;
+            _cell.statueImage.hidden = NO;
             //[self playNotifySound:@"门锁已关闭"];
-            _cell.statueLabel.text = @"关闭";
-            _cell.statueLabel.textColor = [UIColor whiteColor];
-            _cell.statueLabel.font = [UIFont systemFontOfSize:14];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
-            UIImageView *image = [MyUtiles createStatueImage:@"关门2@2x" label:_cell.statueLabel];
-            [_cell addSubview:image];
+            [MBManager hideAlert];
+            _cell.statueImage.image = [UIImage imageNamed:@"关门2@2x"];
         }else if ([devStatus isEqual:@"145"]){
-            _cell.statueLabel.text = @"密码验证失败";
-            _cell.statueLabel.textColor = [UIColor whiteColor];
-            _cell.statueLabel.font = [UIFont systemFontOfSize:10];
-            _cell.statueLabel.backgroundColor = [UIColor grayColor];
+            _cell.statueLabel.hidden = NO;
+            _cell.statueImage.hidden = YES;
+            _cell.statueLabel.text = @"密码失败";
+            _cell.statueImage.image = [UIImage imageNamed:@"关门2@2x"];
+            _cell.statueLabel.backgroundColor = [UIColor redColor];
+            _cell.statueLabel.tintColor = [UIColor whiteColor];
+            [MBManager hideAlert];
         }else if ([arr containsObject:devStatus]){
             NSString *message = [NSString stringWithFormat:@"%@人脸扫描开锁成功",_cell.nameLabel.text];
+            _cell.statueLabel.hidden = YES;
+            _cell.statueImage.hidden = NO;
             //[ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
             [self playNotifySound:message];
+            [MBManager hideAlert];
             [MBManager showBriefMessage:message InView:_roundScrollView];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
-            UIImageView *image = [MyUtiles createStatueImage:@"人脸2@2x" label:_cell.statueLabel];
-            [_cell addSubview:image];
+            _cell.statueImage.image = [UIImage imageNamed:@"人脸2@2x"];
         }else if ([devStatus isEqual:@"30"]){
             NSString *message = [NSString stringWithFormat:@"%@密码验证开锁成功",_cell.nameLabel.text];
+            _cell.statueLabel.hidden = YES;
+            _cell.statueImage.hidden = NO;
             //[ADAudioTool playSystemAudioWithSoundID:1007]; /播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
-            UIImageView *image = [MyUtiles createStatueImage:@"密码2@2x" label:_cell.statueLabel];
-            [_cell addSubview:image];
+            _cell.statueImage.image = [UIImage imageNamed:@"密码2@2x"];
         }else if ([devStatus isEqual:@"138"]){
             NSString *message = [NSString stringWithFormat:@"%@钥匙开锁成功",_cell.nameLabel.text];
+            _cell.statueLabel.hidden = YES;
+            _cell.statueImage.hidden = NO;
             //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
-            UIImageView *image = [MyUtiles createStatueImage:@"钥匙2@2x" label:_cell.statueLabel];
-            [_cell addSubview:image];
+            _cell.statueImage.image = [UIImage imageNamed:@"钥匙2@2x"];
         }else if ([devStatus isEqual:@"28"]){
             NSString *message = [NSString stringWithFormat:@"%@电量低",_cell.nameLabel.text];
+            _cell.statueLabel.hidden = YES;
+            _cell.statueImage.hidden = NO;
             //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
             [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
-            UIImageView *image = [MyUtiles createStatueImage:@"电量低2@2x" label:_cell.statueLabel];
-            [_cell addSubview:image];
+            _cell.statueImage.image = [UIImage imageNamed:@"电量低2@2x"];
+        }else if ([devStatus isEqual:@"144"]){
+            CString epData = it->second.m_strEPData.c_str();
+            epData = epData == "11"?"12":"11";
+            sendControlDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), iter->second->m_strID.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), epData.c_str());
+            NSLog(@"发送密码开门指令成功");
         }
         return _cell;
 }
@@ -240,44 +327,40 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     if (_isNeedPassWord == YES) {    //需要开门密码
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"开门" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            
+            [MBManager showLoadingInView:_roundScrollView];
+            _i = 0;
             [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];    //移除观察者
             _openPassWord = alertController.textFields.firstObject;
             NSLog(@"openPassWord is %@",_openPassWord.text);
             
-           // [MBProgressHUD showHUDAddedTo:_tableView animated:YES];
-            
             ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
             advance(iter, indexPath.row);
             std::map<CString, CEPData>::iterator it = iter->second->m_map_ep_data.begin();
-            if(iter->second->Alarmable()){
-                while (it != iter->second->m_map_ep_data.end()){
-                    CString epStatus = it->second.m_strEPStatus.c_str();
-                    epStatus = epStatus == "1"?"0":"1";
-                    sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 0, iter->second->m_strID.c_str(), iter->second->m_strType.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), 0, 0, 0, 0, epStatus.c_str());
-                    it++;
-                }
-            }
+//            if(iter->second->Alarmable()){
+//                while (it != iter->second->m_map_ep_data.end()){
+//                    CString epStatus = it->second.m_strEPStatus.c_str();
+//                    epStatus = epStatus == "1"?"0":"1";
+//                    sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 0, iter->second->m_strID.c_str(), iter->second->m_strType.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), 0, 0, 0, 0, epStatus.c_str());
+//                    it++;
+//                }
+//            }
+            
             /*
              开锁实现需进行两步：1.验证密码 2.发送开锁指令
              */
             //发送开锁密码
             //while (it != iter->second->m_map_ep_data.end()){
             CString epData1 = it->second.m_strEPData.c_str();
-            epData1 = [_openPassWord.text UTF8String];;   //96111111
+            NSString *passwordStr = [NSString stringWithFormat:@"96%@",_openPassWord.text];
+            epData1 = [passwordStr UTF8String];;   //96111111
             int result = sendControlDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), iter->second->m_strID.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), epData1.c_str());
-            NSLog(@"密码验证");
-            NSLog(@"验证密码结果result is %d",result);
-            //      it++;
-            //}
-            //发送开锁指令11为开锁，12为锁定
-            CString epData = it->second.m_strEPData.c_str();
-            epData = epData == "11"?"12":"11";
-            sendControlDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), iter->second->m_strID.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), epData.c_str());
-            NSLog(@"发送开门指令成功");
+
+            NSLog(@"验证密码结果result is %d",result);            
             
         }];
         UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -295,6 +378,8 @@
         
     }else if (_isNeedPassWord == NO){     //不需要开门密码
 
+        [MBManager showLoadingInView:_roundScrollView];
+        _i = 0;
         ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
         advance(iter, indexPath.row);
         std::map<CString, CEPData>::iterator it = iter->second->m_map_ep_data.begin();
@@ -315,9 +400,15 @@
             it++;
         }
     }
-    //int sendControlDevMsg(CPCHAR appID, CPCHAR gwID, CPCHAR devID, CPCHAR ep, CPCHAR epType, CPCHAR epData);
-    //int sendGetDeviceAlarmData(CPCHAR appID, CPCHAR gwID,CPCHAR devID, CPCHAR time, CPCHAR pageSize);
     return;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+ 
+    if (m_map_id_str_device[m_pGateway->m_strID].size() == 1) {    //一个cell，不允许侧滑编辑
+     return NO;
+    }else
+     return YES;
 }
 
 -(NSArray<UITableViewRowAction*>*)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -326,62 +417,35 @@
     UITableViewRowAction *rowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NSLog(@"删除");
         
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除设备后,您将不能操控此设备" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
-            ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
-            advance(iter, _selectIndex);
-            NSLog(@"确认删除");
-            sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 3, iter->second->m_strID.c_str(), 0, 0, 0, 0, 0, 0, 0, 0);
-            
-        }];
-        UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        [alertController addAction:cancleAction];
-        [alertController addAction:okAction];
-        [self presentViewController:alertController animated:YES completion:nil];
+//        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除设备后,您将不能操控此设备" preferredStyle:UIAlertControllerStyleAlert];
+//        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+//            ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
+//            advance(iter, _selectIndex);
+//            NSLog(@"确认删除");
+//            sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 3, iter->second->m_strID.c_str(), 0, 0, 0, 0, 0, 0, 0, 0);
+//            
+//        }];
+//        UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+//        [alertController addAction:cancleAction];
+//        [alertController addAction:okAction];
+//        [self presentViewController:alertController animated:YES completion:nil];
+        
+        [self deleteDevice:_selectIndex];
         
     }];
     //设备重命名
     UITableViewRowAction *rowAction1 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"重命名" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
-        ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
-        advance(iter, _selectIndex);
-        DeviceSettingViewController *deviceSetVc = [[DeviceSettingViewController alloc]init];
-        deviceSetVc.m_pDevice = iter->second;
-        deviceSetVc.m_pGateway = m_pGateway;
-       // [self presentModalViewController:deviceSetVc animated:YES];
-        self.hidesBottomBarWhenPushed = YES;
-        [self.navigationController pushViewController:deviceSetVc animated:YES];
-        self.hidesBottomBarWhenPushed = NO;
+//        ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
+//        advance(iter, _selectIndex);
+//        DeviceSettingViewController *deviceSetVc = [[DeviceSettingViewController alloc]init];
+//        deviceSetVc.m_pDevice = iter->second;
+//        deviceSetVc.m_pGateway = m_pGateway;
+//       // [self presentModalViewController:deviceSetVc animated:YES];
+//        self.hidesBottomBarWhenPushed = YES;
+//        [self.navigationController pushViewController:deviceSetVc animated:YES];
+//        self.hidesBottomBarWhenPushed = NO;
         
-        return ;
-        
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"重命名" message:nil preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"修改" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];    //移除观察者
-            _nNameTextField = alertController.textFields.firstObject;
-            NSLog(@"newName is %@",_nNameTextField.text);
-            
-            //std::map<CString, CEPData>::iterator iter = _m_pDevice->m_map_ep_data.begin();
-            //advance(iter, _selectIndex);
-            
-            ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
-            advance(iter, indexPath.row);
-            std::map<CString, CEPData>::iterator it = iter->second->m_map_ep_data.begin();
-            sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 2, _m_pDevice->m_strID.c_str(), _m_pDevice->m_strType.c_str(), iter->first.c_str(), it->second.m_strEPType.c_str(), [_nNameTextField.text UTF8String], nil, 0, 0, 0);
-            
-        }];
-        UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        [alertController addAction:cancleAction];
-        [alertController addAction:okAction];
-        //添加输入框
-        [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-            textField.placeholder = @"输入名字";
-            textField.clearButtonMode = UITextFieldViewModeAlways;
-            //监听输入框
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldNameDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
-        }];
-        alertController.actions.lastObject.enabled = NO;//冻结确定按钮
-        [self presentViewController:alertController animated:YES completion:nil];
-        NSLog(@"重命名");
+        [self reName:_selectIndex];
     }];
     
     //关闭开门密码
@@ -421,7 +485,6 @@
     }
 }
 
-
 - (void)alertTextFieldDidChange:(NSNotification *)notification{
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
     if (alertController) {
@@ -432,7 +495,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
 }
 
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
@@ -444,10 +506,31 @@
     }
 }
 
-
--(void)setUp{
+-(void)reName:(NSInteger)index{
     
-    NSLog(@"设置门锁：重命名、删除、关闭开门密码");
+    ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
+    advance(iter, index);
+    DeviceSettingViewController *deviceSetVc = [[DeviceSettingViewController alloc]init];
+    deviceSetVc.m_pDevice = iter->second;
+    deviceSetVc.m_pGateway = m_pGateway;
+    self.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:deviceSetVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
+}
+-(void)deleteDevice:(NSInteger)index{
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"删除设备后,您将不能操控此设备" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
+        advance(iter, index);
+        NSLog(@"确认删除");
+        sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 3, iter->second->m_strID.c_str(), 0, 0, 0, 0, 0, 0, 0, 0);
+        
+    }];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:cancleAction];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)ReViewDevice:(NSNotification *)notification{

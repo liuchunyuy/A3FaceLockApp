@@ -20,22 +20,28 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJI-PS-Po0">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mJI-PS-Po0">
                         <rect key="frame" x="39" y="155" width="255" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fSG-Yt-cOW">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fSG-Yt-cOW">
                         <rect key="frame" x="126" y="22" width="90" height="90"/>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMZ-gA-h7R">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMZ-gA-h7R">
                         <rect key="frame" x="36" y="132" width="255" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <constraints>
+                    <constraint firstItem="fSG-Yt-cOW" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="0YP-wC-ybQ"/>
+                    <constraint firstItem="mJI-PS-Po0" firstAttribute="width" secondItem="PMZ-gA-h7R" secondAttribute="width" id="5aP-eL-ZVw"/>
+                    <constraint firstItem="mJI-PS-Po0" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="dtn-lU-YOf"/>
+                    <constraint firstItem="PMZ-gA-h7R" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="tWt-9G-aUE"/>
+                </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="gateWayDevice" destination="mJI-PS-Po0" id="xHh-IW-RNM"/>
@@ -43,7 +49,7 @@
                 <outlet property="gateWayLogo" destination="fSG-Yt-cOW" id="29W-kn-XKv"/>
                 <outlet property="gateWayStatus" destination="PMZ-gA-h7R" id="QbO-G2-RaQ"/>
             </connections>
-            <point key="canvasLocation" x="349" y="233.5"/>
+            <point key="canvasLocation" x="309" y="205.5"/>
         </tableViewCell>
     </objects>
 </document>

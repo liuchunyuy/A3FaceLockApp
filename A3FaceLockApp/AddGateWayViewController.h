@@ -23,9 +23,11 @@
 @property(nonatomic,strong) UITableView *tableView;  //  网关
 @property(nonatomic,strong) UITableView *userNametableView;  //  用户名
 @property(nonatomic,strong)NSMutableArray *userArr;  // 用户名数组
-@property(nonatomic,strong)UITextField *textID;
-@property(nonatomic,strong)UITextField *textPW;
+@property(nonatomic,strong)UITextField *textID;    //输入的用户名
+@property(nonatomic,strong)UITextField *textPW;   //输入的密码
 @property(nonatomic,strong)UILabel *label;
+
+
 
 
 -(void)OK:(id)sender;

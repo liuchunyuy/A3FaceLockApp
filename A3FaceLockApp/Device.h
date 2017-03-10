@@ -31,7 +31,8 @@ public:
 	CString m_strID;
 	CString m_strPW;
 	CString m_strNewPW;
-    CString data;             //lcy
+    CString data;             //lcy 消息数据
+    CString gwData;          // lcy 断开网关结果
 	CString m_strAppID;
 	int m_iServerStatus;	//服务器状态：0连接成功,-1连接断开,-2连接中,-3初始化失败(connectDefault失败)
 	CString m_strZone;

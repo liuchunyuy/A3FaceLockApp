@@ -75,24 +75,26 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *numstr = _userArr[indexPath.row];
-    //断开当前网关
-   // ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-   // advance(iter, indexPath.row);
+   // 断开当前网关
+    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
+    advance(iter, indexPath.row);
     
-//    NSString *gateWayIDStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"gateWayIDStr"];
-//    NSString *gateWayAppStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"gateWayAppStr"];
-//    
-//    NSLog(@"gateWayIDStr is %@",gateWayIDStr);
-//    NSLog(@"gateWayAppStr is %@",gateWayAppStr);
-//    
-//    int i = sendDisConnectGwMsg([gateWayAppStr UTF8String],[gateWayIDStr UTF8String]);
-//    
-//    NSLog(@"i is %d",i);
+    NSString *gateWayIDStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"gateWayIDStr"];
+    NSString *gateWayAppStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"gateWayAppStr"];
+    
+    NSLog(@"gateWayIDStr is %@",gateWayIDStr);
+    NSLog(@"gateWayAppStr is %@",gateWayAppStr);
+//
+    int i = sendDisConnectGwMsg([gateWayAppStr UTF8String],[gateWayIDStr UTF8String]);
+    
+    NSLog(@"i is %d",i);
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     [dic setValue:numstr forKey:@"name"];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"changeUserName" object:self userInfo:dic];
+    
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }

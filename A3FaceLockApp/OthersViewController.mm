@@ -8,7 +8,7 @@
 
 #import "OthersViewController.h"
 #import "AboutUsViewController.h"
-
+#import "ProductionViewController.h"
 @interface OthersViewController ()<UINavigationControllerDelegate>
 
 @end
@@ -21,12 +21,10 @@
     
     self.view.backgroundColor = [UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0];
     //self.navigationController.delegate = self; //实现nav代理隐藏本页面的nav
-    
     //导航栏字体颜色
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     [self createView];
-    
 }
 
 -(void)createView{
@@ -41,17 +39,16 @@
         lineView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:lineView];
     }
+    NSArray *imageArr = @[@"关于我们@2x",@"production@2x",@"清除缓存@2x",@"版本@2x"];
     
-    NSArray *imageArr = @[@"关于我们@2x",@"清除缓存@2x",@"版本@2x"];
-    
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 4; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageArr[i]]];
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(30, SCREEN_HEIGHT/3+64+10+50*i, 30, 30)];
         imageView.image = image;
         [self.view addSubview:imageView];
     }
-    NSArray *btnTitleArr = @[@"关于我们",@"清除缓存"];
-    for (int i = 0; i < 2; i++) {
+    NSArray *btnTitleArr = @[@"关于我们",@"产品介绍",@"清除缓存"];
+    for (int i = 0; i < 3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         btn.frame = CGRectMake(80, SCREEN_HEIGHT/3+5+64+50*i, 100, 40);
         [btn setTitle:btnTitleArr[i] forState:UIControlStateNormal];
@@ -65,11 +62,24 @@
         if (i == 0) {
             [btn addTarget:self action:@selector(goAboutUSVc) forControlEvents:UIControlEventTouchUpInside];
         }else if (i == 1){
+            [btn addTarget:self action:@selector(goProductionVc) forControlEvents:UIControlEventTouchUpInside];
+        }else if (i == 2){
             [btn addTarget:self action:@selector(clearCache) forControlEvents:UIControlEventTouchUpInside];
-        }
+        }        
     }
-    UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(80, SCREEN_HEIGHT/3+64+5+50*2, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"版    本"];
+    UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(80, SCREEN_HEIGHT/3+64+5+50*3, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"版    本"];
     [self.view addSubview:label];
+    
+    UILabel *versionLabel = [MyUtiles createLabelWithFrame:CGRectMake(3*(SCREEN_WIDTH/4), SCREEN_HEIGHT/3+64+5+50*3, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"2.0"];
+    [self.view addSubview:versionLabel];
+}
+
+-(void)goProductionVc{
+
+    self.hidesBottomBarWhenPushed = YES;
+    ProductionViewController *productionVc = [[ProductionViewController alloc]init];
+    [self.navigationController pushViewController:productionVc animated:YES];
+    self.hidesBottomBarWhenPushed = NO;
 }
 
 -(void)clearCache{
@@ -82,9 +92,12 @@
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"清除缓存" message:message preferredStyle:(UIAlertControllerStyleAlert)];
     
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"确定" style:(UIAlertActionStyleDefault) handler:^(UIAlertAction *action){
+        [MBManager showLoading];
         [self cleanCaches:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).lastObject];
         [self cleanCaches:NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject];
         [self cleanCaches:NSTemporaryDirectory()];
+        [MBManager hideAlert];
+        [MBManager showBriefMessage:@"清除成功" InView:self.view];
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:nil];

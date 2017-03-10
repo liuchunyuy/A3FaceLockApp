@@ -34,12 +34,6 @@
     NSLog(@"_gateWayIDStr is %@", _gateWayIDStr);
     NSLog(@"_gateWayPWStr is%@", _gateWayPWStr);
     
-    UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(0, 0, 100, 50) title:@"监控" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(monitorClick)];
-    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithCustomView:btn];
-    self.navigationItem.rightBarButtonItem = rightBtn;
     // 设置CGRectZero从导航栏下开始计算
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
@@ -126,6 +120,13 @@
 -(void)switchGateWay{
 
     NSLog(@"切换网关");
+    
+    NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
+    NSMutableArray *array = [NSMutableArray arrayWithArray:products.allKeys];
+    if (array.count <= 1) {
+        [MBManager showBriefMessage:@"只有一个网关，不能切换" InView:self.view];
+        return;
+    }
     self.hidesBottomBarWhenPushed = YES;
     SwitchGateWayViewController *switchGateWayVc = [[SwitchGateWayViewController alloc]init];
     [self.navigationController pushViewController:switchGateWayVc animated:YES];
@@ -150,7 +151,7 @@
 
 -(void)creatTableView{
 
-    _tableView  = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/3+20) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor lightGrayColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _tableView  = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/3+20) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
@@ -161,7 +162,7 @@
 
     //ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.find([_gateWayIDStr UTF8String]);
    // if (iter == m_map_str_gateway.end()){
-        
+    
     CGateway *pGetway = new CGateway;
     pGetway->m_strID = [_gateWayIDStr UTF8String];
     pGetway->m_strPW = [_gateWayPWStr UTF8String];
@@ -252,10 +253,13 @@
             cell.gateWayStatus.text = @"The gateway connection fails";
         }else if (iStatus == 11){
             cell.gateWayStatus.text = @"网关不在线";
+            [MBManager hideAlert];
         }else if (iStatus == 12){
             cell.gateWayStatus.text = @"网关ID错误";
+            [MBManager hideAlert];
         }else if (iStatus == 13){
             cell.gateWayStatus.text = @"网关密码错误";
+            [MBManager hideAlert];
         }else if (iStatus == 14){
             cell.gateWayStatus.text = @"Change the new IP login";
         }else if (iStatus == 21){
@@ -282,10 +286,11 @@
     cell.gateWayDevice.text = strDeviceNum;
     //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     cell.backgroundColor = [UIColor clearColor];
-    cell.gateWayLogo.image = [UIImage imageNamed:@"company_logo"];
-    cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"head"]];
+    cell.gateWayLogo.image = [UIImage imageNamed:@"网关logo@2x"];
+    //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gatewaylogo@2x"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
+    
 }
 
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath{
@@ -318,11 +323,6 @@
                                             destructiveButtonTitle:@"Modify the gateway"
                                                  otherButtonTitles:@"Connect to the gateway",@"Disconnect the gateway",@"Reconnect ",@"Stop the reconnection",nil];
     [actionSheet showInView:self.view];
-}
-
--(void)monitorClick{
-
-    NSLog(@"监控");
 }
 
 - (void)ReViewGateway:(NSNotification *)notification{

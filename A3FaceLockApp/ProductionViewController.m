@@ -19,43 +19,26 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"A3人脸锁";
-  //  [self createView];
-    
-    UIWebView *tempWV = [[UIWebView alloc] init];
-    [tempWV setFrame:self.view.frame];
-   // [self.view addSubview:tempWV];
-   // [self loadDocument:@"UdisA3" inView:tempWV];
+    //左按钮颜色
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     self.automaticallyAdjustsScrollViewInsets = NO;
-    [self createView];
+   // [self createView];
+    [MBManager showLoading];
+    [self createWebview];
 }
 
--(void)loadDocument:(NSString *)documentName inView:(UIWebView *)webView{
-    NSString *path = [[NSBundle mainBundle] pathForResource:documentName ofType:@"pdf"];
-    NSURL *url = [NSURL fileURLWithPath:path];
+-(void)createWebview{
+    
+    UIWebView *webview = [[UIWebView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
+    webview.scalesPageToFit = YES;
+    [self.view addSubview:webview];    
+    NSURL *url = [[NSBundle mainBundle] URLForResource:@"UdisA3.pdf" withExtension:nil];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [webView loadRequest:request];
+    [webview loadRequest:request];
+    [MBManager hideAlert];    
 }
 
--(void)createView{
 
-    UITextView * textView = [[UITextView alloc] initWithFrame:CGRectMake(10, 64, SCREEN_WIDTH-20, SCREEN_HEIGHT-64)];
-    [self.view addSubview:textView];
-    textView.text = @"\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字,这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字,这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字,这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n    这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字,这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字。\n这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字，这是一段文字";
-    textView.font = [UIFont systemFontOfSize:15.f];
-    textView.textAlignment = NSTextAlignmentJustified;
-    textView.editable = NO; // 默认YES
-    textView.selectable = NO; // 默认YES 当设置为NO时，不能选择
-    
-    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
-    attachment.image = [UIImage imageNamed:@"head"];
-    attachment.bounds = CGRectMake(10, 0, SCREEN_WIDTH-30, SCREEN_HEIGHT/4);
-    NSMutableAttributedString *attachmentString = (NSMutableAttributedString *)[NSAttributedString attributedStringWithAttachment:attachment];
-    
-   // [textView.textStorage appendAttributedString:attachmentString];
-    
-    [textView.textStorage insertAttributedString:attachmentString atIndex:1];
-    
-}
 
 //-(void)createView{
 //    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)];
