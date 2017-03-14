@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #include "Device.h"
-
+#import "OpenUDID.h"
 @protocol AddGatewayViewControllerDelegate;
 @interface AddGateWayViewController : UIViewController<UITextFieldDelegate>{
 
     CGateway *m_pGateway;
+    CCleanGateway *c_cGateWay;
 }
 
 - (void)setM_pGateway:(CGateway *)pGateway;

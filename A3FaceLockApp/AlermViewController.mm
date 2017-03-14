@@ -126,7 +126,7 @@
 
 -(void)createSegmentControl{
     
-    NSArray *segmentedArray = [NSArray arrayWithObjects:@"信息",@"警告",nil];
+    NSArray *segmentedArray = [NSArray arrayWithObjects:@"开门记录",@"警告信息",nil];
     _segmentedControl = [[UISegmentedControl alloc]initWithItems:segmentedArray];
     _segmentedControl.frame = CGRectMake(0, 0, 100, 25);
     _segmentedControl.selectedSegmentIndex = 0;
@@ -195,6 +195,7 @@
             advance(iter, 0);
             NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->data.c_str()];
             if (gateWayIDStr == nil) {
+                [MBManager hideAlert];
                 return;
             }
             NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[gateWayIDStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
@@ -281,23 +282,26 @@
             [messageArr addObject:dic];
         }
     }
+
+    NSMutableArray *messageArray2 = [NSMutableArray array];
+    for (NSDictionary *dic in messageArr) {
+        NSString *nameStr = [NSString stringWithFormat:@"%@",dic[@"epData"]];
+        if ([nameStr isEqualToString:@"10"]||[nameStr isEqualToString:@"11"]||[nameStr isEqualToString:@"20"]||[nameStr isEqualToString:@"23"]||[nameStr isEqualToString:@"24"]||[nameStr isEqualToString:@"25"]||[nameStr isEqualToString:@"28"]||[nameStr isEqualToString:@"29"]||[nameStr isEqualToString:@"31"]) {
+            [_alermArr1 addObject:dic];
+        }else{
+            [messageArray2 addObject:dic];   //除去警告的消息数组
+        }
+    }
     
-    NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:messageArr];
+    NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:messageArray2];
     [_messageArr addObjectsFromArray:models];
     if (_messageArr.count == 0) {
         [MBManager hideAlert];
         return;
     }
     [_messageTable reloadData];
-    
     [MBManager hideAlert];
-
-    for (NSDictionary *dic in array) {
-        NSString *nameStr = [NSString stringWithFormat:@"%@",dic[@"epData"]];
-        if ([nameStr isEqualToString:@"10"]||[nameStr isEqualToString:@"11"]||[nameStr isEqualToString:@"20"]||[nameStr isEqualToString:@"23"]||[nameStr isEqualToString:@"24"]||[nameStr isEqualToString:@"25"]||[nameStr isEqualToString:@"28"]||[nameStr isEqualToString:@"29"]||[nameStr isEqualToString:@"31"]) {
-            [_alermArr1 addObject:dic];
-        }
-    }
+    
     NSLog(@"_alermArr is %@",_alermArr1);  //截取后的警告数组
     NSArray *models1 = [AlermAlermModel arrayOfModelsFromDictionaries:_alermArr1];
     [_alermArr addObjectsFromArray:models1];

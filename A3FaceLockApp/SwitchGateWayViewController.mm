@@ -33,7 +33,7 @@
 
 -(void)createTableView{
 
-    UITableView *tableView = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:236/255.f green:236/255.f blue:236/255.f alpha:1.0] separatorColor:[UIColor purpleColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    UITableView *tableView = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-200) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:236/255.f green:236/255.f blue:236/255.f alpha:1.0] separatorColor:[UIColor purpleColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
     _userArr = [NSMutableArray arrayWithArray:products.allKeys];
     NSLog(@"用户名arr ------%@", _userArr);
@@ -42,6 +42,7 @@
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
+    
 }
 
 #pragma mark - TableViewDelegate
@@ -75,27 +76,26 @@
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSString *numstr = _userArr[indexPath.row];
-   // 断开当前网关
-    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-    advance(iter, indexPath.row);
     
+    // 断开正在登录的网关
     NSString *gateWayIDStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"gateWayIDStr"];
     NSString *gateWayAppStr = [[NSUserDefaults standardUserDefaults]objectForKey:@"gateWayAppStr"];
     
     NSLog(@"gateWayIDStr is %@",gateWayIDStr);
     NSLog(@"gateWayAppStr is %@",gateWayAppStr);
-//
-    int i = sendDisConnectGwMsg([gateWayAppStr UTF8String],[gateWayIDStr UTF8String]);
+   // int i = sendDisConnectGwMsg([gateWayAppStr UTF8String],[gateWayIDStr UTF8String]);
     
-    NSLog(@"i is %d",i);
+   // NSLog(@"i is %d",i);
     
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     [dic setValue:numstr forKey:@"name"];
     
     [[NSNotificationCenter defaultCenter]postNotificationName:@"changeUserName" object:self userInfo:dic];
     
-    
+    //return;
     [self dismissViewControllerAnimated:YES completion:nil];
+    
+    //[self.navigationController popViewControllerAnimated:YES];
     
 }
 

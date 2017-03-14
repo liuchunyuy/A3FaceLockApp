@@ -12,7 +12,7 @@
 #import "ModifyGateWayPWViewController.h"
 #import "SwitchGateWayViewController.h"
 
-@interface DeviceListViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate>
+@interface DeviceListViewController ()<UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UINavigationControllerDelegate>
 
 //@property(nonatomic,copy)NSString *gateWayIDStr;
 @end
@@ -38,7 +38,7 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    
+    //self.navigationController.delegate = nil;
     //导航栏字体颜色
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReViewGateway:) name:REVIEW_GATEWAY object:nil];
@@ -50,10 +50,10 @@
 
 -(void)createView{
 
-    NSArray *labelArr = @[@"网关ID",@"网关版本"];
-    NSArray *imageArr = @[@"网关ID@2x",@"网关版本@2x",@"修改密码@2x",@"切换网关@2x"];
-    for (int i = 0; i < 4; i++) {
-        if (i < 2) {
+    NSArray *labelArr = @[@"用户ID"];
+    NSArray *imageArr = @[@"网关ID@2x",@"修改密码@2x",@"切换网关@2x"];
+    for (int i = 0; i < 3; i++) {
+        if (i < 1) {
             UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 100, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:labelArr[i]];
            // label.backgroundColor = [UIColor redColor];
             [self.view addSubview:label];
@@ -70,15 +70,15 @@
     [[NSUserDefaults standardUserDefaults] setObject:gateWayIDStr forKey:@"gateWayIDStr"];
     [[NSUserDefaults standardUserDefaults] setObject:gateWayAppStr forKey:@"gateWayAppStr"];
     
-    NSArray *label1Arr = @[gateWayIDStr,@"3.3.25"];
-    for (int i = 0; i < 2; i++) {
+    NSArray *label1Arr = @[gateWayIDStr];
+    for (int i = 0; i < 1; i++) {
         UILabel *label1 = [MyUtiles createLabelWithFrame:CGRectMake(150, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 150, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:label1Arr[i]];
         [self.view addSubview:label1];
     }
     
-    NSArray *buttonArr = @[@"修改密码",@"切换网关"];
+    NSArray *buttonArr = @[@"修改密码",@"切换用户"];
     for (int i = 0; i < 2; i++) {
-        UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30+30+30*i, 100, 25) title:buttonArr[i] normalBgImg:nil highlightedBgImg:nil target:self action:nil];
+        UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20+30+30*i, 100, 25) title:buttonArr[i] normalBgImg:nil highlightedBgImg:nil target:self action:nil];
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
@@ -242,7 +242,7 @@
         int iStatus = strtol(iter->second->m_strData.c_str(), &stopped, 10);  //网关状态
         NSLog(@"iStatus is %d",iStatus);
         if (iStatus == -3){
-            cell.gateWayStatus.text = @"The gateway to disconnect";
+            cell.gateWayStatus.text = @"网关连接已断开";
         }else if (iStatus == -2){
             cell.gateWayStatus.text = @"正在尝试连接网关...";
             [MBManager showLoadingInView:_tableView];

@@ -69,12 +69,14 @@
     }
     std::map<CString, CEPData>::iterator iter = m_pDevice->m_map_ep_data.begin();
     sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 2, m_pDevice->m_strID.c_str(), m_pDevice->m_strType.c_str(), iter->first.c_str(), iter->second.m_strEPType.c_str(), [_nameTextFieldPutin.text UTF8String], [categoryTF.text UTF8String], strAreaID.c_str(), 0, 0);
-    [self dismissViewControllerAnimated:YES completion:nil];
+   // [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(IBAction)cancel
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //[self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (IBAction)showEP:(id)sender
@@ -159,22 +161,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (void)viewDidUnload {
-//    [self setDoneBtn:nil];
-//    [self setCancelBtn:nil];
-//    [self setShowEPBtn:nil];
-//    [self setEpView:nil];
-//    [self setMainName:nil];
-//    [self setEpName1:nil];
-//    [self setEpName2:nil];
-//    [self setEpName3:nil];
-//    [self setEpName4:nil];
-//    [self setCategoryTF:nil];
-//    [self setTheTableView:nil];
-//    [self setEpLab1:nil];
-//    [self setEpLab2:nil];
-//    [self setEpLab3:nil];
-//    [self setEpLab4:nil];
-//    [super viewDidUnload];
-//}
 @end

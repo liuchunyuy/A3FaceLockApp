@@ -32,8 +32,6 @@
 @property(nonatomic,strong)UILabel *noDeviceLabel;  //无设备label
 @property (nonatomic , strong) NSMutableArray *items;   //单锁测试按钮的列表item
 
-@property(nonatomic)NSInteger *i;
-
 @end
 
 @implementation LockListViewController
@@ -63,9 +61,8 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshoushutDown:) name:@"shutDownPsaaword" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
     self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
-    self.title = @"设备";
+    self.title = @"门锁";
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(ReViewDevice:) name:REVIEW_DEVICE object:nil];
-    _i = 0;
     [self createRightSetUpButton];
     [self creatTableView];
     [self createScrollView];
@@ -218,6 +215,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
+    if (m_map_id_str_device[m_pGateway->m_strID].size() == 0) {
+        _setUpButton.hidden = YES;
+    }
     return m_map_id_str_device[m_pGateway->m_strID].size();
 }
 
@@ -333,7 +333,6 @@
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"开门" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             
             [MBManager showLoadingInView:_roundScrollView];
-            _i = 0;
             [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];    //移除观察者
             _openPassWord = alertController.textFields.firstObject;
             NSLog(@"openPassWord is %@",_openPassWord.text);
@@ -379,7 +378,6 @@
     }else if (_isNeedPassWord == NO){     //不需要开门密码
 
         [MBManager showLoadingInView:_roundScrollView];
-        _i = 0;
         ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
         advance(iter, indexPath.row);
         std::map<CString, CEPData>::iterator it = iter->second->m_map_ep_data.begin();

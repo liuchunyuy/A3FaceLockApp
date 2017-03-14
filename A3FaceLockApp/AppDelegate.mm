@@ -74,11 +74,11 @@ void __stdcall myMessageCallback(int fncode, void *pdata)
     {
         LP_DISCONNECT_GATEWAY result = (LP_DISCONNECT_GATEWAY)pdata;
         strID = result->gwID;
-//        int idata = atoi(result->gwData.c_str());
-//        if (idata == 0)
-//        {
-//            m_map_str_gateway[strID]->m_strData = "-3";	//Õ¯πÿ∂œø™
-//        }
+        int idata = atoi(result->gwData.c_str());
+        if (idata == 0)
+        {
+            m_map_str_gateway[strID]->m_strData = "-3";	//Õ¯πÿ∂œø™
+        }
         
         gwData = result->gwData;
         //data = result->data;
