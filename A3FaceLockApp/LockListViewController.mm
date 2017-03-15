@@ -355,7 +355,7 @@
             //发送开锁密码
             //while (it != iter->second->m_map_ep_data.end()){
             CString epData1 = it->second.m_strEPData.c_str();
-            NSString *passwordStr = [NSString stringWithFormat:@"96%@",_openPassWord.text];
+            NSString *passwordStr = [NSString stringWithFormat:@"9%lu%@",_openPassWord.text.length,_openPassWord.text];
             epData1 = [passwordStr UTF8String];;   //96111111
             int result = sendControlDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), iter->second->m_strID.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), epData1.c_str());
 

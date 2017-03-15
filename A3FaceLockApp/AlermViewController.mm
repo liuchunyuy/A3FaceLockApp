@@ -20,10 +20,13 @@
 @property(nonatomic,strong)UISegmentedControl *segmentedControl; //信息、警告
 @property(nonatomic,copy) UIView *messageView;  //消息
 @property(nonatomic,copy) UIView *alermView;    //警告
-@property(nonatomic,copy)NSMutableArray *messageArr;  //消息数组
-@property(nonatomic,copy)NSMutableArray *alermArr;  //警告数组
 
-@property(nonatomic,copy)NSMutableArray *alermArr1;  //截取后的警告数组
+@property(nonatomic,copy)NSMutableArray *messageArr;  //当天消息数组(准备展示)
+@property(nonatomic,copy)NSMutableArray *alermArr;  //当天警告数组(准备展示)
+@property(nonatomic,copy)NSMutableArray *alermArr1;  //截取后的警告数组 (手动选择时间)
+@property(nonatomic,copy)NSMutableArray *alermArr2;  //截取后的警告数组(现在的时间)
+@property(nonatomic,copy)NSMutableArray *messageArray1;  //截取后的当天消息数组(手动选择时间)
+@property(nonatomic,copy)NSMutableArray *messageArray2;  //截取后的当天消息数组(现在时间)
 
 @property(nonatomic,strong)NSString *date;
 
@@ -49,14 +52,15 @@
     _messageArr = [NSMutableArray array];
     _alermArr = [NSMutableArray array];
     _alermArr1 = [NSMutableArray array];
+    _alermArr2 = [NSMutableArray array];
+    _messageArray2 = [NSMutableArray array];
+    _messageArray1 = [NSMutableArray array];
     
     _messageView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
     _alermView = [[UIView alloc]initWithFrame:CGRectMake(0, 64, SCREEN_WIDTH, SCREEN_HEIGHT-64)];
     
     [self.view addSubview:_messageView];
     [self.view addSubview:_alermView];
-    
-    [MBManager showLoading];
     
     [self createTableView];
     [self createRigthBtn];
@@ -93,13 +97,13 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [_messageTable registerNib:[UINib nibWithNibName:@"AlermMessageTableViewCell" bundle:nil] forCellReuseIdentifier:@"AlermMessageTableViewCell"];
     [_messageView addSubview:_messageTable];
+    [MBManager showLoadingInView:_messageTable];
     //回到主线程刷新页面
     dispatch_async(dispatch_get_main_queue(), ^{
         
         [self dataPick];
     });
     
-    _alermArr = [NSMutableArray array];
     _alermTable = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-49) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor colorWithRed:64/255.f green:76/255.f blue:86/255.f alpha:1.0] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:YES];
     _alermTable.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];//取消空白的cell
     _alermTable.delegate = self;
@@ -115,11 +119,23 @@
     
         _messageTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             // 进入刷新状态后会自动调用这个block
+            [_alermArr removeAllObjects];
+            [_messageArr removeAllObjects];
+            [_alermArr1 removeAllObjects];
+            [_messageArray2 removeAllObjects];
+            [_alermArr2 removeAllObjects];
+            [_messageArray1 removeAllObjects];
             [self dataPick];
         }];
         
         _alermTable.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
             // 进入刷新状态后会自动调用这个block
+            [_alermArr removeAllObjects];
+            [_messageArr removeAllObjects];
+            [_alermArr1 removeAllObjects];
+            [_messageArray2 removeAllObjects];
+            [_alermArr2 removeAllObjects];
+            [_messageArray1 removeAllObjects];
             [self dataPick];
         }];
 }
@@ -166,7 +182,8 @@
 -(void)dataClick{
 
     NSLog(@"选择其他日期");
-
+    [_messageArr removeAllObjects];
+    [_alermArr removeAllObjects];
     [self performSelector:@selector(checkIsOverTime) withObject:nil afterDelay:10];// 请求超时
     
     SZCalendarPicker *calendarPicker = [SZCalendarPicker showOnView:[[UIApplication sharedApplication] windows].lastObject];
@@ -184,21 +201,24 @@
         NSLog(@"date1 is %@",_date);
         NSTimeInterval a=(long long)[date1 timeIntervalSince1970]*1000; //*1000 是精确到毫秒，不乘是精确到秒
         NSString *timeSp = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+        
         if (!m_pGateway) {
             [MBManager hideAlert];
             return;
         }
         dispatch_async(dispatch_get_main_queue(),^{;
             
-            sendGetDeviceAlarmData(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(),NULL, [timeSp UTF8String], "20");
+            sendGetDeviceAlarmData(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(),NULL, [timeSp UTF8String], "5");
             ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
             advance(iter, 0);
-            NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->data.c_str()];
-            if (gateWayIDStr == nil) {
+            NSString *data = [NSString stringWithUTF8String:iter->second->data.c_str()];
+            if (data == nil) {
                 [MBManager hideAlert];
+                [MBManager showBriefMessage:@"暂无消息" InView:self.view];
                 return;
             }
-            NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[gateWayIDStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+            NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[data dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+        
             NSArray *array = [dic objectForKey:@"retData"];    // 所有日期的消息+警告数组
             [_alermArr removeAllObjects];
             [_messageArr removeAllObjects];
@@ -206,47 +226,46 @@
             NSString *dateNow = [date22 substringToIndex:11];
             NSLog(@"dateNow is %@",dateNow);
             NSMutableArray *messageArr = [NSMutableArray array];  //截取当天的消息+警告数组
-            NSLog(@"array is %@",array);
             for (NSDictionary *dic in array) {
                 NSString *dateNetNow = [dic[@"createDate"] substringToIndex:11];
                 if ([dateNow isEqualToString:dateNetNow]) {
                     [messageArr addObject:dic];
                 }
             }
-            
             [MBManager hideAlert];
-            NSLog(@"array is %@",array);
-            NSMutableArray *messageArray2 = [NSMutableArray array];
-            for (NSDictionary *dic in array) {
+            for (NSDictionary *dic in messageArr) {
                 NSString *nameStr = [NSString stringWithFormat:@"%@",dic[@"epData"]];
                 if ([nameStr isEqualToString:@"10"]||[nameStr isEqualToString:@"11"]||[nameStr isEqualToString:@"20"]||[nameStr isEqualToString:@"23"]||[nameStr isEqualToString:@"24"]||[nameStr isEqualToString:@"25"]||[nameStr isEqualToString:@"28"]||[nameStr isEqualToString:@"29"]||[nameStr isEqualToString:@"31"]) {
-                    [_alermArr1 addObject:dic];
+                    [_alermArr1 addObject:dic];     //当天除去消息的警告数组
                 }else
-                    [messageArray2 addObject:dic];   //除去警告的消息数组
+                    [_messageArray1 addObject:dic];   //除去警告的消息数组
             }
-            
-            NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:messageArray2];
+            NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:_messageArray1];
             [_messageArr addObjectsFromArray:models];
             if (_messageArr.count == 0) {
                 [MBManager hideAlert];
                 return;
             }
             [_messageTable reloadData];
-            NSLog(@"_alermArr is %@",_alermArr1);  //截取后的警告数组
+            
             NSArray *models1 = [AlermAlermModel arrayOfModelsFromDictionaries:_alermArr1];
             [_alermArr addObjectsFromArray:models1];
             [_alermTable reloadData];
             
-        });
+        });        
     };
 }
 
 -(void)dataPick{     //当前时间
 
+    [_messageArr removeAllObjects];
+    [_alermArr removeAllObjects];
     [self performSelector:@selector(checkIsOverTime) withObject:nil afterDelay:1];// 请求超时
     NSDate* date = [NSDate dateWithTimeIntervalSinceNow:0];
     NSTimeInterval a=[date timeIntervalSince1970]*1000; // *1000 是精确到毫秒，不乘就是精确到秒
     NSString *timeString = [NSString stringWithFormat:@"%.0f", a]; //转为字符型
+    
+   // [self getMessageAndAlermData:timeString nowDate:date];
     
     if (!m_pGateway) {
         [MBManager hideAlert];
@@ -256,11 +275,14 @@
     
     ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
     advance(iter, 0);
-    NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->data.c_str()];
-    if (gateWayIDStr == nil) {
+    NSString *data = [NSString stringWithUTF8String:iter->second->data.c_str()];
+    if (data == nil) {
+        [MBManager hideAlert];
+        [MBManager showBriefMessage:@"暂无消息" InView:self.view];
         return;
     }
-    NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[gateWayIDStr dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
+    
+    NSDictionary *dic=[NSJSONSerialization JSONObjectWithData:[data dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
     
     NSArray *array = [dic objectForKey:@"retData"];
 
@@ -270,40 +292,38 @@
      3.比较两个日期的前十个字符是否一样，一样的话把此元素保存在一个数组中，此数组就是即将显示的数组
      */
     
-    [_alermArr removeAllObjects];
-    [_messageArr removeAllObjects];
     NSString *date22 = [NSString stringWithFormat:@"%@",date];
     NSString *dateNow = [date22 substringToIndex:11];          //截取日历选择日期的前10个字符：2017-03-01
     NSLog(@"dateNow is %@",dateNow);
     NSMutableArray *messageArr = [NSMutableArray array];
+    //[messageArr removeAllObjects];
     for (NSDictionary *dic in array) {
         NSString *dateNetNow = [dic[@"createDate"] substringToIndex:11]; //截取获取到的日期前10个字符
         if ([dateNow isEqualToString:dateNetNow]) {   //日期前10个字符相等的元素加入一个新数组供显示
-            [messageArr addObject:dic];
+            [messageArr addObject:dic];         //一天内包含开门消息和警告
         }
     }
 
-    NSMutableArray *messageArray2 = [NSMutableArray array];
     for (NSDictionary *dic in messageArr) {
         NSString *nameStr = [NSString stringWithFormat:@"%@",dic[@"epData"]];
         if ([nameStr isEqualToString:@"10"]||[nameStr isEqualToString:@"11"]||[nameStr isEqualToString:@"20"]||[nameStr isEqualToString:@"23"]||[nameStr isEqualToString:@"24"]||[nameStr isEqualToString:@"25"]||[nameStr isEqualToString:@"28"]||[nameStr isEqualToString:@"29"]||[nameStr isEqualToString:@"31"]) {
-            [_alermArr1 addObject:dic];
+            [_alermArr2 addObject:dic];      //警告数组
         }else{
-            [messageArray2 addObject:dic];   //除去警告的消息数组
+            [_messageArray2 addObject:dic];   //除去警告的消息数组
         }
     }
     
-    NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:messageArray2];
+    NSArray *models = [AlermMessageModel arrayOfModelsFromDictionaries:_messageArray2];
     [_messageArr addObjectsFromArray:models];
     if (_messageArr.count == 0) {
         [MBManager hideAlert];
         return;
     }
+    
     [_messageTable reloadData];
     [MBManager hideAlert];
     
-    NSLog(@"_alermArr is %@",_alermArr1);  //截取后的警告数组
-    NSArray *models1 = [AlermAlermModel arrayOfModelsFromDictionaries:_alermArr1];
+    NSArray *models1 = [AlermAlermModel arrayOfModelsFromDictionaries:_alermArr2];
     [_alermArr addObjectsFromArray:models1];
     [_alermTable reloadData];
     
@@ -311,6 +331,7 @@
     [_alermTable.mj_header endRefreshing];
    // NSLog(@"时间戳timeString is %@",timeString);
     NSLog(@"获取警告信息结果t is %d",t);
+    
 }
 
 -(void)checkIsOverTime{
