@@ -31,6 +31,7 @@
 @property(nonatomic, strong)NSString *textPassWordStr;  // 去掉空格后的密码
 @property(nonatomic)BOOL isLogined;
 
+@property(nonatomic,strong)NSString *gateWayIDStr;
 @property(nonatomic) BOOL isClick;
 
 @end
@@ -76,8 +77,9 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshou:) name:@"changeUserName" object:nil];     //切换网关回调的通知
-    //接收键盘弹出的通知
+    //切换网关回调id的通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshou:) name:@"changeUserName" object:nil];
+    //监听键盘弹出的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     //监听键盘隐藏的通知
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -259,8 +261,7 @@
         [textID resignFirstResponder];
         NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
         _userArr = [NSMutableArray arrayWithArray:products.allKeys];
-        NSLog(@"用户名arr ------%@", _userArr);
-        
+        NSLog(@"用户名arr ------%@", _userArr);        
         [_userNametableView reloadData];
         _userNametableView.hidden = NO;
         return YES;
@@ -323,8 +324,8 @@
     
     bool bLocal = false;
     int iRet = connectDefault(pGetway->m_strAppID.c_str(), "0",m_strAppVer.c_str(), pGetway->m_strID.c_str(), pGetway->m_strPW.c_str(), NULL, NULL, [[[NSBundle mainBundle] resourcePath] UTF8String], NULL, bLocal);
-    NSString *gateWayIDStr = [NSString stringWithUTF8String:pGetway->m_strID.c_str()];
-    NSLog(@"准备连接的网关ID -1- gateWayIDStr is %@",gateWayIDStr);
+    _gateWayIDStr = [NSString stringWithUTF8String:pGetway->m_strID.c_str()];
+    NSLog(@"准备连接的网关ID -1- gateWayIDStr is %@",_gateWayIDStr);
 
     NSLog(@"iRet is %d",iRet);
     if (iRet != 0) {
@@ -348,7 +349,7 @@
 //                                                    delegate:self
 //                                           cancelButtonTitle:@"ok" otherButtonTitles:nil];
 //        [av show];
-        NSLog(@"有网关了");
+     //   NSLog(@"有网关了");
         //[MBManager hideAlert];
         //[self loadMainView];
        // return;
@@ -364,7 +365,11 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (tableView == _tableView) {
         NSLog(@"m_map_str_gateway.size() is %lu",m_map_str_gateway.size());
-        return m_map_str_gateway.size();
+        if (m_map_str_gateway.size() >= 1) {
+            return 1;
+        }else
+            return 0;
+        
     }else
         return _userArr.count;
 }
@@ -385,8 +390,7 @@
                     cell = (DeviceListAddTableViewCell*)oneObject;
         }
         
-        ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-        advance(iter, indexPath.row);
+        ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.find([_gateWayIDStr UTF8String]);
         NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->m_strID.c_str()];
         cell.gateWayID.text = [NSString stringWithFormat:@"网关ID: %@",gateWayIDStr];
         NSLog(@"正在连接的网关ID -2- gateWayIDStr is %@",gateWayIDStr);
@@ -411,7 +415,12 @@
                 [MBManager hideAlert];
                 cell.gateWayStatus.text = @"Gateway connection is successful";
                 self.isClick = false;
-                [self loadMainView];    // 加载主页面
+                
+               // if ([_gateWayIDStr isEqualToString:gateWayIDStr]) {
+                    [self loadMainView];    // 加载主页面
+               // }else
+                //    [MBManager showBriefMessage:@"切换失败" InView:self.view];
+                
             }else if (iStatus == -1){
                 cell.gateWayStatus.text = @"The gateway connection fails";
             }else if (iStatus == 11){
@@ -491,8 +500,7 @@
     UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:deviceVc];
     
     LockListViewController *locksListVc = [[LockListViewController alloc]init];
-    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-    advance(iter, 0);
+    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.find([_gateWayIDStr UTF8String]);
     m_strCurID = iter->second->m_strID;
     locksListVc.m_pGateway = iter->second;
     locksListVc.title = @"门锁";

@@ -99,7 +99,7 @@
     exitGateWayBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [exitGateWayBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [exitGateWayBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    [self.view addSubview:exitGateWayBtn];
+   // [self.view addSubview:exitGateWayBtn];
     
 }
 
@@ -205,7 +205,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return m_map_str_gateway.size();
+    return 1;
 }
 
 // Customize the appearance of table view cells.
@@ -223,8 +223,7 @@
                 cell = (DeviceListTableViewCell*)oneObject;
     }
     
-    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-    advance(iter, indexPath.row);
+    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.find([_gateWayIDStr UTF8String]);
     NSString *gateWayIDStr = [NSString stringWithUTF8String:iter->second->m_strID.c_str()];
     cell.gateWayID.text = [NSString stringWithFormat:@"网关ID: %@",gateWayIDStr];
     
@@ -281,6 +280,7 @@
         cell.gateWayStatus.text = @"The server connection is unknown";
     }
 
+    /*
     NSString *strDeviceNum = [NSString stringWithFormat:@"设备数量: %ld个", m_map_id_str_device[iter->second->m_strID].size()];
     NSLog(@"设备数量2----%ld",m_map_id_str_device[m_map_str_gateway.begin()->second->m_strID].size());
     cell.gateWayDevice.text = strDeviceNum;
@@ -289,6 +289,14 @@
     cell.gateWayLogo.image = [UIImage imageNamed:@"网关logo@2x"];
     //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gatewaylogo@2x"]];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+     */
+    NSString *strDeviceNum = [NSString stringWithFormat:@"设备数量: %ld个", m_map_id_str_device[iter->second->m_strID].size()];
+    NSLog(@"设备数量2----%ld",m_map_id_str_device[iter->second->m_strID].size());
+    cell.gateWayDevice.text = strDeviceNum;
+    //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+    cell.backgroundColor = [UIColor clearColor];
+    cell.gateWayLogo.image = [UIImage imageNamed:@"网关logo@2x"];
+    //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gatewaylogo@2x"]];
     return cell;
     
 }
