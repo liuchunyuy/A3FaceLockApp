@@ -415,12 +415,7 @@
                 [MBManager hideAlert];
                 cell.gateWayStatus.text = @"Gateway connection is successful";
                 self.isClick = false;
-                
-               // if ([_gateWayIDStr isEqualToString:gateWayIDStr]) {
-                    [self loadMainView];    // 加载主页面
-               // }else
-                //    [MBManager showBriefMessage:@"切换失败" InView:self.view];
-                
+                [self loadMainView];    // 加载主页面                
             }else if (iStatus == -1){
                 cell.gateWayStatus.text = @"The gateway connection fails";
             }else if (iStatus == 11){

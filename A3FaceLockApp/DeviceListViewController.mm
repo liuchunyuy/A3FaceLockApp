@@ -64,13 +64,11 @@
         [self.view addSubview:imageView];
     }
     
-    NSString *gateWayIDStr = [NSString stringWithUTF8String:m_map_str_gateway.begin()->second->m_strID.c_str()];   //
-    NSString *gateWayAppStr = [NSString stringWithUTF8String:m_map_str_gateway.begin()->second->m_strAppID.c_str()];
     
-    [[NSUserDefaults standardUserDefaults] setObject:gateWayIDStr forKey:@"gateWayIDStr"];
-    [[NSUserDefaults standardUserDefaults] setObject:gateWayAppStr forKey:@"gateWayAppStr"];
+    [[NSUserDefaults standardUserDefaults] setObject:_gateWayIDStr forKey:@"gateWayIDStr"];
+   // [[NSUserDefaults standardUserDefaults] setObject:gateWayAppStr forKey:@"gateWayAppStr"];
     
-    NSArray *label1Arr = @[gateWayIDStr];
+    NSArray *label1Arr = @[_gateWayIDStr];
     for (int i = 0; i < 1; i++) {
         UILabel *label1 = [MyUtiles createLabelWithFrame:CGRectMake(150, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 150, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:label1Arr[i]];
         [self.view addSubview:label1];

@@ -280,6 +280,7 @@
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
             _cell.statueImage.image = [UIImage imageNamed:@"人脸2@2x"];
         }else if ([devStatus isEqual:@"30"]){
+            [MBManager hideAlert];
             NSString *message = [NSString stringWithFormat:@"%@密码验证开锁成功",_cell.nameLabel.text];
             _cell.statueLabel.hidden = YES;
             _cell.statueImage.hidden = NO;
@@ -289,6 +290,7 @@
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
             _cell.statueImage.image = [UIImage imageNamed:@"密码2@2x"];
         }else if ([devStatus isEqual:@"138"]){
+            [MBManager hideAlert];
             NSString *message = [NSString stringWithFormat:@"%@钥匙开锁成功",_cell.nameLabel.text];
             _cell.statueLabel.hidden = YES;
             _cell.statueImage.hidden = NO;
@@ -298,12 +300,13 @@
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
             _cell.statueImage.image = [UIImage imageNamed:@"钥匙2@2x"];
         }else if ([devStatus isEqual:@"28"]){
+            [MBManager hideAlert];
             NSString *message = [NSString stringWithFormat:@"%@电量低",_cell.nameLabel.text];
             _cell.statueLabel.hidden = YES;
             _cell.statueImage.hidden = NO;
-            //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
-            [self playNotifySound:message];
             [MBManager showBriefMessage:message InView:_roundScrollView];
+            //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+           // [self playNotifySound:message];
             _cell.statueLabel.backgroundColor = [UIColor clearColor];
             _cell.statueImage.image = [UIImage imageNamed:@"电量低2@2x"];
         }else if ([devStatus isEqual:@"144"]){
