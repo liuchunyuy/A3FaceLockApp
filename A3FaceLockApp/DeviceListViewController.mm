@@ -63,8 +63,7 @@
         imageView.image = image;
         [self.view addSubview:imageView];
     }
-    
-    
+        
     [[NSUserDefaults standardUserDefaults] setObject:_gateWayIDStr forKey:@"gateWayIDStr"];
    // [[NSUserDefaults standardUserDefaults] setObject:gateWayAppStr forKey:@"gateWayAppStr"];
     
@@ -306,17 +305,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     return;
-//    [_tableView deselectRowAtIndexPath:indexPath animated:YES];
-//    
-//    ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
-//    advance(iter, indexPath.row);
-//    m_strCurID = iter->second->m_strID;
-//    if (!self.locksListViewController)
-//    {
-//        self.locksListViewController = [[LocksListViewController alloc] initWithNibName:@"DeviceListTableViewCell" bundle:nil];
-//    }
-//    self.locksListViewController.m_pGateway = iter->second;
-//    [self.navigationController pushViewController:self.locksListViewController animated:YES];
     
 }
 

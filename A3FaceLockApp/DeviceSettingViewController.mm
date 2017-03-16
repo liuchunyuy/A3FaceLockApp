@@ -66,6 +66,9 @@
     if (_nameTextFieldPutin.text.length == 0) {
         [MBManager showBriefMessage:@"不要偷懒，新名字不能为空哦 o(>﹏<)o" InView:self.view];
         return;
+    }else if ([_nameTextFieldPutin.text containsString:@" "]){
+        [MBManager showBriefMessage:@"新名字不能包含空格哦 o(>﹏<)o" InView:self.view];
+        return;
     }
     std::map<CString, CEPData>::iterator iter = m_pDevice->m_map_ep_data.begin();
     sendSetDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), 2, m_pDevice->m_strID.c_str(), m_pDevice->m_strType.c_str(), iter->first.c_str(), iter->second.m_strEPType.c_str(), [_nameTextFieldPutin.text UTF8String], [categoryTF.text UTF8String], strAreaID.c_str(), 0, 0);
