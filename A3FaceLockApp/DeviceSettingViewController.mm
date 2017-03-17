@@ -37,6 +37,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    
     UIWindow* tempWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:1];
     doneBtn.frame = CGRectMake(37,tempWindow.frame.size.height/2,116,30);
     cancelBtn.frame = CGRectMake(168,tempWindow.frame.size.height/2,116,30);

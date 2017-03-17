@@ -65,7 +65,6 @@
     }
         
     [[NSUserDefaults standardUserDefaults] setObject:_gateWayIDStr forKey:@"gateWayIDStr"];
-   // [[NSUserDefaults standardUserDefaults] setObject:gateWayAppStr forKey:@"gateWayAppStr"];
     
     NSArray *label1Arr = @[_gateWayIDStr];
     for (int i = 0; i < 1; i++) {
@@ -104,6 +103,8 @@
 
     NSLog(@"修改网关密码");
     
+    [MBManager showBriefMessage:@"当前不提供此方法" InView:self.view];
+    return;
     self.hidesBottomBarWhenPushed = YES;
     ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
     advance(iter, 0);

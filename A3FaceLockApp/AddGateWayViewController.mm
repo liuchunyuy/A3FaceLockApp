@@ -662,10 +662,11 @@
 
 -(void)createVersonLabel{
     
-    NSString *versionStr1 = @"2.0";    //用户正在使用的版本-------代码的写死
+    NSString *versionStr1 = @"1.0";    //用户正在使用的版本-------代码的写死
     UILabel *versonLabel = [MyUtiles createLabelWithFrame:CGRectMake(3*(self.view.frame.size.width/4), self.view.frame.size.height-40, self.view.frame.size.width/4, 40) font:[UIFont systemFontOfSize:12] textAlignment:NSTextAlignmentLeft color:[UIColor lightGrayColor] text:[NSString stringWithFormat:@"Version: %@",versionStr1]];
     [self.view addSubview:versonLabel];
     
+    return;
     NSURL *url1 = [NSURL URLWithString:@"http://220.197.186.34:8081/gzdg/update_IOS.txt"];
     NSURLRequest *urlR = [NSURLRequest requestWithURL:url1];
     NSURLSession *session = [NSURLSession sharedSession];

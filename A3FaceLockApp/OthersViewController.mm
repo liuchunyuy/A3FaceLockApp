@@ -70,7 +70,7 @@
     UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(80, SCREEN_HEIGHT/3+64+5+50*3, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"版    本"];
     [self.view addSubview:label];
     
-    UILabel *versionLabel = [MyUtiles createLabelWithFrame:CGRectMake(3*(SCREEN_WIDTH/4), SCREEN_HEIGHT/3+64+5+50*3, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"2.0"];
+    UILabel *versionLabel = [MyUtiles createLabelWithFrame:CGRectMake(3*(SCREEN_WIDTH/4), SCREEN_HEIGHT/3+64+5+50*3, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentLeft color:[UIColor blackColor] text:@"1.0"];
     [self.view addSubview:versionLabel];
 }
 

@@ -18,6 +18,8 @@
 #import "DeviceSettingViewController.h"
 
 #import "YCXMenu.h"      // 右上角按钮
+
+#import "model.h"
 @interface LockListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic,copy)NSArray *localImageArr;   //本地图片数组
@@ -31,6 +33,8 @@
 @property(nonatomic,strong)UIButton *setUpButton;  //单锁页面右上角设置按钮
 @property(nonatomic,strong)UILabel *noDeviceLabel;  //无设备label
 @property (nonatomic , strong) NSMutableArray *items;   //单锁测试按钮的列表item
+
+@property (nonatomic,strong) NSMutableArray *closePWDArr;
 
 @end
 
@@ -168,7 +172,14 @@
 }
 
 -(void)creatTableView{
-        
+    
+    _closePWDArr = [[NSMutableArray alloc]init];
+    for (int index = 0; index < 2 ; index ++) {
+        model *m = [[model alloc]init];
+        m.isNeedPWD = YES;
+        [_closePWDArr addObject:m];
+    }
+    
     _tableView  = [MyUtiles createTableView:CGRectMake(0, SCREEN_HEIGHT/3, SCREEN_WIDTH, SCREEN_HEIGHT-SCREEN_HEIGHT/3-49-64) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor whiteColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     [_tableView registerNib:[UINib nibWithNibName:@"LockListTableViewCell" bundle:nil] forCellReuseIdentifier:@"LockListTableViewCell"];
     _tableView.delegate = self;
@@ -326,7 +337,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (_isNeedPassWord == YES) {    //需要开门密码
+    model *m = self.closePWDArr[indexPath.row];
+    if (m.isNeedPWD == YES) {    //需要开门密码
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"密码" message:nil preferredStyle:UIAlertControllerStyleAlert];
         
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"开门" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -374,7 +386,7 @@
         alertController.actions.lastObject.enabled = NO;//冻结确定按钮
         [self presentViewController:alertController animated:YES completion:nil];
         
-    }else if (_isNeedPassWord == NO){     //不需要开门密码
+    }else if (m.isNeedPWD == NO){     //不需要开门密码
 
         [MBManager showLoadingInView:_roundScrollView];
         ITER_MAP_STR_DEVICE iter = m_map_id_str_device[m_pGateway->m_strID].begin();
@@ -413,6 +425,8 @@
     //删除设备
     UITableViewRowAction *rowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NSLog(@"删除");
+        [MBManager showBriefMessage:@"当前版不提供此方法" InView:self.view];
+        return ;
         [self deleteDevice:_selectIndex];             //  删除
     }];
     //设备重命名
@@ -420,16 +434,19 @@
         [self reName:_selectIndex];                   //  重命名
     }];
     //关闭开门密码
-    UITableViewRowAction *rowAction2 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:_passWordAlertTitle handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
+    model *m = self.closePWDArr[indexPath.row];
+    UITableViewRowAction *rowAction2 = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:m.isNeedPWD ? @"关闭密码":@"打开密码" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
        // [self openOrShutDownPassWord:_selectIndex];   //打开／关闭密码
-        if (_isNeedPassWord == YES ) {
+        if (m.isNeedPWD == YES ) {
             NSLog(@"打开密码");
             _isNeedPassWord = NO;
+            m.isNeedPWD = NO;
             _passWordAlertTitle = @"打开密码";
             [_tableView reloadData];
-        }else if (_isNeedPassWord == NO ){
+        }else if (m.isNeedPWD == NO ){
             NSLog(@"关闭密码");
             _isNeedPassWord = YES;
+            m.isNeedPWD = YES;
             _passWordAlertTitle = @"关闭密码";
             [_tableView reloadData];
         }

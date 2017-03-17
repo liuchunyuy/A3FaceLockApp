@@ -15,6 +15,7 @@
 		8635988A1E5C1B2C009F6713 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 863598891E5C1B2C009F6713 /* MBProgressHUD.m */; };
 		863618F01E5E8742003A14AB /* UdisA3.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 863618EF1E5E8742003A14AB /* UdisA3.pdf */; };
 		863618FA1E5EB5C3003A14AB /* noDevice.png in Resources */ = {isa = PBXBuildFile; fileRef = 863618F91E5EB5C3003A14AB /* noDevice.png */; };
+		8639FCF01E7B6A0D0089CD4A /* model.m in Sources */ = {isa = PBXBuildFile; fileRef = 8639FCEF1E7B6A0D0089CD4A /* model.m */; };
 		8662AB3A1E3060FA0081AE12 /* DeviceListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8662AB381E3060FA0081AE12 /* DeviceListTableViewCell.m */; };
 		8662AB3B1E3060FA0081AE12 /* DeviceListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8662AB391E3060FA0081AE12 /* DeviceListTableViewCell.xib */; };
 		86690C9D1E6809690086ACBA /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 86690C711E6809690086ACBA /* MJRefreshAutoFooter.m */; };
@@ -211,6 +212,8 @@
 		863598891E5C1B2C009F6713 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = ../MBProgressHUD.m; sourceTree = "<group>"; };
 		863618EF1E5E8742003A14AB /* UdisA3.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = UdisA3.pdf; sourceTree = "<group>"; };
 		863618F91E5EB5C3003A14AB /* noDevice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noDevice.png; path = ../noDevice.png; sourceTree = "<group>"; };
+		8639FCEE1E7B6A0D0089CD4A /* model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model.h; sourceTree = "<group>"; };
+		8639FCEF1E7B6A0D0089CD4A /* model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = model.m; sourceTree = "<group>"; };
 		8662AB371E3060FA0081AE12 /* DeviceListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceListTableViewCell.h; path = ../A3FaceLockApp/DeviceListTableViewCell.h; sourceTree = "<group>"; };
 		8662AB381E3060FA0081AE12 /* DeviceListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceListTableViewCell.m; path = ../A3FaceLockApp/DeviceListTableViewCell.m; sourceTree = "<group>"; };
 		8662AB391E3060FA0081AE12 /* DeviceListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = DeviceListTableViewCell.xib; path = ../A3FaceLockApp/DeviceListTableViewCell.xib; sourceTree = "<group>"; };
@@ -1042,6 +1045,8 @@
 				86DC6F931E2EFA38006FC681 /* DeviceListViewController.mm */,
 				8635987C1E5BE73E009F6713 /* LockListViewController.h */,
 				8635987D1E5BE73E009F6713 /* LockListViewController.mm */,
+				8639FCEE1E7B6A0D0089CD4A /* model.h */,
+				8639FCEF1E7B6A0D0089CD4A /* model.m */,
 				86DA20B51E63BF5D00B03B6A /* DeviceSettingViewController.h */,
 				86DA20B61E63BF5D00B03B6A /* DeviceSettingViewController.mm */,
 				86DA20B71E63BF5D00B03B6A /* DeviceSettingViewController.xib */,
@@ -1380,6 +1385,7 @@
 				86690CAC1E6809690086ACBA /* MJRefreshConst.m in Sources */,
 				86D4FC971E553F8B00C81A1B /* SZCalendarPicker.m in Sources */,
 				869848FC1E6664550044C7DC /* JSONHTTPClient.m in Sources */,
+				8639FCF01E7B6A0D0089CD4A /* model.m in Sources */,
 				86D4FC7D1E5427AB00C81A1B /* UIImageView+WebCache.m in Sources */,
 				86690CA11E6809690086ACBA /* MJRefreshHeader.m in Sources */,
 				86D4FC991E553F8B00C81A1B /* UIColor+ZXLazy.m in Sources */,
@@ -1571,6 +1577,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/A3FaceLockApp/Utiles/PrefixHeader.pch";
 				INFOPLIST_FILE = A3FaceLockApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1594,6 +1601,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/A3FaceLockApp/Utiles/PrefixHeader.pch";
 				INFOPLIST_FILE = A3FaceLockApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
