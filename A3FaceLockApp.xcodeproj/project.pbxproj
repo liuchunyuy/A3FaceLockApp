@@ -61,24 +61,6 @@
 		86690D141E6954AF0086ACBA /* 切换网关@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CF61E6954AF0086ACBA /* 切换网关@2x.png */; };
 		86690D151E6954AF0086ACBA /* 网关ID@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CF71E6954AF0086ACBA /* 网关ID@2x.png */; };
 		86690D161E6954AF0086ACBA /* 网关版本@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CF81E6954AF0086ACBA /* 网关版本@2x.png */; };
-		86690D171E6954AF0086ACBA /* app2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CFB1E6954AF0086ACBA /* app2@2x.png */; };
-		86690D181E6954AF0086ACBA /* 人脸2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CFC1E6954AF0086ACBA /* 人脸2@2x.png */; };
-		86690D191E6954AF0086ACBA /* 关门2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CFD1E6954AF0086ACBA /* 关门2@2x.png */; };
-		86690D1A1E6954AF0086ACBA /* 密码2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CFE1E6954AF0086ACBA /* 密码2@2x.png */; };
-		86690D1B1E6954AF0086ACBA /* 电量低2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690CFF1E6954AF0086ACBA /* 电量低2@2x.png */; };
-		86690D1C1E6954AF0086ACBA /* 钥匙2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D001E6954AF0086ACBA /* 钥匙2@2x.png */; };
-		86690D1D1E6954AF0086ACBA /* app@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D021E6954AF0086ACBA /* app@2x.png */; };
-		86690D1E1E6954AF0086ACBA /* face@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D031E6954AF0086ACBA /* face@2x.png */; };
-		86690D1F1E6954AF0086ACBA /* locked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D041E6954AF0086ACBA /* locked@2x.png */; };
-		86690D201E6954AF0086ACBA /* password@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D051E6954AF0086ACBA /* password@2x.png */; };
-		86690D211E6954AF0086ACBA /* powerlow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D061E6954AF0086ACBA /* powerlow@2x.png */; };
-		86690D221E6954AF0086ACBA /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D071E6954AF0086ACBA /* key@2x.png */; };
-		86690D231E6954AF0086ACBA /* app1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D091E6954AF0086ACBA /* app1@2x.png */; };
-		86690D241E6954AF0086ACBA /* face1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D0A1E6954AF0086ACBA /* face1@2x.png */; };
-		86690D251E6954AF0086ACBA /* locked1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D0B1E6954AF0086ACBA /* locked1@2x.png */; };
-		86690D261E6954AF0086ACBA /* password1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D0C1E6954AF0086ACBA /* password1@2x.png */; };
-		86690D271E6954AF0086ACBA /* powerlow1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D0D1E6954AF0086ACBA /* powerlow1@2x.png */; };
-		86690D281E6954AF0086ACBA /* key@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D0E1E6954AF0086ACBA /* key@2x.png */; };
 		86690D2B1E6962560086ACBA /* 密码@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D291E6962560086ACBA /* 密码@2x.png */; };
 		86690D2C1E6962560086ACBA /* 用户名@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D2A1E6962560086ACBA /* 用户名@2x.png */; };
 		86690D2E1E6973440086ACBA /* other_company1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86690D2D1E6973440086ACBA /* other_company1@2x.png */; };
@@ -179,6 +161,52 @@
 		86DC6F821E2DED9E006FC681 /* MyUtiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 86DC6F811E2DED9E006FC681 /* MyUtiles.m */; };
 		86DC6F8F1E2DFAF7006FC681 /* libiOSwulianSDK_new_dev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 86DC6F8E1E2DFAF7006FC681 /* libiOSwulianSDK_new_dev.a */; };
 		86DC6F941E2EFA38006FC681 /* DeviceListViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 86DC6F931E2EFA38006FC681 /* DeviceListViewController.mm */; };
+		86E35E691E7FB0FA004549F3 /* app.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E3A1E7FB0FA004549F3 /* app.png */; };
+		86E35E6A1E7FB0FA004549F3 /* 上保险.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E3B1E7FB0FA004549F3 /* 上保险.png */; };
+		86E35E6B1E7FB0FA004549F3 /* 人脸.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E3C1E7FB0FA004549F3 /* 人脸.png */; };
+		86E35E6C1E7FB0FA004549F3 /* 入侵警报.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E3D1E7FB0FA004549F3 /* 入侵警报.png */; };
+		86E35E6D1E7FB0FA004549F3 /* 关门.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E3E1E7FB0FA004549F3 /* 关门.png */; };
+		86E35E6E1E7FB0FA004549F3 /* 反锁.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E3F1E7FB0FA004549F3 /* 反锁.png */; };
+		86E35E6F1E7FB0FA004549F3 /* 密码.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E401E7FB0FA004549F3 /* 密码.png */; };
+		86E35E701E7FB0FA004549F3 /* 密码连续错误.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E411E7FB0FA004549F3 /* 密码连续错误.png */; };
+		86E35E711E7FB0FA004549F3 /* 密码错误.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E421E7FB0FA004549F3 /* 密码错误.png */; };
+		86E35E721E7FB0FA004549F3 /* 强制上锁.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E431E7FB0FA004549F3 /* 强制上锁.png */; };
+		86E35E731E7FB0FA004549F3 /* 电量低.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E441E7FB0FA004549F3 /* 电量低.png */; };
+		86E35E741E7FB0FA004549F3 /* 破坏警报.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E451E7FB0FA004549F3 /* 破坏警报.png */; };
+		86E35E751E7FB0FA004549F3 /* 解除保险.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E461E7FB0FA004549F3 /* 解除保险.png */; };
+		86E35E761E7FB0FA004549F3 /* 解除警报.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E471E7FB0FA004549F3 /* 解除警报.png */; };
+		86E35E771E7FB0FA004549F3 /* 钥匙.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E481E7FB0FA004549F3 /* 钥匙.png */; };
+		86E35E781E7FB0FA004549F3 /* app1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E4A1E7FB0FA004549F3 /* app1@2x.png */; };
+		86E35E791E7FB0FA004549F3 /* 上保险1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E4B1E7FB0FA004549F3 /* 上保险1@2x.png */; };
+		86E35E7A1E7FB0FA004549F3 /* 人脸1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E4C1E7FB0FA004549F3 /* 人脸1@2x.png */; };
+		86E35E7B1E7FB0FA004549F3 /* 入侵警报1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E4D1E7FB0FA004549F3 /* 入侵警报1@2x.png */; };
+		86E35E7C1E7FB0FA004549F3 /* 关门1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E4E1E7FB0FA004549F3 /* 关门1@2x.png */; };
+		86E35E7D1E7FB0FA004549F3 /* 反锁1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E4F1E7FB0FA004549F3 /* 反锁1@2x.png */; };
+		86E35E7E1E7FB0FA004549F3 /* 密码1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E501E7FB0FA004549F3 /* 密码1@2x.png */; };
+		86E35E7F1E7FB0FA004549F3 /* 密码连续错误1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E511E7FB0FA004549F3 /* 密码连续错误1@2x.png */; };
+		86E35E801E7FB0FA004549F3 /* 密码错误1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E521E7FB0FA004549F3 /* 密码错误1@2x.png */; };
+		86E35E811E7FB0FA004549F3 /* 强制上锁1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E531E7FB0FA004549F3 /* 强制上锁1@2x.png */; };
+		86E35E821E7FB0FA004549F3 /* 电量低1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E541E7FB0FA004549F3 /* 电量低1@2x.png */; };
+		86E35E831E7FB0FA004549F3 /* 破坏警报1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E551E7FB0FA004549F3 /* 破坏警报1@2x.png */; };
+		86E35E841E7FB0FA004549F3 /* 解除保险1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E561E7FB0FA004549F3 /* 解除保险1@2x.png */; };
+		86E35E851E7FB0FA004549F3 /* 解除警报1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E571E7FB0FA004549F3 /* 解除警报1@2x.png */; };
+		86E35E861E7FB0FA004549F3 /* 钥匙1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E581E7FB0FA004549F3 /* 钥匙1@2x.png */; };
+		86E35E871E7FB0FA004549F3 /* app2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E5A1E7FB0FA004549F3 /* app2@2x.png */; };
+		86E35E881E7FB0FA004549F3 /* 上保险2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E5B1E7FB0FA004549F3 /* 上保险2@2x.png */; };
+		86E35E891E7FB0FA004549F3 /* 人脸2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E5C1E7FB0FA004549F3 /* 人脸2@2x.png */; };
+		86E35E8A1E7FB0FA004549F3 /* 入侵警报2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E5D1E7FB0FA004549F3 /* 入侵警报2@2x.png */; };
+		86E35E8B1E7FB0FA004549F3 /* 关门2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E5E1E7FB0FA004549F3 /* 关门2@2x.png */; };
+		86E35E8C1E7FB0FA004549F3 /* 反锁2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E5F1E7FB0FA004549F3 /* 反锁2@2x.png */; };
+		86E35E8D1E7FB0FA004549F3 /* 密码2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E601E7FB0FA004549F3 /* 密码2@2x.png */; };
+		86E35E8E1E7FB0FA004549F3 /* 密码连续错误2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E611E7FB0FA004549F3 /* 密码连续错误2@2x.png */; };
+		86E35E8F1E7FB0FA004549F3 /* 密码错误2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E621E7FB0FA004549F3 /* 密码错误2@2x.png */; };
+		86E35E901E7FB0FA004549F3 /* 强制上锁2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E631E7FB0FA004549F3 /* 强制上锁2@2x.png */; };
+		86E35E911E7FB0FA004549F3 /* 电量低2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E641E7FB0FA004549F3 /* 电量低2@2x.png */; };
+		86E35E921E7FB0FA004549F3 /* 破坏警报2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E651E7FB0FA004549F3 /* 破坏警报2@2x.png */; };
+		86E35E931E7FB0FA004549F3 /* 解除保险2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E661E7FB0FA004549F3 /* 解除保险2@2x.png */; };
+		86E35E941E7FB0FA004549F3 /* 解除警报2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E671E7FB0FA004549F3 /* 解除警报2@2x.png */; };
+		86E35E951E7FB0FA004549F3 /* 钥匙2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E681E7FB0FA004549F3 /* 钥匙2@2x.png */; };
+		86E35E971E80BBA5004549F3 /* A3production.png in Resources */ = {isa = PBXBuildFile; fileRef = 86E35E961E80BBA5004549F3 /* A3production.png */; };
 		86EC8DEB1E305969008B9103 /* person@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 86EC8DEA1E305969008B9103 /* person@2x.png */; };
 /* End PBXBuildFile section */
 
@@ -281,24 +309,6 @@
 		86690CF61E6954AF0086ACBA /* 切换网关@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "切换网关@2x.png"; sourceTree = "<group>"; };
 		86690CF71E6954AF0086ACBA /* 网关ID@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "网关ID@2x.png"; sourceTree = "<group>"; };
 		86690CF81E6954AF0086ACBA /* 网关版本@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "网关版本@2x.png"; sourceTree = "<group>"; };
-		86690CFB1E6954AF0086ACBA /* app2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app2@2x.png"; sourceTree = "<group>"; };
-		86690CFC1E6954AF0086ACBA /* 人脸2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人脸2@2x.png"; sourceTree = "<group>"; };
-		86690CFD1E6954AF0086ACBA /* 关门2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关门2@2x.png"; sourceTree = "<group>"; };
-		86690CFE1E6954AF0086ACBA /* 密码2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码2@2x.png"; sourceTree = "<group>"; };
-		86690CFF1E6954AF0086ACBA /* 电量低2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "电量低2@2x.png"; sourceTree = "<group>"; };
-		86690D001E6954AF0086ACBA /* 钥匙2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钥匙2@2x.png"; sourceTree = "<group>"; };
-		86690D021E6954AF0086ACBA /* app@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app@2x.png"; sourceTree = "<group>"; };
-		86690D031E6954AF0086ACBA /* face@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face@2x.png"; sourceTree = "<group>"; };
-		86690D041E6954AF0086ACBA /* locked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "locked@2x.png"; sourceTree = "<group>"; };
-		86690D051E6954AF0086ACBA /* password@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password@2x.png"; sourceTree = "<group>"; };
-		86690D061E6954AF0086ACBA /* powerlow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "powerlow@2x.png"; sourceTree = "<group>"; };
-		86690D071E6954AF0086ACBA /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
-		86690D091E6954AF0086ACBA /* app1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app1@2x.png"; sourceTree = "<group>"; };
-		86690D0A1E6954AF0086ACBA /* face1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "face1@2x.png"; sourceTree = "<group>"; };
-		86690D0B1E6954AF0086ACBA /* locked1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "locked1@2x.png"; sourceTree = "<group>"; };
-		86690D0C1E6954AF0086ACBA /* password1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "password1@2x.png"; sourceTree = "<group>"; };
-		86690D0D1E6954AF0086ACBA /* powerlow1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "powerlow1@2x.png"; sourceTree = "<group>"; };
-		86690D0E1E6954AF0086ACBA /* key@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "key@2x.png"; sourceTree = "<group>"; };
 		86690D291E6962560086ACBA /* 密码@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码@2x.png"; sourceTree = "<group>"; };
 		86690D2A1E6962560086ACBA /* 用户名@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "用户名@2x.png"; sourceTree = "<group>"; };
 		86690D2D1E6973440086ACBA /* other_company1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "other_company1@2x.png"; sourceTree = "<group>"; };
@@ -467,6 +477,52 @@
 		86DC6F8E1E2DFAF7006FC681 /* libiOSwulianSDK_new_dev.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libiOSwulianSDK_new_dev.a; sourceTree = "<group>"; };
 		86DC6F921E2EFA38006FC681 /* DeviceListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceListViewController.h; sourceTree = "<group>"; };
 		86DC6F931E2EFA38006FC681 /* DeviceListViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DeviceListViewController.mm; sourceTree = "<group>"; };
+		86E35E3A1E7FB0FA004549F3 /* app.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app.png; sourceTree = "<group>"; };
+		86E35E3B1E7FB0FA004549F3 /* 上保险.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上保险.png"; sourceTree = "<group>"; };
+		86E35E3C1E7FB0FA004549F3 /* 人脸.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人脸.png"; sourceTree = "<group>"; };
+		86E35E3D1E7FB0FA004549F3 /* 入侵警报.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "入侵警报.png"; sourceTree = "<group>"; };
+		86E35E3E1E7FB0FA004549F3 /* 关门.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关门.png"; sourceTree = "<group>"; };
+		86E35E3F1E7FB0FA004549F3 /* 反锁.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "反锁.png"; sourceTree = "<group>"; };
+		86E35E401E7FB0FA004549F3 /* 密码.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码.png"; sourceTree = "<group>"; };
+		86E35E411E7FB0FA004549F3 /* 密码连续错误.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码连续错误.png"; sourceTree = "<group>"; };
+		86E35E421E7FB0FA004549F3 /* 密码错误.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码错误.png"; sourceTree = "<group>"; };
+		86E35E431E7FB0FA004549F3 /* 强制上锁.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "强制上锁.png"; sourceTree = "<group>"; };
+		86E35E441E7FB0FA004549F3 /* 电量低.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "电量低.png"; sourceTree = "<group>"; };
+		86E35E451E7FB0FA004549F3 /* 破坏警报.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "破坏警报.png"; sourceTree = "<group>"; };
+		86E35E461E7FB0FA004549F3 /* 解除保险.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "解除保险.png"; sourceTree = "<group>"; };
+		86E35E471E7FB0FA004549F3 /* 解除警报.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "解除警报.png"; sourceTree = "<group>"; };
+		86E35E481E7FB0FA004549F3 /* 钥匙.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钥匙.png"; sourceTree = "<group>"; };
+		86E35E4A1E7FB0FA004549F3 /* app1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app1@2x.png"; sourceTree = "<group>"; };
+		86E35E4B1E7FB0FA004549F3 /* 上保险1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上保险1@2x.png"; sourceTree = "<group>"; };
+		86E35E4C1E7FB0FA004549F3 /* 人脸1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人脸1@2x.png"; sourceTree = "<group>"; };
+		86E35E4D1E7FB0FA004549F3 /* 入侵警报1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "入侵警报1@2x.png"; sourceTree = "<group>"; };
+		86E35E4E1E7FB0FA004549F3 /* 关门1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关门1@2x.png"; sourceTree = "<group>"; };
+		86E35E4F1E7FB0FA004549F3 /* 反锁1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "反锁1@2x.png"; sourceTree = "<group>"; };
+		86E35E501E7FB0FA004549F3 /* 密码1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码1@2x.png"; sourceTree = "<group>"; };
+		86E35E511E7FB0FA004549F3 /* 密码连续错误1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码连续错误1@2x.png"; sourceTree = "<group>"; };
+		86E35E521E7FB0FA004549F3 /* 密码错误1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码错误1@2x.png"; sourceTree = "<group>"; };
+		86E35E531E7FB0FA004549F3 /* 强制上锁1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "强制上锁1@2x.png"; sourceTree = "<group>"; };
+		86E35E541E7FB0FA004549F3 /* 电量低1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "电量低1@2x.png"; sourceTree = "<group>"; };
+		86E35E551E7FB0FA004549F3 /* 破坏警报1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "破坏警报1@2x.png"; sourceTree = "<group>"; };
+		86E35E561E7FB0FA004549F3 /* 解除保险1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "解除保险1@2x.png"; sourceTree = "<group>"; };
+		86E35E571E7FB0FA004549F3 /* 解除警报1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "解除警报1@2x.png"; sourceTree = "<group>"; };
+		86E35E581E7FB0FA004549F3 /* 钥匙1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钥匙1@2x.png"; sourceTree = "<group>"; };
+		86E35E5A1E7FB0FA004549F3 /* app2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app2@2x.png"; sourceTree = "<group>"; };
+		86E35E5B1E7FB0FA004549F3 /* 上保险2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "上保险2@2x.png"; sourceTree = "<group>"; };
+		86E35E5C1E7FB0FA004549F3 /* 人脸2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "人脸2@2x.png"; sourceTree = "<group>"; };
+		86E35E5D1E7FB0FA004549F3 /* 入侵警报2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "入侵警报2@2x.png"; sourceTree = "<group>"; };
+		86E35E5E1E7FB0FA004549F3 /* 关门2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "关门2@2x.png"; sourceTree = "<group>"; };
+		86E35E5F1E7FB0FA004549F3 /* 反锁2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "反锁2@2x.png"; sourceTree = "<group>"; };
+		86E35E601E7FB0FA004549F3 /* 密码2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码2@2x.png"; sourceTree = "<group>"; };
+		86E35E611E7FB0FA004549F3 /* 密码连续错误2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码连续错误2@2x.png"; sourceTree = "<group>"; };
+		86E35E621E7FB0FA004549F3 /* 密码错误2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "密码错误2@2x.png"; sourceTree = "<group>"; };
+		86E35E631E7FB0FA004549F3 /* 强制上锁2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "强制上锁2@2x.png"; sourceTree = "<group>"; };
+		86E35E641E7FB0FA004549F3 /* 电量低2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "电量低2@2x.png"; sourceTree = "<group>"; };
+		86E35E651E7FB0FA004549F3 /* 破坏警报2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "破坏警报2@2x.png"; sourceTree = "<group>"; };
+		86E35E661E7FB0FA004549F3 /* 解除保险2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "解除保险2@2x.png"; sourceTree = "<group>"; };
+		86E35E671E7FB0FA004549F3 /* 解除警报2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "解除警报2@2x.png"; sourceTree = "<group>"; };
+		86E35E681E7FB0FA004549F3 /* 钥匙2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "钥匙2@2x.png"; sourceTree = "<group>"; };
+		86E35E961E80BBA5004549F3 /* A3production.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A3production.png; sourceTree = "<group>"; };
 		86EC8DEA1E305969008B9103 /* person@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "person@2x.png"; path = "../../person@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -629,6 +685,7 @@
 		86690CC21E694D080086ACBA /* others */ = {
 			isa = PBXGroup;
 			children = (
+				86E35E961E80BBA5004549F3 /* A3production.png */,
 				86AF82751E6D39FB00DC77B7 /* deviceEmpty.png */,
 				863618F91E5EB5C3003A14AB /* noDevice.png */,
 				863598861E5C0E89009F6713 /* backGround.png */,
@@ -691,50 +748,11 @@
 		86690CF91E6954AF0086ACBA /* 状态图标 */ = {
 			isa = PBXGroup;
 			children = (
-				86690CFA1E6954AF0086ACBA /* 150*150 */,
-				86690D011E6954AF0086ACBA /* 40*40 */,
-				86690D081E6954AF0086ACBA /* 80*80 */,
+				86E35E391E7FB0FA004549F3 /* 40*40 */,
+				86E35E491E7FB0FA004549F3 /* 80*80 */,
+				86E35E591E7FB0FA004549F3 /* 150*150 */,
 			);
 			path = "状态图标";
-			sourceTree = "<group>";
-		};
-		86690CFA1E6954AF0086ACBA /* 150*150 */ = {
-			isa = PBXGroup;
-			children = (
-				86690CFB1E6954AF0086ACBA /* app2@2x.png */,
-				86690CFC1E6954AF0086ACBA /* 人脸2@2x.png */,
-				86690CFD1E6954AF0086ACBA /* 关门2@2x.png */,
-				86690CFE1E6954AF0086ACBA /* 密码2@2x.png */,
-				86690CFF1E6954AF0086ACBA /* 电量低2@2x.png */,
-				86690D001E6954AF0086ACBA /* 钥匙2@2x.png */,
-			);
-			path = "150*150";
-			sourceTree = "<group>";
-		};
-		86690D011E6954AF0086ACBA /* 40*40 */ = {
-			isa = PBXGroup;
-			children = (
-				86690D021E6954AF0086ACBA /* app@2x.png */,
-				86690D031E6954AF0086ACBA /* face@2x.png */,
-				86690D041E6954AF0086ACBA /* locked@2x.png */,
-				86690D051E6954AF0086ACBA /* password@2x.png */,
-				86690D061E6954AF0086ACBA /* powerlow@2x.png */,
-				86690D071E6954AF0086ACBA /* key@2x.png */,
-			);
-			path = "40*40";
-			sourceTree = "<group>";
-		};
-		86690D081E6954AF0086ACBA /* 80*80 */ = {
-			isa = PBXGroup;
-			children = (
-				86690D091E6954AF0086ACBA /* app1@2x.png */,
-				86690D0A1E6954AF0086ACBA /* face1@2x.png */,
-				86690D0B1E6954AF0086ACBA /* locked1@2x.png */,
-				86690D0C1E6954AF0086ACBA /* password1@2x.png */,
-				86690D0D1E6954AF0086ACBA /* powerlow1@2x.png */,
-				86690D0E1E6954AF0086ACBA /* key@2x.png */,
-			);
-			path = "80*80";
 			sourceTree = "<group>";
 		};
 		8669D2C21E5304590010F233 /*  TableViewCells */ = {
@@ -1137,6 +1155,72 @@
 			path = Utiles;
 			sourceTree = "<group>";
 		};
+		86E35E391E7FB0FA004549F3 /* 40*40 */ = {
+			isa = PBXGroup;
+			children = (
+				86E35E3A1E7FB0FA004549F3 /* app.png */,
+				86E35E3B1E7FB0FA004549F3 /* 上保险.png */,
+				86E35E3C1E7FB0FA004549F3 /* 人脸.png */,
+				86E35E3D1E7FB0FA004549F3 /* 入侵警报.png */,
+				86E35E3E1E7FB0FA004549F3 /* 关门.png */,
+				86E35E3F1E7FB0FA004549F3 /* 反锁.png */,
+				86E35E401E7FB0FA004549F3 /* 密码.png */,
+				86E35E411E7FB0FA004549F3 /* 密码连续错误.png */,
+				86E35E421E7FB0FA004549F3 /* 密码错误.png */,
+				86E35E431E7FB0FA004549F3 /* 强制上锁.png */,
+				86E35E441E7FB0FA004549F3 /* 电量低.png */,
+				86E35E451E7FB0FA004549F3 /* 破坏警报.png */,
+				86E35E461E7FB0FA004549F3 /* 解除保险.png */,
+				86E35E471E7FB0FA004549F3 /* 解除警报.png */,
+				86E35E481E7FB0FA004549F3 /* 钥匙.png */,
+			);
+			path = "40*40";
+			sourceTree = "<group>";
+		};
+		86E35E491E7FB0FA004549F3 /* 80*80 */ = {
+			isa = PBXGroup;
+			children = (
+				86E35E4A1E7FB0FA004549F3 /* app1@2x.png */,
+				86E35E4B1E7FB0FA004549F3 /* 上保险1@2x.png */,
+				86E35E4C1E7FB0FA004549F3 /* 人脸1@2x.png */,
+				86E35E4D1E7FB0FA004549F3 /* 入侵警报1@2x.png */,
+				86E35E4E1E7FB0FA004549F3 /* 关门1@2x.png */,
+				86E35E4F1E7FB0FA004549F3 /* 反锁1@2x.png */,
+				86E35E501E7FB0FA004549F3 /* 密码1@2x.png */,
+				86E35E511E7FB0FA004549F3 /* 密码连续错误1@2x.png */,
+				86E35E521E7FB0FA004549F3 /* 密码错误1@2x.png */,
+				86E35E531E7FB0FA004549F3 /* 强制上锁1@2x.png */,
+				86E35E541E7FB0FA004549F3 /* 电量低1@2x.png */,
+				86E35E551E7FB0FA004549F3 /* 破坏警报1@2x.png */,
+				86E35E561E7FB0FA004549F3 /* 解除保险1@2x.png */,
+				86E35E571E7FB0FA004549F3 /* 解除警报1@2x.png */,
+				86E35E581E7FB0FA004549F3 /* 钥匙1@2x.png */,
+			);
+			path = "80*80";
+			sourceTree = "<group>";
+		};
+		86E35E591E7FB0FA004549F3 /* 150*150 */ = {
+			isa = PBXGroup;
+			children = (
+				86E35E5A1E7FB0FA004549F3 /* app2@2x.png */,
+				86E35E5B1E7FB0FA004549F3 /* 上保险2@2x.png */,
+				86E35E5C1E7FB0FA004549F3 /* 人脸2@2x.png */,
+				86E35E5D1E7FB0FA004549F3 /* 入侵警报2@2x.png */,
+				86E35E5E1E7FB0FA004549F3 /* 关门2@2x.png */,
+				86E35E5F1E7FB0FA004549F3 /* 反锁2@2x.png */,
+				86E35E601E7FB0FA004549F3 /* 密码2@2x.png */,
+				86E35E611E7FB0FA004549F3 /* 密码连续错误2@2x.png */,
+				86E35E621E7FB0FA004549F3 /* 密码错误2@2x.png */,
+				86E35E631E7FB0FA004549F3 /* 强制上锁2@2x.png */,
+				86E35E641E7FB0FA004549F3 /* 电量低2@2x.png */,
+				86E35E651E7FB0FA004549F3 /* 破坏警报2@2x.png */,
+				86E35E661E7FB0FA004549F3 /* 解除保险2@2x.png */,
+				86E35E671E7FB0FA004549F3 /* 解除警报2@2x.png */,
+				86E35E681E7FB0FA004549F3 /* 钥匙2@2x.png */,
+			);
+			path = "150*150";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1241,54 +1325,68 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86E35E8B1E7FB0FA004549F3 /* 关门2@2x.png in Resources */,
+				86E35E6F1E7FB0FA004549F3 /* 密码.png in Resources */,
 				86AF829D1E764C3D00DC77B7 /* device_select@2x.png in Resources */,
-				86690D261E6954AF0086ACBA /* password1@2x.png in Resources */,
+				86E35E821E7FB0FA004549F3 /* 电量低1@2x.png in Resources */,
 				86AF82761E6D39FB00DC77B7 /* deviceEmpty.png in Resources */,
-				86690D211E6954AF0086ACBA /* powerlow@2x.png in Resources */,
+				86E35E8C1E7FB0FA004549F3 /* 反锁2@2x.png in Resources */,
 				86AF829B1E764C3D00DC77B7 /* mySelf_select@2x.png in Resources */,
-				86690D201E6954AF0086ACBA /* password@2x.png in Resources */,
-				86690D251E6954AF0086ACBA /* locked1@2x.png in Resources */,
-				86690D191E6954AF0086ACBA /* 关门2@2x.png in Resources */,
+				86E35E861E7FB0FA004549F3 /* 钥匙1@2x.png in Resources */,
+				86E35E8E1E7FB0FA004549F3 /* 密码连续错误2@2x.png in Resources */,
+				86E35E7B1E7FB0FA004549F3 /* 入侵警报1@2x.png in Resources */,
 				86690D151E6954AF0086ACBA /* 网关ID@2x.png in Resources */,
 				86690CBF1E694CF30086ACBA /* scroll_1.png in Resources */,
 				86AF82981E764C3D00DC77B7 /* alermMessage_usual@2x.png in Resources */,
+				86E35E8D1E7FB0FA004549F3 /* 密码2@2x.png in Resources */,
 				86690D111E6954AF0086ACBA /* 版本@2x.png in Resources */,
+				86E35E731E7FB0FA004549F3 /* 电量低.png in Resources */,
 				86690D2B1E6962560086ACBA /* 密码@2x.png in Resources */,
-				86690D221E6954AF0086ACBA /* key@2x.png in Resources */,
-				86690D1B1E6954AF0086ACBA /* 电量低2@2x.png in Resources */,
 				86690CB91E69071B0086ACBA /* ico_make.png in Resources */,
 				86D76BB61E5A9C2D0099C8CD /* 历史删除@2x.png in Resources */,
 				86D4FC3A1E5409FA00C81A1B /* lightNormal.png in Resources */,
 				86690CE41E6954870086ACBA /* user@2x.png in Resources */,
+				86E35E901E7FB0FA004549F3 /* 强制上锁2@2x.png in Resources */,
 				86DC6F451E2DDF71006FC681 /* LaunchScreen.storyboard in Resources */,
 				863618F01E5E8742003A14AB /* UdisA3.pdf in Resources */,
 				86D4FC3B1E5409FA00C81A1B /* lightSelect.png in Resources */,
 				86AF829A1E764C3D00DC77B7 /* other_select@2x.png in Resources */,
 				86690D2C1E6962560086ACBA /* 用户名@2x.png in Resources */,
 				86690D0F1E6954AF0086ACBA /* 关于我们@2x.png in Resources */,
-				86690D1C1E6954AF0086ACBA /* 钥匙2@2x.png in Resources */,
 				86AF82991E764C3D00DC77B7 /* device_usual@2x.png in Resources */,
 				86AF82821E6F9D6700DC77B7 /* 网关logo@2x.png in Resources */,
 				86D4FC3F1E5409FA00C81A1B /* scanLine@3x.png in Resources */,
 				86D4FC851E54457900C81A1B /* company_logo.png in Resources */,
+				86E35E871E7FB0FA004549F3 /* app2@2x.png in Resources */,
 				86AF826F1E6D0DD500DC77B7 /* gatewaylogo@2x.png in Resources */,
 				863618FA1E5EB5C3003A14AB /* noDevice.png in Resources */,
 				86690D131E6954AF0086ACBA /* 修改密码@2x.png in Resources */,
 				86690CC11E694CF30086ACBA /* scroll_3.png in Resources */,
+				86E35E971E80BBA5004549F3 /* A3production.png in Resources */,
 				86690CEB1E6954970086ACBA /* 顶部 红色条.png in Resources */,
+				86E35E7C1E7FB0FA004549F3 /* 关门1@2x.png in Resources */,
+				86E35E691E7FB0FA004549F3 /* app.png in Resources */,
 				86690CC01E694CF30086ACBA /* scroll_2.png in Resources */,
 				86AF82971E764C3D00DC77B7 /* mySelf_usual@2x.png in Resources */,
+				86E35E6D1E7FB0FA004549F3 /* 关门.png in Resources */,
 				86690D2E1E6973440086ACBA /* other_company1@2x.png in Resources */,
-				86690D1F1E6954AF0086ACBA /* locked@2x.png in Resources */,
+				86E35E7E1E7FB0FA004549F3 /* 密码1@2x.png in Resources */,
+				86E35E6C1E7FB0FA004549F3 /* 入侵警报.png in Resources */,
 				86690D161E6954AF0086ACBA /* 网关版本@2x.png in Resources */,
+				86E35E751E7FB0FA004549F3 /* 解除保险.png in Resources */,
+				86E35E811E7FB0FA004549F3 /* 强制上锁1@2x.png in Resources */,
 				86D4FC981E553F8B00C81A1B /* SZCalendarPicker.xib in Resources */,
+				86E35E7A1E7FB0FA004549F3 /* 人脸1@2x.png in Resources */,
 				86690D101E6954AF0086ACBA /* 清除缓存@2x.png in Resources */,
 				86690CE21E6954870086ACBA /* password@2x.png in Resources */,
+				86E35E791E7FB0FA004549F3 /* 上保险1@2x.png in Resources */,
+				86E35E6B1E7FB0FA004549F3 /* 人脸.png in Resources */,
 				863598871E5C0E89009F6713 /* backGround.png in Resources */,
+				86E35E7F1E7FB0FA004549F3 /* 密码连续错误1@2x.png in Resources */,
 				86690CED1E6954A00086ACBA /* other_company@2x.png in Resources */,
-				86690D241E6954AF0086ACBA /* face1@2x.png in Resources */,
 				86690D121E6954AF0086ACBA /* 日期@2x.png in Resources */,
 				86D4FC401E5409FA00C81A1B /* scanscanBg.png in Resources */,
+				86E35E931E7FB0FA004549F3 /* 解除保险2@2x.png in Resources */,
 				86D4FC3E1E5409FA00C81A1B /* scanLine@2x.png in Resources */,
 				863598851E5BEA20009F6713 /* LockListTableViewCell.xib in Resources */,
 				86DA20B91E63BF5D00B03B6A /* DeviceSettingViewController.xib in Resources */,
@@ -1296,34 +1394,48 @@
 				86690CE51E6954870086ACBA /* 登陆按钮.png in Resources */,
 				869849521E669E3A0044C7DC /* AlermAlermTableViewCell.xib in Resources */,
 				86D76BA21E55B3DB0099C8CD /* head.png in Resources */,
-				86690D1A1E6954AF0086ACBA /* 密码2@2x.png in Resources */,
+				86E35E711E7FB0FA004549F3 /* 密码错误.png in Resources */,
 				86D4FC951E553F8B00C81A1B /* bt_previous@2x.png in Resources */,
-				86690D181E6954AF0086ACBA /* 人脸2@2x.png in Resources */,
-				86690D281E6954AF0086ACBA /* key@2x.png in Resources */,
 				86D4FC941E553F8B00C81A1B /* bt_next@2x.png in Resources */,
+				86E35E771E7FB0FA004549F3 /* 钥匙.png in Resources */,
 				86690CE31E6954870086ACBA /* saoyisao@2x.png in Resources */,
+				86E35E801E7FB0FA004549F3 /* 密码错误1@2x.png in Resources */,
 				86EC8DEB1E305969008B9103 /* person@2x.png in Resources */,
+				86E35E721E7FB0FA004549F3 /* 强制上锁.png in Resources */,
 				86690CEA1E6954970086ACBA /* 底部 黑色条.png in Resources */,
 				86D76BB21E5A8C150099C8CD /* SwitchGateWayTableViewCell.xib in Resources */,
 				86AF82961E764C3D00DC77B7 /* other_usual@2x.png in Resources */,
+				86E35E6A1E7FB0FA004549F3 /* 上保险.png in Resources */,
+				86E35E701E7FB0FA004549F3 /* 密码连续错误.png in Resources */,
+				86E35E831E7FB0FA004549F3 /* 破坏警报1@2x.png in Resources */,
 				86690CE61E6954870086ACBA /* login_background.png in Resources */,
+				86E35E7D1E7FB0FA004549F3 /* 反锁1@2x.png in Resources */,
 				86DC6F421E2DDF71006FC681 /* Assets.xcassets in Resources */,
+				86E35E921E7FB0FA004549F3 /* 破坏警报2@2x.png in Resources */,
 				86D4FC3C1E5409FA00C81A1B /* noticeMusic.wav in Resources */,
-				86690D171E6954AF0086ACBA /* app2@2x.png in Resources */,
 				86690D141E6954AF0086ACBA /* 切换网关@2x.png in Resources */,
 				86DC6F401E2DDF71006FC681 /* Main.storyboard in Resources */,
+				86E35E951E7FB0FA004549F3 /* 钥匙2@2x.png in Resources */,
+				86E35E6E1E7FB0FA004549F3 /* 反锁.png in Resources */,
 				86690CE71E6954870086ACBA /* 输入条.png in Resources */,
-				86690D1D1E6954AF0086ACBA /* app@2x.png in Resources */,
+				86E35E941E7FB0FA004549F3 /* 解除警报2@2x.png in Resources */,
 				86690CE11E6954870086ACBA /* 下拉@2x.png in Resources */,
+				86E35E741E7FB0FA004549F3 /* 破坏警报.png in Resources */,
+				86E35E841E7FB0FA004549F3 /* 解除保险1@2x.png in Resources */,
+				86E35E911E7FB0FA004549F3 /* 电量低2@2x.png in Resources */,
+				86E35E891E7FB0FA004549F3 /* 人脸2@2x.png in Resources */,
 				86AF829C1E764C3D00DC77B7 /* alermMessage_select@2x.png in Resources */,
-				86690D1E1E6954AF0086ACBA /* face@2x.png in Resources */,
 				86AF82741E6D111700DC77B7 /* DeviceListAddTableViewCell.xib in Resources */,
+				86E35E781E7FB0FA004549F3 /* app1@2x.png in Resources */,
 				8662AB3B1E3060FA0081AE12 /* DeviceListTableViewCell.xib in Resources */,
 				86690CAB1E6809690086ACBA /* MJRefresh.bundle in Resources */,
-				86690D231E6954AF0086ACBA /* app1@2x.png in Resources */,
+				86E35E881E7FB0FA004549F3 /* 上保险2@2x.png in Resources */,
+				86E35E8F1E7FB0FA004549F3 /* 密码错误2@2x.png in Resources */,
+				86E35E8A1E7FB0FA004549F3 /* 入侵警报2@2x.png in Resources */,
 				86AF82841E6FB00300DC77B7 /* production@2x.png in Resources */,
+				86E35E851E7FB0FA004549F3 /* 解除警报1@2x.png in Resources */,
+				86E35E761E7FB0FA004549F3 /* 解除警报.png in Resources */,
 				869849041E6664910044C7DC /* AlermMessageTableViewCell.xib in Resources */,
-				86690D271E6954AF0086ACBA /* powerlow1@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1503,7 +1615,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jinggong Technology Co., Ltd. (28XU459573)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jinggong Technology Co., Ltd. (28XU459573)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1547,7 +1660,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Shanghai Jinggong Technology Co., Ltd. (28XU459573)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Shanghai Jinggong Technology Co., Ltd. (28XU459573)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1585,7 +1699,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = Udis.A3FaceLockApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.udis.A3FaceLockApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -1609,7 +1723,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_BUNDLE_IDENTIFIER = Udis.A3FaceLockApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.udis.A3FaceLockApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

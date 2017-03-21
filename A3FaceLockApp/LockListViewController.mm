@@ -269,10 +269,10 @@
         [MBManager hideAlert];
         _cell.statueImage.image = [UIImage imageNamed:@"关门2@2x"];
     }else if ([devStatus isEqual:@"145"]){
-        _cell.statueLabel.hidden = NO;
-        _cell.statueImage.hidden = YES;
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
         _cell.statueLabel.text = @"密码失败";
-        _cell.statueImage.image = [UIImage imageNamed:@"关门2@2x"];
+        _cell.statueImage.image = [UIImage imageNamed:@"密码错误2@2x"];
         _cell.statueLabel.backgroundColor = [UIColor redColor];
         _cell.statueLabel.tintColor = [UIColor whiteColor];
         [MBManager hideAlert];
@@ -316,6 +316,86 @@
         // [self playNotifySound:message];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
         _cell.statueImage.image = [UIImage imageNamed:@"电量低2@2x"];
+    }else if ([devStatus isEqual:@"10"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@上保险",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"上保险2@2x"];
+    }else if ([devStatus isEqual:@"11"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@解除保险",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"解除保险2@2x"];
+    }else if ([devStatus isEqual:@"20"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@反锁",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"反锁2@2x"];
+    }else if ([devStatus isEqual:@"23"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@入侵警报",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"入侵警报2@2x"];
+    }else if ([devStatus isEqual:@"24"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@报警解除",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"报警解除2@2x"];
+    }else if ([devStatus isEqual:@"25"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@强制上锁",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"强制上锁2@2x"];
+    }else if ([devStatus isEqual:@"29"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@破坏报警",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"破坏报警2@2x"];
+    }else if ([devStatus isEqual:@"31"]){
+        [MBManager hideAlert];
+        NSString *message = [NSString stringWithFormat:@"%@密码连续输入错误",_cell.nameLabel.text];
+        _cell.statueLabel.hidden = YES;
+        _cell.statueImage.hidden = NO;
+        [MBManager showBriefMessage:message InView:_roundScrollView];
+        //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
+        // [self playNotifySound:message];
+        _cell.statueLabel.backgroundColor = [UIColor clearColor];
+        _cell.statueImage.image = [UIImage imageNamed:@"密码连续错误2@2x"];
     }else if ([devStatus isEqual:@"144"]){
         CString epData = it->second.m_strEPData.c_str();
         epData = epData == "11"?"12":"11";

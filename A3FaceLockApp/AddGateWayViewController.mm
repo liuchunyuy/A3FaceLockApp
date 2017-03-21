@@ -212,6 +212,7 @@
    // }else{
         //textID.text = @"50294D203FFB";
         textID.text = @"50294D2044C1";
+    //textID.text = @"";
         //textID.enabled = NO;
         //label.text = @"Add the gateway";
         textPW.text = @"2044C1";

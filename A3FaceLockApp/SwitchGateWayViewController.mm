@@ -21,6 +21,7 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"选择网关";
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     //[self checkGateWayCount];    //取消搜索局域网网关功能
     // 设置CGRectZero从导航栏下开始计算
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
@@ -33,7 +34,7 @@
 
 -(void)createTableView{
 
-    UITableView *tableView = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64-200) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:236/255.f green:236/255.f blue:236/255.f alpha:1.0] separatorColor:[UIColor purpleColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    UITableView *tableView = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT-64) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:236/255.f green:236/255.f blue:236/255.f alpha:1.0] separatorColor:[UIColor purpleColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
     _userArr = [NSMutableArray arrayWithArray:products.allKeys];
     NSLog(@"用户名arr ------%@", _userArr);

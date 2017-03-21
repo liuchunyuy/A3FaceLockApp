@@ -45,60 +45,68 @@
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   上锁",nameStr];
             _nameLabel.textColor = [UIColor colorWithRed:133/255.f green:213/255.f blue:77/255.f alpha:1.0];
-            _image.image = [UIImage imageNamed:@"locked1@2x"];
+            _image.image = [UIImage imageNamed:@"关门1@2x"];
         }else if ([_model.epData  isEqualToString: @"30"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   密码开锁",nameStr];
             _nameLabel.textColor = [UIColor orangeColor];
-            _image.image = [UIImage imageNamed:@"password1@2x"];
+            _image.image = [UIImage imageNamed:@"密码1@2x"];
         }else if ([arr containsObject:_model.epData]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   人脸扫描开锁",nameStr];
             _nameLabel.textColor = [UIColor purpleColor];
-            _image.image = [UIImage imageNamed:@"face1@2x"];
+            _image.image = [UIImage imageNamed:@"人脸1@2x"];
         }else if ([_model.epData isEqualToString:@"138"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   钥匙开锁",nameStr];
             _nameLabel.textColor = [UIColor brownColor];
-            _image.image = [UIImage imageNamed:@"key@2x"];
+            _image.image = [UIImage imageNamed:@"钥匙@2x"];
         }else if ([_model.epData isEqualToString:@"23"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   入侵警报",nameStr];
             _nameLabel.textColor = [UIColor redColor];
+            _image.image = [UIImage imageNamed:@"入侵警报1@2x"];
         }else if ([_model.epData isEqualToString:@"24"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   报警解除",nameStr];
             _nameLabel.textColor = [UIColor blueColor];
+            _image.image = [UIImage imageNamed:@"解除报警1@2x"];
         }else if ([_model.epData isEqualToString:@"25"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   强制上锁",nameStr];
             _nameLabel.textColor = [UIColor redColor];
+            _image.image = [UIImage imageNamed:@"强制上锁1@2x"];
         }else if ([_model.epData isEqualToString:@"10"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   上保险",nameStr];
             _nameLabel.textColor = [UIColor blueColor];
+            _image.image = [UIImage imageNamed:@"上保险1@2x"];
         }else if ([_model.epData isEqualToString:@"11"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   解除保险",nameStr];
             _nameLabel.textColor = [UIColor redColor];
+            _image.image = [UIImage imageNamed:@"解除保险@2x"];
         }else if ([_model.epData isEqualToString:@"29"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   破坏报警",nameStr];
             _nameLabel.textColor = [UIColor redColor];
+            _image.image = [UIImage imageNamed:@"破坏报警1@2x"];
         }else if ([_model.epData isEqualToString:@"31"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   密码连续出错",nameStr];
             _nameLabel.textColor = [UIColor redColor];
+            _image.image = [UIImage imageNamed:@"密码连续错误1@2x"];
         }else if ([_model.epData isEqualToString:@"20"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@   反锁",nameStr];
             _nameLabel.textColor = [UIColor redColor];
+            _image.image = [UIImage imageNamed:@"反锁1@2x"];
             _image.image = [UIImage imageNamed:@"company_logo"];
         }else if ([_model.epData isEqualToString:@"28"]){
             NSString *nameStr = HH_IsEmptyString(model.name);
             _nameLabel.text = [NSString stringWithFormat:@"%@ 电量低",nameStr];
         _nameLabel.textColor = [UIColor redColor];
-            _image.image = [UIImage imageNamed:@"powerlow1@2x"];
+            _image.image = [UIImage imageNamed:@"电量低1@2x"];
         }
         
         _timeLabel.text = model.createDate;
