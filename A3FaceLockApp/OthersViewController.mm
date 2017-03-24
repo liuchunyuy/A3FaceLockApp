@@ -156,8 +156,6 @@
     [self.navigationController setNavigationBarHidden:isShowHomePage animated:YES];
 }
 
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

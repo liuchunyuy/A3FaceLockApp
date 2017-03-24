@@ -102,7 +102,7 @@
 -(void)modifyGateWayPassWord{
 
     NSLog(@"修改网关密码");
-    
+#warning ping bi gai mi ma gong neng
     [MBManager showBriefMessage:@"当前不提供此方法" InView:self.view];
     return;
     self.hidesBottomBarWhenPushed = YES;
@@ -122,7 +122,7 @@
     NSDictionary *products = [NSDictionary dictionaryWithContentsOfFile:[MyUtiles getDocumentsPath:@"oldLoginName.plist"]];
     NSMutableArray *array = [NSMutableArray arrayWithArray:products.allKeys];
     if (array.count <= 1) {
-        [MBManager showBriefMessage:@"只有一个网关，不能切换" InView:self.view];
+        [MBManager showBriefMessage:@"只登录过一个网关，不能切换" InView:self.view];
         return;
     }
     self.hidesBottomBarWhenPushed = YES;
@@ -256,12 +256,24 @@
             [MBManager hideAlert];
         }else if (iStatus == 13){
             cell.gateWayStatus.text = @"网关密码错误";
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"modifyGateWayPassWord1" object:self userInfo:nil];
             [MBManager hideAlert];
         }else if (iStatus == 14){
             cell.gateWayStatus.text = @"Change the new IP login";
         }else if (iStatus == 21){
             cell.gateWayStatus.text = @"修改密码成功";
-            [self showAlert:@"网关密码修改成功"];
+            //[self showAlert:@"网关密码修改成功,请重新登录才能控制设备"];
+            [[NSNotificationCenter defaultCenter]postNotificationName:@"modifyGateWayPassWord1" object:self userInfo:nil];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"网关密码修改成功,请点击确定重新登录来控制设备" preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+            UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                
+                [[NSNotificationCenter defaultCenter]postNotificationName:@"modifyGateWayPassWord" object:self userInfo:nil];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            }];
+            [alertController addAction:cancleAction];
+            [alertController addAction:okAction];
+            [self presentViewController:alertController animated:YES completion:nil];
         }else if (iStatus == 22){
             cell.gateWayStatus.text = @"修改密码失败";
             [self showAlert:@"网关密码修改失败，请重试"];
@@ -328,6 +340,12 @@
     }    
     //PackageMessage *msg = [notification.userInfo valueForKey:@"MSG"];
     [self.tableView reloadData];
+}
+
+-(void)dealloc{
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"modifyGateWayPassWord" object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"modifyGateWayPassWord1" object:nil];
 }
 
 // Pop-up box

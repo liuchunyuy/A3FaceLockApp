@@ -59,9 +59,9 @@
         label.backgroundColor = [UIColor clearColor];
         [self.view addSubview:label];
     }
-    _oldPW = [MyUtiles createTextField:CGRectMake(30+70+20, 84, SCREEN_WIDTH-70-20-60, 30) placeholder:@"输入原密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:NO];
-    _PWNew = [MyUtiles createTextField:CGRectMake(30+70+20, 84+32*1, SCREEN_WIDTH-70-20-60, 30) placeholder:@"输入新密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:NO];
-    _repertPW = [MyUtiles createTextField:CGRectMake(30+70+20, 84+32*2, SCREEN_WIDTH-70-20-60, 30) placeholder:@"确认新密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:NO];
+    _oldPW = [MyUtiles createTextField:CGRectMake(30+70+20, 84, SCREEN_WIDTH-70-20-60, 30) placeholder:@"输入原密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:YES];
+    _PWNew = [MyUtiles createTextField:CGRectMake(30+70+20, 84+32*1, SCREEN_WIDTH-70-20-60, 30) placeholder:@"输入新密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:YES];
+    _repertPW = [MyUtiles createTextField:CGRectMake(30+70+20, 84+32*2, SCREEN_WIDTH-70-20-60, 30) placeholder:@"确认新密码" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor whiteColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeAlways secureTextEntry:YES];
     
     UIButton *okButton = [MyUtiles createBtnWithFrame:CGRectMake(30, 84+32*2+30+50, SCREEN_WIDTH-60, 30) title:@"确定" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(modifyPassWord)];
     okButton.backgroundColor = [UIColor redColor];
@@ -96,7 +96,9 @@
         m_strChangePw = [_PWNew.text UTF8String];
         sendChangeGwPwdMsg(_m_pGateway->m_strAppID.c_str(), _m_pGateway->m_strID.c_str(), [_oldPW.text UTF8String], [_PWNew.text UTF8String]);
         //[self dismissViewControllerAnimated:YES completion:nil];
+        
         [self.navigationController popViewControllerAnimated:YES];
+        
     }
 }
 

@@ -86,8 +86,6 @@
     NSLog(@"gateWayAppStr is %@",gateWayAppStr);
    // int i = sendDisConnectGwMsg([gateWayAppStr UTF8String],[gateWayIDStr UTF8String]);
     
-   // NSLog(@"i is %d",i);
-    
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
     [dic setValue:numstr forKey:@"name"];
     

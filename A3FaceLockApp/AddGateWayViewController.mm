@@ -79,6 +79,8 @@
     }
     //切换网关回调id的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshou:) name:@"changeUserName" object:nil];
+    //修改网关密码的通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(modifyGateWayPassWord) name:@"modifyGateWayPassWord" object:nil];
     //监听键盘弹出的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentKeyBoard:) name:UIKeyboardWillShowNotification object:nil];
     //监听键盘隐藏的通知
@@ -157,7 +159,7 @@
     imageUser.userInteractionEnabled = YES;
     [userView addSubview:imageUser];
     
-    textPW = [MyUtiles createTextField:CGRectMake(60, 5, SCREEN_WIDTH-60-100, 40) placeholder:@"密码(区分大小写)" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor clearColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeNever secureTextEntry:NO];
+    textPW = [MyUtiles createTextField:CGRectMake(60, 5, SCREEN_WIDTH-60-100, 40) placeholder:@"密码(区分大小写)" alignment:UIControlContentVerticalAlignmentCenter color:[UIColor clearColor] keyboardType:UIKeyboardTypeDefault viewMode:UITextFieldViewModeNever secureTextEntry:YES];
     textPW.textColor = [UIColor whiteColor];
     [textPW setBorderStyle:UITextBorderStyleNone];
     textPW.returnKeyType =UIReturnKeyDone;
@@ -596,6 +598,18 @@
     }
 }
 
+-(void)modifyGateWayPassWord{
+
+    textPW.text = @"";
+    [self.view endEditing:YES];
+    //_userNametableView.hidden = YES;
+    //键盘归位
+    [UIView animateWithDuration:.25 animations:^{
+        self.view.transform = CGAffineTransformIdentity;
+
+    }];
+}
+
 -(void)OK:(id)sender{
 
     [self.view endEditing:YES];
@@ -667,8 +681,8 @@
     UILabel *versonLabel = [MyUtiles createLabelWithFrame:CGRectMake(3*(self.view.frame.size.width/4), self.view.frame.size.height-40, self.view.frame.size.width/4, 40) font:[UIFont systemFontOfSize:12] textAlignment:NSTextAlignmentLeft color:[UIColor lightGrayColor] text:[NSString stringWithFormat:@"Version: %@",versionStr1]];
     [self.view addSubview:versonLabel];
     
-    return;
-    NSURL *url1 = [NSURL URLWithString:@"http://220.197.186.34:8081/gzdg/update_IOS.txt"];
+    //return;
+    NSURL *url1 = [NSURL URLWithString:@"http://140.207.101.214/UDISA3/update_IOS.txt"];
     NSURLRequest *urlR = [NSURLRequest requestWithURL:url1];
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:urlR completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {

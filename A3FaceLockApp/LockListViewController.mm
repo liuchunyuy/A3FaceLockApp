@@ -10,31 +10,23 @@
 #import "SZKRoundScrollView.h"        //    轮播图
 #import "ProductionViewController.h"
 #import "LockListTableViewCell.h"
-
 #import "SDSoundPlayer.h"
-
 #import <AudioToolbox/AudioToolbox.h>
-
 #import "DeviceSettingViewController.h"
-
 #import "YCXMenu.h"      // 右上角按钮
 
-#import "model.h"
+#import "model.h"     //
 @interface LockListViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @property(nonatomic,copy)NSArray *localImageArr;   //本地图片数组
 @property(nonatomic,copy)SZKRoundScrollView *roundScrollView;
-
 @property(nonatomic)BOOL isNeedPassWord;     //是否需要开门密码
-
 @property(nonatomic,strong)NSString *passWordAlertTitle;
 @property(nonatomic,strong)UITextField *openPassWord;   //开门密码
-
 @property(nonatomic,strong)UIButton *setUpButton;  //单锁页面右上角设置按钮
 @property(nonatomic,strong)UILabel *noDeviceLabel;  //无设备label
-@property (nonatomic , strong) NSMutableArray *items;   //单锁测试按钮的列表item
-
-@property (nonatomic,strong) NSMutableArray *closePWDArr;
+@property(nonatomic,strong) NSMutableArray *items;   //单锁测试按钮的列表item
+@property(nonatomic,strong) NSMutableArray *closePWDArr;
 
 @end
 
@@ -61,6 +53,8 @@
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     _isNeedPassWord = YES;
     _passWordAlertTitle = @"关闭密码";
+    //修改网关密码的通知
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(modifyGateWayPassWord1) name:@"modifyGateWayPassWord1" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshouopen:) name:@"openPsaaword" object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshoushutDown:) name:@"shutDownPsaaword" object:nil];
     self.view.backgroundColor = [UIColor whiteColor];
@@ -107,19 +101,20 @@
         [YCXMenu showMenuInView:self.view fromRect:CGRectMake(self.view.frame.size.width - 50, 0, 50, 0) menuItems:_items selected:^(NSInteger index, YCXMenuItem *item) {
             NSLog(@"index is %ld",(long)index);
             if (index == 0) {
+                model *m = self.closePWDArr[0];
                // NSLog(@"关闭密码");
-                if (_isNeedPassWord == YES) {
+                if (m.isNeedPWD == YES) {
                     NSLog(@"打开密码");
                     _isNeedPassWord = NO;
+                    m.isNeedPWD = NO;
                     _passWordAlertTitle = @"打开密码";
                     [_tableView reloadData];
-                    _isNeedPassWord = NO;
-                }else if (_isNeedPassWord == NO){
+                }else if (m.isNeedPWD == NO){
                     NSLog(@"关闭密码");
                     _isNeedPassWord = YES;
+                    m.isNeedPWD = YES;
                     _passWordAlertTitle = @"关闭密码";
                     [_tableView reloadData];
-                    _isNeedPassWord = YES;
                 }
             }else if (index == 1){
                 NSLog(@"单锁重命名");
@@ -165,9 +160,9 @@
     //小圆点控制器位置
     _roundScrollView.pageControlAlignment=NSPageControlAlignmentCenter;
     //当前小圆点颜色
-    _roundScrollView.curPageControlColor=[UIColor yellowColor];
+    _roundScrollView.curPageControlColor=[UIColor colorWithRed:252/255.f green:86/255.f blue:89/255.f alpha:1.0];
     //其余小圆点颜色
-    _roundScrollView.otherPageControlColor=[UIColor orangeColor];
+    _roundScrollView.otherPageControlColor=[UIColor whiteColor];
     
 }
 
@@ -188,7 +183,7 @@
     [self.view addSubview:_tableView];
     
     _noDeviceLabel = [MyUtiles createLabelWithFrame:CGRectMake(SCREEN_WIDTH/3, 100, SCREEN_WIDTH/3, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor lightGrayColor] text:@"暂无设备"];
-    _noDeviceLabel.backgroundColor = [UIColor orangeColor];
+    _noDeviceLabel.backgroundColor = [UIColor clearColor];
     [_tableView addSubview:_noDeviceLabel];
     
 }
@@ -252,21 +247,20 @@
     NSLog(@"锁返回状态 devStatus is %@",devStatus);
     NSArray *arr = @[@"65",@"66",@"67",@"68",@"69",@"70",@"71",@"72",@"73",@"74",@"75",@"76",@"77",@"78",@"79",@"80",@"81",@"82",@"83",@"84"];
     if ([devStatus isEqual: @"1"]) {
+        [MBManager hideAlert];
         _cell.statueLabel.hidden = YES;
         _cell.statueImage.hidden = NO;
         NSString *message = [NSString stringWithFormat:@"%@远程开锁成功",_cell.nameLabel.text];
         // [ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
         [self playNotifySound:message];
-        [MBManager hideAlert];
         [MBManager showBriefMessage:message InView:_roundScrollView];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
         _cell.statueImage.image = [UIImage imageNamed:@"app2@2x"];
     }else if ([devStatus isEqual:@"2"] || [devStatus isEqual:@"00"]){
+        [MBManager hideAlert];
         _cell.statueLabel.hidden = YES;
         _cell.statueImage.hidden = NO;
-        //[self playNotifySound:@"门锁已关闭"];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
-        [MBManager hideAlert];
         _cell.statueImage.image = [UIImage imageNamed:@"关门2@2x"];
     }else if ([devStatus isEqual:@"145"]){
         _cell.statueLabel.hidden = YES;
@@ -277,12 +271,12 @@
         _cell.statueLabel.tintColor = [UIColor whiteColor];
         [MBManager hideAlert];
     }else if ([arr containsObject:devStatus]){
+        [MBManager hideAlert];
         NSString *message = [NSString stringWithFormat:@"%@人脸扫描开锁成功",_cell.nameLabel.text];
         _cell.statueLabel.hidden = YES;
         _cell.statueImage.hidden = NO;
         //[ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
-        [self playNotifySound:message];
-        [MBManager hideAlert];
+        [self playNotifySound:message];        
         [MBManager showBriefMessage:message InView:_roundScrollView];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
         _cell.statueImage.image = [UIImage imageNamed:@"人脸2@2x"];
@@ -353,7 +347,7 @@
         _cell.statueImage.hidden = NO;
         [MBManager showBriefMessage:message InView:_roundScrollView];
         //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
-        // [self playNotifySound:message];
+        [self playNotifySound:message];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
         _cell.statueImage.image = [UIImage imageNamed:@"入侵警报2@2x"];
     }else if ([devStatus isEqual:@"24"]){
@@ -383,7 +377,7 @@
         _cell.statueImage.hidden = NO;
         [MBManager showBriefMessage:message InView:_roundScrollView];
         //[ADAudioTool playSystemAudioWithSoundID:1007];   //播放系统提示音
-        // [self playNotifySound:message];
+        [self playNotifySound:message];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
         _cell.statueImage.image = [UIImage imageNamed:@"破坏报警2@2x"];
     }else if ([devStatus isEqual:@"31"]){
@@ -450,8 +444,7 @@
             epData1 = [passwordStr UTF8String];;   //96111111
             int result = sendControlDevMsg(m_pGateway->m_strAppID.c_str(), m_pGateway->m_strID.c_str(), iter->second->m_strID.c_str(), it->first.c_str(), it->second.m_strEPType.c_str(), epData1.c_str());
 
-            NSLog(@"验证密码结果result is %d",result);            
-            
+            NSLog(@"验证密码结果result is %d",result);
         }];
         UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
         [alertController addAction:cancleAction];
@@ -506,6 +499,7 @@
     UITableViewRowAction *rowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NSLog(@"删除");
         [MBManager showBriefMessage:@"当前版不提供此方法" InView:self.view];
+#warning ping bi shan chu gong neng
         return ;
         [self deleteDevice:_selectIndex];             //  删除
     }];
@@ -601,20 +595,33 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
--(void)openOrShutDownPassWord:(NSInteger)index{
+-(void)modifyGateWayPassWord1{
 
-    if (_isNeedPassWord == YES) {
-        NSLog(@"打开密码");
-        _isNeedPassWord = NO;
-        _passWordAlertTitle = @"打开密码";
-        [_tableView reloadData];
-    }else if (_isNeedPassWord == NO){
-        NSLog(@"关闭密码");
-        _isNeedPassWord = YES;
-        _passWordAlertTitle = @"关闭密码";
-        [_tableView reloadData];
-    }
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:@"有人修改了密码,请点击确定重新登录来控制设备" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *cancleAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alertController addAction:cancleAction];
+    [alertController addAction:okAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
+
+//-(void)openOrShutDownPassWord:(NSInteger)index{
+//
+//    if (_isNeedPassWord == YES) {
+//        NSLog(@"打开密码");
+//        _isNeedPassWord = NO;
+//        _passWordAlertTitle = @"打开密码";
+//        [_tableView reloadData];
+//    }else if (_isNeedPassWord == NO){
+//        NSLog(@"关闭密码");
+//        _isNeedPassWord = YES;
+//        _passWordAlertTitle = @"关闭密码";
+//        [_tableView reloadData];
+//    }
+//}
 
 - (void)ReViewDevice:(NSNotification *)notification{
     
