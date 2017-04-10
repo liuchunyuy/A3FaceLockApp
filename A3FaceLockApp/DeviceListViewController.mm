@@ -30,7 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0];
     NSLog(@"_gateWayIDStr is %@", _gateWayIDStr);
     NSLog(@"_gateWayPWStr is%@", _gateWayPWStr);
     
@@ -54,12 +54,12 @@
     NSArray *imageArr = @[@"网关ID@2x",@"修改密码@2x",@"切换网关@2x"];
     for (int i = 0; i < 3; i++) {
         if (i < 1) {
-            UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 100, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:labelArr[i]];
+            UILabel *label = [MyUtiles createLabelWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3  +5 +50*i, 100, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:labelArr[i]];
            // label.backgroundColor = [UIColor redColor];
             [self.view addSubview:label];
         }
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%@",imageArr[i]]];
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(25, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 25, 25)];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:CGRectMake(25, _tableView.frame.origin.y+SCREEN_HEIGHT/3 +10 +50*i, 30, 30)];
         imageView.image = image;
         [self.view addSubview:imageView];
     }
@@ -68,15 +68,16 @@
     
     NSArray *label1Arr = @[_gateWayIDStr];
     for (int i = 0; i < 1; i++) {
-        UILabel *label1 = [MyUtiles createLabelWithFrame:CGRectMake(150, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30*i, 150, 25) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:label1Arr[i]];
+        UILabel *label1 = [MyUtiles createLabelWithFrame:CGRectMake(150, _tableView.frame.origin.y+SCREEN_HEIGHT/3 +5 +50*i, 150, 40) font:[UIFont systemFontOfSize:15] textAlignment:NSTextAlignmentCenter color:[UIColor blackColor] text:label1Arr[i]];
         [self.view addSubview:label1];
     }
     
     NSArray *buttonArr = @[@"修改密码",@"切换用户"];
     for (int i = 0; i < 2; i++) {
-        UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20+30+30*i, 100, 25) title:buttonArr[i] normalBgImg:nil highlightedBgImg:nil target:self action:nil];
+        UIButton *btn = [MyUtiles createBtnWithFrame:CGRectMake(50, _tableView.frame.origin.y+SCREEN_HEIGHT/3 +5 +50+50*i, 100, 40) title:buttonArr[i] normalBgImg:nil highlightedBgImg:nil target:self action:nil];
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        btn.titleLabel.font = [UIFont systemFontOfSize:15];
         btn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         if (i == 0) {
            // btn.backgroundColor = [UIColor yellowColor];
@@ -86,6 +87,12 @@
             [btn addTarget:self action:@selector(switchGateWay) forControlEvents:UIControlEventTouchUpInside];
         }
         [self.view addSubview:btn];
+    }
+    
+    for (int i = 0; i <  3; i++) {
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, _tableView.frame.origin.y+SCREEN_HEIGHT/3+50*(i+1), SCREEN_WIDTH, 1)];
+        lineView.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:lineView];
     }
     
     UIButton *exitGateWayBtn = [MyUtiles createBtnWithFrame:CGRectMake(SCREEN_WIDTH/4, _tableView.frame.origin.y+SCREEN_HEIGHT/3+20 +20 +30+30+60+50, SCREEN_WIDTH/2, 40) title:@"退出" normalBgImg:nil highlightedBgImg:nil target:self action:@selector(exitGateWay)];
@@ -102,9 +109,9 @@
 -(void)modifyGateWayPassWord{
 
     NSLog(@"修改网关密码");
-#warning ping bi gai mi ma gong neng
-    [MBManager showBriefMessage:@"当前不提供此方法" InView:self.view];
-    return;
+//#warning ping bi gai mi ma gong neng
+   // [MBManager showBriefMessage:@"当前不提供此方法" InView:self.view];
+   // return;
     self.hidesBottomBarWhenPushed = YES;
     ITER_MAP_STR_GATEWAY iter = m_map_str_gateway.begin();
     advance(iter, 0);
@@ -149,7 +156,7 @@
 
 -(void)creatTableView{
 
-    _tableView  = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/3+20) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _tableView  = [MyUtiles createTableView:CGRectMake(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT/3) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor colorWithRed:248/255.f green:248/255.f blue:255/255.f alpha:1.0] separatorColor:[UIColor whiteColor] separatorStyle:UITableViewCellSeparatorStyleNone showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     _tableView.delegate = self;
     _tableView.dataSource = self;
     _tableView.scrollEnabled = NO;
@@ -304,7 +311,7 @@
     NSLog(@"设备数量2----%ld",m_map_id_str_device[iter->second->m_strID].size());
     cell.gateWayDevice.text = strDeviceNum;
     //cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor whiteColor];
     cell.gateWayLogo.image = [UIImage imageNamed:@"网关logo@2x"];
     //cell.backgroundView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"gatewaylogo@2x"]];
     return cell;

@@ -276,7 +276,7 @@
         _cell.statueLabel.hidden = YES;
         _cell.statueImage.hidden = NO;
         //[ADAudioTool playSystemAudioWithSoundID:1007];   /播放系统提示音
-        [self playNotifySound:message];        
+        [self playNotifySound:message];
         [MBManager showBriefMessage:message InView:_roundScrollView];
         _cell.statueLabel.backgroundColor = [UIColor clearColor];
         _cell.statueImage.image = [UIImage imageNamed:@"人脸2@2x"];
@@ -498,9 +498,9 @@
     //删除设备
     UITableViewRowAction *rowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction * _Nonnull action, NSIndexPath * _Nonnull indexPath) {
         NSLog(@"删除");
-        [MBManager showBriefMessage:@"当前版不提供此方法" InView:self.view];
-#warning ping bi shan chu gong neng
-        return ;
+ //       [MBManager showBriefMessage:@"当前版不提供此方法" InView:self.view];
+//#warning ping bi shan chu gong neng
+  //      return ;
         [self deleteDevice:_selectIndex];             //  删除
     }];
     //设备重命名

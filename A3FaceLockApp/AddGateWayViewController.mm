@@ -77,6 +77,8 @@
     if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)]) {
         self.edgesForExtendedLayout = UIRectEdgeNone;
     }
+    
+    self.navigationController.delegate = self; //实现nav代理隐藏本页面的nav
     //切换网关回调id的通知
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(jisshou:) name:@"changeUserName" object:nil];
     //修改网关密码的通知
@@ -192,7 +194,7 @@
     [self.view addSubview:loginBtn];    //登录按钮
     
     //UIView *userNameView = [UIView alloc]initWithFrame:<#(CGRect)#>
-    _userNametableView = [MyUtiles createTableView:CGRectMake(userView.frame.origin.x, userView.frame.origin.y+55, userView.frame.size.width, userView.frame.size.height*3) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor lightGrayColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
+    _userNametableView = [MyUtiles createTableView:CGRectMake(userView.frame.origin.x, userView.frame.origin.y+55, userView.frame.size.width, userView.frame.size.height*3) tableViewStyle:UITableViewStylePlain backgroundColor:[UIColor clearColor] separatorColor:[UIColor lightGrayColor] separatorStyle:UITableViewCellSeparatorStyleSingleLine showsHorizontalScrollIndicator:NO showsVerticalScrollIndicator:NO];
     _userNametableView.delegate = self;
     _userNametableView.dataSource = self;
     _userNametableView.hidden = YES;
@@ -213,11 +215,11 @@
         //label.text = @"Modify the gateway";
    // }else{
         //textID.text = @"50294D203FFB";
-        textID.text = @"50294D2044C1";
-    //textID.text = @"";
+       // textID.text = @"50294D2044C1";
+    textID.text = @"";
         //textID.enabled = NO;
         //label.text = @"Add the gateway";
-        textPW.text = @"2044C1";
+        textPW.text = @"";
   //  }
     
 }
@@ -462,7 +464,7 @@
     }else{
         SwitchGateWayTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"SwitchGateWayTableViewCell" forIndexPath:indexPath];
         cell.userLabel.text = _userArr[indexPath.row];
-        cell.backgroundColor = [UIColor colorWithRed:1.0 green:1.0 blue:1.0 alpha:0.4];
+        cell.backgroundColor = [UIColor whiteColor];
         return cell;
     }    
     _isClick = false;
@@ -673,6 +675,15 @@
     }
     //PackageMessage *msg = [notification.userInfo valueForKey:@"MSG"];
     [self.tableView reloadData];
+}
+
+//隐藏本页面的nav
+
+- (void)navigationController:(UINavigationController *)navigationController willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    // 判断要显示的控制器是否是自己
+    BOOL isShowHomePage = [viewController isKindOfClass:[self class]];
+    
+    [self.navigationController setNavigationBarHidden:isShowHomePage animated:YES];
 }
 
 -(void)createVersonLabel{

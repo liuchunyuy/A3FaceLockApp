@@ -34,7 +34,7 @@
     imageView.image = image;
     [self.view addSubview:imageView];
     
-    for (int i = 0; i <  3; i++) {
+    for (int i = 0; i <  4; i++) {
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT/3+64+50*(i+1), SCREEN_WIDTH, 1)];
         lineView.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:lineView];
